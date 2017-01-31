@@ -50,15 +50,15 @@ class UsersController extends AppController {
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
+                $this->Flash->success(__('Usuário Salvo.'));
                 return $this->redirect(['action' => 'add']);
             }
-            $this->Flash->error(__('Unable to add the user.'));
+            $this->Flash->error(__('Não foi possível salvar Usuário.'));
         }
         $this->set('user', $user);
     }
 
-    public function painel(){
+    public function painel() {
 
     }
 
