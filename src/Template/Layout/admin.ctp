@@ -55,7 +55,9 @@
             <?php echo $this->Html->link('Categorias', ['controller' => 'categorias']); ?>
             </li>
             <li><a href="noticias.html">Notícias</a></li>
-            <li><?php echo $this->Html->link('Albuns', ['controller' => 'albuns']); ?></li>
+            <li class='<?php if ($this->request->session()->read('link_actived') === 'albuns'){echo 'active';}?>'>
+            <?php echo $this->Html->link('Albuns', ['controller' => 'albuns']); ?>
+            </li>
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
