@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Notícias</title>
+
+    <!-- Bootstrap -->
+   <!-- Latest compiled and minified CSS -->
+   <link rel="stylesheet"- href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="altinopolis">
+
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="resources/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="resources/css/dashboard.css" rel="stylesheet">
+
+    <!-- CKEditor 4.6.2 -->
+    <script src="//cdn.ckeditor.com/4.6.2/basic/ckeditor.js"></script>
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Nome do Site / Logo</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+           	<li><a href="contas.html">Meu Cadastro</a></li>
+            <li><a href="preferencias.html">Preferências</a></li>
+            <li><a href="login.html">Sair</a></li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Pesquisar notícias...">
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active">
+            <a href="#">MEU PAINEL <span class="sr-only">(current)</span></a></li>
+            <li><a href="usuarios.html">Usuários</a></li>
+            <li><a href="categorias.html">Categorias</a></li>
+            <li><a href="noticias.html">Notícias</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Noticias</h1>
+          <div class="row">
+            <div class="col-lg-12">
+              <form id="form_noticias"  method="post">
+                <div class="form-group">
+                    <label>Cadastro</label>
+                    <input type="date" name="" value="1900-01-01" class="form-control" placeholder="Data...">
+                </div>
+                <div class="form-group">				                
+                  <label>Categoria</label>
+                  <select class="form-control">
+                    <option>Categoria 1</option>
+                    <option>Categoria 2</option>
+                    <option>Categoria 3</option>
+                  </select>
+                </div>
+                 <div class="form-group">
+                    <label>Título</label>
+                    <input type="text" name="" class="form-control" placeholder="Título..." maxlength="150">
+                 </div>
+                 <div class="form-group">
+                    <label>Resumo</label>
+                    <textarea name="" class="form-control" placeholder="Resumo..." maxlength="255" style="resize: none; "></textarea>
+                 </div>
+                 <div class="form-group">
+                    <label>Texto</label>
+                    <textarea id="editor1" name="editor1" maxlength="5000">Texto...</textarea>
+                 </div>
+                <div class="form-group">
+                    <label>Incoporar Vídeo</label>
+                		<input type="url" name="" class="form-control" placeholder="http://www.youtube.com/code" maxlength="150">
+                </div>
+
+				<div class="form-group">
+				<!-- 16:9 aspect ratio -->
+				<div class="embed-responsive embed-responsive-16by9">
+		  				<iframe width="854" height="480" src="https://www.youtube.com/embed/UMhskLXJuq4" frameborder="0" allowfullscreen></iframe>
+				</div>
+				 </div>                 
+                <div class="form-group">
+                   <label>Publicar em</label>
+                   <input type="date" name="" value="1900-01-01" class="form-control" placeholder="Data...">
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" id="i_active" name="">
+                    <label for="i_active">Ativar</label>
+                </div>
+                <input type="submit" name="salvar" value="Salvar" class="btn btn-default">
+                <input type="submit" name="novo" value="Novo" class="btn btn-default">
+                <input type="submit" name="delete" value="Excluir" class="btn btn-default">
+                <a href="pesquisar_noticias.html" class="btn btn-default">Pesquisar</a>
+              </form>
+              <form id="form_galeria"  method="post" enctype="multipart/form-data">
+				<div class="panel panel-default" style=" margin-top: 15px">
+						<div class="panel-heading"><strong>GALERIA</strong></div>
+						<div class="panel-body">...</div>
+						<div class="panel-footer">
+							<input type="file" accept="image/*" name="upload" value="Upload" class="btn btn-default">
+						</div>
+				</div> 
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>    
+    <script type="text/javascript">
+    	CKEDITOR.replace('editor1');
+	</script>
+  </body>
+</html>
