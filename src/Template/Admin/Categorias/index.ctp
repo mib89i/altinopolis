@@ -3,7 +3,6 @@
         <h1 class="page-header">Categorias</h1>
         <div class="row">            
             <div class="col-lg-12">
-                <h3>LISTA</h3>
                 <table class="table table-responsive table-striped" style="margin-top: 15px">
 	  			<thead>
 	  				<tr>
