@@ -18,16 +18,14 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <?= $this->Form->input('title', array('class'=>'form-control', 'placeholder'=>'Titulo...')) ?>
+                        <?= $this->Form->input('title', array('label'=>'Titulo', 'class'=>'form-control', 'placeholder'=>'Titulo...')) ?>
                     </div>
                     <div class="form-group">
-                        <label>Subtitulo</label>
-                        <textarea name="" class="form-control" placeholder="Resumo..." maxlength="255" style="resize: none; "></textarea>
-                        <?= $this->Form->input('subtitle', array('class'=>'form-control', 'placeholder'=>'Texto em...', 'id'=>'editor1', 'maxlenght'=>'150', 'rows'=>'3')) ?>
+                        <?= $this->Form->input('subtitle', array('label'=>'Subtitulo', 'class'=>'form-control', 'placeholder'=>'Texto em...', 'id'=>'editor1', 'maxlenght'=>'150', 'rows'=>'3', 'style="overflow:nome;"')) ?>
                     </div>
                     <div class="form-group">
                         <label>Texto</label>
-                        <?= $this->Form->input('text', array('label'=>false, 'class'=>'form-control', 'placeholder'=>'Texto em...', 'id'=>'editor1', 'maxlenght'=>'5000')) ?>
+                        <?= $this->Form->input('text', array('label'=>false, 'name'=>'editor1','class'=>'form-control', 'placeholder'=>'Texto em...', 'id'=>'editor1', 'maxlenght'=>'5000')) ?>
                     </div>
                     <div class="form-group">
                         <label>Incoporar Vídeo</label>
@@ -69,17 +67,8 @@
         </div>
     </div>
 </div>
-
-        
-        
-        
-        
-        <?= $this->Form->input('username') ?>
-        <?= $this->Form->input('password') ?>
-        <?=
-        $this->Form->input('role', [
-            'options' => ['admin' => 'Administrador', 'comum' => 'Comum']
-        ])
-        ?>
-
+<script src="//cdn.ckeditor.com/4.6.2/basic/ckeditor.js"></script>
+<script type="text/javascript">
+    CKEDITOR.replace('editor1');
+</script>
 <?= $this->Form->end() ?>
