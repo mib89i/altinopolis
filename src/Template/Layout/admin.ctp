@@ -50,12 +50,12 @@
             <li class="active">
             <a href="#">MEU PAINEL <span class="sr-only">(current)</span></a></li>
             <li><a href="usuarios.html">Usuários</a></li>
-            <li><?php echo $this->Html->link('Categorias', ['controller' => 'categorias', 'action' => 'add']); ?></li>
+            <li><?php echo $this->Html->link('Categorias', ['controller' => 'categorias']); ?></li>
             <li><a href="noticias.html">Notícias</a></li>
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Painel</h1>
+          <?= $this->Flash->render() ?>
           <?= $this->fetch('content') ?>
         </div>
       </div>
