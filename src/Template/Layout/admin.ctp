@@ -14,6 +14,7 @@
     
 </head>
 <body>
+    <?php if (isset($user_session['username'])): ?>
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -49,7 +50,7 @@
             <li class="active">
             <a href="#">MEU PAINEL <span class="sr-only">(current)</span></a></li>
             <li><a href="usuarios.html">Usuários</a></li>
-            <li><a href="categorias.html">Categorias</a></li>
+            <li><?php echo $this->Html->link('Categorias', ['controller' => 'categorias', 'action' => 'add']); ?></li>
             <li><a href="noticias.html">Notícias</a></li>
           </ul>
         </div>
@@ -58,7 +59,17 @@
           <?= $this->fetch('content') ?>
         </div>
       </div>
-    </div>    
+    </div> 
+    <?php else: ?>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-1 col-lg-12">
+        <?= $this->fetch('content') ?>
+        </div>
+      </div>
+    </div>
+    <?php endif; ?>
+
     <footer>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
