@@ -11,6 +11,9 @@ class UsersController extends AppController {
 
         $this->Auth->allow(['logout']);
         $this->Auth->deny(['index']);
+
+        $session = $this->request->session();
+        $session->write('link_actived', 'meu-painel');
     }
 
     public function isAuthorized($user) {
@@ -28,7 +31,7 @@ class UsersController extends AppController {
         }
 
         if ( $this->Auth->user() ) {
-            return $this->redirect('/admin/users/painel');
+            return $this->redirect('/admin/users');
         }
     }
 
@@ -57,9 +60,4 @@ class UsersController extends AppController {
         }
         $this->set('user', $user);
     }
-
-    public function painel() {
-
-    }
-
 }

@@ -8,7 +8,10 @@ class CategoriasController extends AppController {
 
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event); 
-        $this->Auth->deny(['index']);       
+        $this->Auth->deny(['index']);
+
+        $session = $this->request->session();
+        $session->write('link_actived', 'categorias');
     }
 
     public function isAuthorized($user) {
@@ -21,25 +24,24 @@ class CategoriasController extends AppController {
 
     public function edit($id = NULL) {
         $categorias = $this->Categorias->get($id);
-        $this->set(compact('categorias'));
-        if ($this->request->is('post')) {
+        if ($this->request->is(['post', 'put'])) {
             $categorias = $this->Categorias->patchEntity($categorias, $this->request->data);
-            if ($this->Categorias->update($categorias)) {
+            if ($this->Categorias->save($categorias)) {
                 $this->Flash->success(__('Categoria atualizada.'));
-                return $this->redirect(['action' => 'edit']);
+                //return $this->redirect(['action' => 'edit'. DS . $categorias->id]);
+                return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('Não foi possível salvar categoria.'));
 		}
-             
+        $this->set(compact('categorias'));     
     }
-    
 
     public function add() {
         $categorias = $this->Categorias->newEntity();
         if ($this->request->is('post')) {
             $categorias = $this->Categorias->patchEntity($categorias, $this->request->data);
             if ($this->Categorias->save($categorias)) {
-                $this->Flash->success(__('Categoria inserida.'));
+                $this->Flash->success(__('Categoria Inserida.'));
                 return $this->redirect(['action' => 'add']);
             }
             $this->Flash->error(__('Não foi possível salvar categoria.'));
@@ -50,16 +52,15 @@ class CategoriasController extends AppController {
     public function delete($id = NULL) {
         $categorias = $this->Categorias->get($id);
         $this->set(compact('categorias'));
-        if ($this->request->is('post')) {
+        if ($this->request->is(['post', 'delete'])) {
             $categorias = $this->Categorias->patchEntity($categorias, $this->request->data);
             if ($this->Categorias->delete($categorias)) {
-                $this->Flash->success(__('Categoria removida.'));
+                $this->Flash->success(__('Categoria Removida.'));
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('Não foi possível salvar categoria.'));
-		}
-             
-    }    
+		}    
+    }
 
     public function painel() {
 

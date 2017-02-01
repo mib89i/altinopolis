@@ -1,6 +1,5 @@
     <?= $this->Form->create($categorias) ?>
     <div class="row">
-
         <div class="col-lg-12">
             <h1 class="page-header">Editar - Categoria</h1>
             <div class="row">
@@ -8,8 +7,7 @@
                     <div class="form-group">
                          <?= $this->Form->input('name', array('label'=>'', 'class'=>'form-control','maxlenght'=>'150','placeholder'=>'Descrição...')) ?>
                     </div>
-                    <?= $this->Form->input('id', array('type' => 'hidden')); ?>
-			        <div class="row">
+                    <div class="row">
 			        	<div class="col-sm-1" >
 			        		<?= $this->Form->submit('Alterar', array('class' => 'btn btn-default', 'title' => 'Alterar')); ?>
 			        	</div>
@@ -21,4 +19,4 @@
             </div>
         </div>       
     </div>
-    <?= $this->Form->end() ?>
+    <?= $this->Form->end(); ?>
