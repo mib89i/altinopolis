@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 namespace App\Controller\Admin;
 
 use App\Controller\AppController;
@@ -30,7 +31,7 @@ class UsersController extends AppController {
             $this->Flash->error(__('Usuário ou Senha inválida, tente novamente'));
         }
 
-        if ( $this->Auth->user() ) {
+        if ($this->Auth->user()) {
             return $this->redirect('/admin/users');
         }
     }
@@ -53,11 +54,39 @@ class UsersController extends AppController {
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('Usuário Salvo.'));
+                $this->Flash->success(__('Registro salvo.'));
                 return $this->redirect(['action' => 'add']);
             }
-            $this->Flash->error(__('Não foi possível salvar Usuário.'));
+            $this->Flash->error(__('Não foi possível inserir registro.'));
         }
         $this->set('user', $user);
     }
+
+    public function edit($id = NULL) {
+        $user = $this->Users->get($id);
+        if ($this->request->is(['post', 'put'])) {
+            $user = $this->Users->patchEntity($user, $this->request->data);
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('Registro atualizado.'));
+                //return $this->redirect(['action' => 'edit'. DS . $categorias->id]);
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('Não foi possível atualizar registro.'));
+        }
+        $this->set(compact('user'));
+    }
+
+    public function delete($id = NULL) {
+        $user = $this->Users->get($id);
+        $this->set(compact('user'));
+        if ($this->request->is(['post', 'delete'])) {
+            $user = $this->Users->patchEntity($user, $this->request->data);
+            if ($this->Users->delete($user)) {
+                $this->Flash->success(__('Registro removido.'));
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('Não foi possível remover registro.'));
+        }
+    }
+
 }

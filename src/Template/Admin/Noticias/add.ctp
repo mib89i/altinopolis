@@ -1,16 +1,13 @@
-<div class="users form">
-    <?= $this->Form->create($preferencia) ?>
-    <legend><?= __('Add User') ?></legend>
+<?= $this->Form->create($noticias) ?>
 <div class="row">
-
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <div class="col-lg-12">
         <h1 class="page-header">Noticias</h1>
         <div class="row">
             <div class="col-lg-12">
                 <form id="form_noticias"  method="post">
                     <div class="form-group">
-                        <label>Cadastro</label>
-                        <input type="date" name="" value="1900-01-01" class="form-control" placeholder="Data...">
+                        <label>Publicação</label>
+                         <?= $this->Form->input('publish', array('label'=>false, 'class'=>'form-control', 'placeholder'=>'Data...', ''=>'', 'type'=>'date')) ?>
                     </div>
                     <div class="form-group">				                
                         <label>Categoria</label>
@@ -21,20 +18,21 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Título</label>
-                        <input type="text" name="" class="form-control" placeholder="Título..." maxlength="150">
+                        <?= $this->Form->input('title', array('class'=>'form-control', 'placeholder'=>'Titulo...')) ?>
                     </div>
                     <div class="form-group">
-                        <label>Resumo</label>
+                        <label>Subtitulo</label>
                         <textarea name="" class="form-control" placeholder="Resumo..." maxlength="255" style="resize: none; "></textarea>
+                        <?= $this->Form->input('subtitle', array('class'=>'form-control', 'placeholder'=>'Texto em...', 'id'=>'editor1', 'maxlenght'=>'150', 'rows'=>'3')) ?>
                     </div>
                     <div class="form-group">
                         <label>Texto</label>
-                        <textarea id="editor1" name="editor1" maxlength="5000">Texto...</textarea>
+                        <?= $this->Form->input('text', array('label'=>false, 'class'=>'form-control', 'placeholder'=>'Texto em...', 'id'=>'editor1', 'maxlenght'=>'5000')) ?>
                     </div>
                     <div class="form-group">
                         <label>Incoporar Vídeo</label>
                         <input type="url" name="" class="form-control" placeholder="http://www.youtube.com/code" maxlength="150">
+                        <?= $this->Form->input('video_url', array('class'=>'form-control', 'placeholder'=>'Url de incoporação...', ''=>'', 'type'=>'url')) ?>
                     </div>
 
                     <div class="form-group">
@@ -45,7 +43,7 @@
                     </div>                 
                     <div class="form-group">
                         <label>Publicar em</label>
-                        <input type="date" name="" value="1900-01-01" class="form-control" placeholder="Data...">
+                        <?= $this->Form->input('schedule', array('label'=>false, 'class'=>'form-control', 'placeholder'=>'Data...', ''=>'', 'type'=>'date')) ?>
                     </div>
                     <div class="form-group">
                         <input type="checkbox" id="i_active" name="">
@@ -85,4 +83,3 @@
         ?>
 
 <?= $this->Form->end() ?>
-</div>

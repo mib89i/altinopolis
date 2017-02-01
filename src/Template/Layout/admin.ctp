@@ -54,7 +54,9 @@
             <li class='<?php if ($this->request->session()->read('link_actived') === 'categorias'){echo 'active';}?>'>
             <?php echo $this->Html->link('Categorias', ['controller' => 'categorias']); ?>
             </li>
-            <li><a href="noticias.html">Notícias</a></li>
+            <li class='<?php if ($this->request->session()->read('link_actived') === 'categorias'){echo 'active';}?>'>
+                <?php echo $this->Html->link('Notícias', ['controller' => 'noticias']); ?>
+            </li>
             <li class='<?php if ($this->request->session()->read('link_actived') === 'albuns'){echo 'active';}?>'>
             <?php echo $this->Html->link('Albuns', ['controller' => 'albuns']); ?>
             </li>
@@ -69,7 +71,7 @@
     <?php else: ?>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-1 col-lg-12">
+        <div class="col-lg-12">
         <?= $this->fetch('content') ?>
         </div>
       </div>
