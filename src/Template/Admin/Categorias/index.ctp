@@ -14,13 +14,13 @@
                         </tr>
                     </thead>
                     <tbody>	
-                        <?php foreach ($lista_categoria as $categoria): ?>
+                        <?php foreach ($lista_categoria as $c): ?>
                             <tr>
-                                <td><?= $categoria['id']; ?></td>
-                                <td><?php echo $this->Html->link('<span class="glyphicon glyphicon-edit"></span>', ['controller' => 'categorias', 'action' => 'edit', $categoria['id']], array('escape' => false)); ?></td>
-                                <td><?= $categoria['name']; ?></td>
-                                <td><?= $categoria['user']['name']; ?></td>
-                                <td><?php echo $this->Form->postLink('<span class="glyphicon glyphicon-trash"></span>', array('controller' => 'categorias', 'action' => 'delete', $categoria['id']), array('escape' => false, 'confirm' => 'Deseja Realmente excluir essa Categoria?')); ?></td>
+                                <td><?= $c['id']; ?></td>
+                                <td><?php echo $this->Html->link('<span class="glyphicon glyphicon-edit"></span>', ['controller' => 'categorias', 'action' => 'edit', $c['id']], array('escape' => false)); ?></td>
+                                <td><?= $c['name']; ?></td>
+                                <td><?= $c['user_id']; debug($c);?></td>
+                                <td><?php echo $this->Form->postLink('<span class="glyphicon glyphicon-trash"></span>', array('controller' => 'categorias', 'action' => 'delete', $c['id']), array('escape' => false, 'confirm' => 'Deseja Realmente excluir essa Categoria?')); ?></td>
                             </tr>
                         </tbody>
                     <?php endforeach; ?>                                        
