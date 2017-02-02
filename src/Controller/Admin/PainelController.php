@@ -9,8 +9,7 @@ class PainelController extends AppController {
 
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
-
-        $this->Auth->allow(['logout']);
+        
         $this->Auth->deny(['index']);
 
         $session = $this->request->session();
