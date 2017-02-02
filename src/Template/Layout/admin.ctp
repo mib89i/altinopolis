@@ -48,7 +48,7 @@
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li class='<?php if ($this->request->session()->read('link_actived') === 'painel'){echo 'active';}?>'>
-              <?php echo $this->Html->link('MEU PAINEL', ['controller' => 'users']); ?>
+                <?php echo $this->Html->link('MEU PAINEL', ['controller' => 'painel']); ?>
             </li>
             <li class='<?php if ($this->request->session()->read('link_actived') === 'users'){echo 'active';}?>'>
                 <?php echo $this->Html->link('Usuários', ['controller' => 'users']); ?>
@@ -60,7 +60,7 @@
                 <?php echo $this->Html->link('Notícias', ['controller' => 'noticias']); ?>
             </li>
             <li class='<?php if ($this->request->session()->read('link_actived') === 'albuns'){echo 'active';}?>'>
-            <?php echo $this->Html->link('Albuns', ['controller' => 'albuns']); ?>
+                <?php echo $this->Html->link('Albuns', ['controller' => 'albuns']); ?>
             </li>
           </ul>
         </div>

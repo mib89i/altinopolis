@@ -90,7 +90,7 @@ class UsersController extends AppController {
     }
     
     public function account() {
-        $user = $this->User->get($this->Auth->user()->id);
+        $user = $this->Users->get($this->Auth->user('id'));
         if ($this->request->is(['post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
