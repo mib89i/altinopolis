@@ -16,17 +16,17 @@
                         </tr>
                     </thead>
                     <tbody>	
-                        <?php foreach ($lista_usuarios as $usuario): ?>
+                        <?php foreach ($list_users as $user): ?>
                             <tr>
-                                <td><?= $usuario['id']; ?></td>
-                                <td><?= $this->Html->link('<span class="glyphicon glyphicon-edit"></span>', ['controller' => 'usuarios', 'action' => 'edit', $usuario['id']], array('escape' => false)); ?></td>
+                                <td><?= $user['id']; ?></td>
+                                <td><?= $this->Html->link('<span class="glyphicon glyphicon-edit"></span>', ['controller' => 'users', 'action' => 'edit', $user['id']], array('escape' => false)); ?></td>
                                 <td>
-                                <?= $usuario['active'] == 1 ? '<span class="glyphicon glyphicon-ok"></span>' : ''; ?>
+                                <?= $user['active'] == 1 ? '<span class="glyphicon glyphicon-ok"></span>' : ''; ?>
                                 </td>
-                                <td><?= $usuario['name']; ?></td>
-                                <td><?= $usuario['username']; ?></td>
-                                <td><?= $usuario['role']; ?></td>
-                                <td><?php echo $this->Form->postLink('<span class="glyphicon glyphicon-trash"></span>', array('controller' => 'usuarios', 'action' => 'delete', $usuario['id']), array('escape' => false, 'confirm' => 'Deseja Realmente excluir esse registro?')); ?></td>
+                                <td><?= $user['name']; ?></td>
+                                <td><?= $user['username']; ?></td>
+                                <td><?= $user['role']; ?></td>
+                                <td><?php echo $this->Form->postLink('<span class="glyphicon glyphicon-trash"></span>', array('controller' => 'users', 'action' => 'delete', $user['id']), array('escape' => false, 'confirm' => 'Deseja Realmente excluir esse registro?')); ?></td>
                             </tr>
                         </tbody>
                     <?php endforeach; ?>                                        
@@ -35,7 +35,7 @@
         </div>
         <div class="row">
             <div class="col-lg-12" >
-                <?php echo $this->Html->link('Novo', ['controller' => 'usuarios', 'action' => 'add'], array('class' => 'btn btn-default')); ?>
+                <?php echo $this->Html->link('Novo', ['controller' => 'users', 'action' => 'add'], array('class' => 'btn btn-default')); ?>
             </div>
         </div>
     </div>
