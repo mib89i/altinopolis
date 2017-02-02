@@ -5,7 +5,7 @@ namespace App\Controller\Admin;
 use App\Controller\AppController;
 use Cake\Event\Event;
 
-class UsersController extends AppController {
+class UsuariosController extends AppController {
 
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
@@ -17,22 +17,22 @@ class UsersController extends AppController {
         $session->write('link_actived', 'meu-painel');
     }
 
-    public function isAuthorized($user) {
+    public function isAuthorized($usuario) {
         return true;
     }
 
     public function login() {
         if ($this->request->is('post')) {
-            $user = $this->Auth->identify();
-            if ($user) {
-                $this->Auth->setUser($user);
+            $usuario = $this->Auth->identify();
+            if ($usuario) {
+                $this->Auth->setUser($usuario);
                 return $this->redirect($this->Auth->redirectUrl());
             }
             $this->Flash->error(__('Usuário ou Senha inválida, tente novamente'));
         }
 
         if ($this->Auth->user()) {
-            return $this->redirect('/admin/users');
+            return $this->redirect('/admin/usuarios');
         }
     }
 
@@ -41,47 +41,47 @@ class UsersController extends AppController {
     }
 
     public function index() {
-        $this->set('users', $this->Users->find('all'));
+        $this->set('lista_usuarios', $this->Usuarios->find('all'));
     }
 
     public function view($id) {
-        $user = $this->Users->get($id);
-        $this->set(compact('user'));
+        $usuario = $this->Usuarios->get($id);
+        $this->set(compact('usuario'));
     }
 
     public function add() {
-        $user = $this->Users->newEntity();
+        $usuario = $this->Usuarios->newEntity();
         if ($this->request->is('post')) {
-            $user = $this->Users->patchEntity($user, $this->request->data);
-            if ($this->Users->save($user)) {
+            $usuario = $this->Usuarios->patchEntity($usuario, $this->request->data);
+            if ($this->Usuarios->save($usuario)) {
                 $this->Flash->success(__('Registro salvo.'));
                 return $this->redirect(['action' => 'add']);
             }
             $this->Flash->error(__('Não foi possível inserir registro.'));
         }
-        $this->set('user', $user);
+        $this->set('usuario', $usuario);
     }
 
     public function edit($id = NULL) {
-        $user = $this->Users->get($id);
+        $usuario = $this->Usuarios->get($id);
         if ($this->request->is(['post', 'put'])) {
-            $user = $this->Users->patchEntity($user, $this->request->data);
-            if ($this->Users->save($user)) {
+            $usuario = $this->Usuarios->patchEntity($usuario, $this->request->data);
+            if ($this->Usuarios->save($usuario)) {
                 $this->Flash->success(__('Registro atualizado.'));
                 //return $this->redirect(['action' => 'edit'. DS . $categorias->id]);
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('Não foi possível atualizar registro.'));
         }
-        $this->set(compact('user'));
+        $this->set(compact('usuario'));
     }
 
     public function delete($id = NULL) {
-        $user = $this->Users->get($id);
+        $usuario = $this->Usuarios->get($id);
         $this->set(compact('user'));
         if ($this->request->is(['post', 'delete'])) {
-            $user = $this->Users->patchEntity($user, $this->request->data);
-            if ($this->Users->delete($user)) {
+            $usuario = $this->Usuarios->patchEntity($usuario, $this->request->data);
+            if ($this->Usuarios->delete($usuario)) {
                 $this->Flash->success(__('Registro removido.'));
                 return $this->redirect(['action' => 'index']);
             }

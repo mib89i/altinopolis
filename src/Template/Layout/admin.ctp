@@ -50,11 +50,13 @@
             <li class='<?php if ($this->request->session()->read('link_actived') === 'meu-painel'){echo 'active';}?>'>
               <?php echo $this->Html->link('MEU PAINEL', ['controller' => 'users']); ?>
             </li>
-            <li><a href="usuarios.html">Usuários</a></li>
-            <li class='<?php if ($this->request->session()->read('link_actived') === 'categorias'){echo 'active';}?>'>
-            <?php echo $this->Html->link('Categorias', ['controller' => 'categorias']); ?>
+            <li class='<?php if ($this->request->session()->read('link_actived') === 'usuarios'){echo 'active';}?>'>
+                <?php echo $this->Html->link('Usuários', ['controller' => 'usuarios']); ?>
             </li>
             <li class='<?php if ($this->request->session()->read('link_actived') === 'categorias'){echo 'active';}?>'>
+                <?php echo $this->Html->link('Categorias', ['controller' => 'categorias']); ?>
+            </li>
+            <li class='<?php if ($this->request->session()->read('link_actived') === 'noticias'){echo 'active';}?>'>
                 <?php echo $this->Html->link('Notícias', ['controller' => 'noticias']); ?>
             </li>
             <li class='<?php if ($this->request->session()->read('link_actived') === 'albuns'){echo 'active';}?>'>

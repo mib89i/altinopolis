@@ -29,7 +29,7 @@ class NoticiasController extends AppController {
             $noticias = $this->Noticias->patchEntity($noticias, $this->request->data);
             if ($this->Noticias->save($noticias)) {
                 $this->Flash->success(__('Registro inserido.'));
-                return $this->redirect(['action' => 'add']);
+                return $this->redirect(['action' => 'edit', $this->Noticias->id]);
             }
             $this->Flash->error(__('Não foi possível inserir registro.'));
         }
