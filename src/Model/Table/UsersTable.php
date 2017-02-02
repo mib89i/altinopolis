@@ -4,11 +4,7 @@ namespace App\Model\Table;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
-class UsuariosTable extends Table {
-
-    public function initialize(array $config) {
-        $this->table('users');
-    }
+class UsersTable extends Table {
     
     public function validationDefault(Validator $validator) {
         return $validator

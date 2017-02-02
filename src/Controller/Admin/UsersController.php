@@ -5,7 +5,7 @@ namespace App\Controller\Admin;
 use App\Controller\AppController;
 use Cake\Event\Event;
 
-class UsuariosController extends AppController {
+class UsersController extends AppController {
 
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
@@ -14,25 +14,25 @@ class UsuariosController extends AppController {
         $this->Auth->deny(['index']);
 
         $session = $this->request->session();
-        $session->write('link_actived', 'meu-painel');
+        $session->write('link_actived', 'users');
     }
 
-    public function isAuthorized($usuario) {
+    public function isAuthorized($user) {
         return true;
     }
 
     public function login() {
         if ($this->request->is('post')) {
-            $usuario = $this->Auth->identify();
-            if ($usuario) {
-                $this->Auth->setUser($usuario);
+            $user = $this->Auth->identify();
+            if ($user) {
+                $this->Auth->setUser($user);
                 return $this->redirect($this->Auth->redirectUrl());
             }
             $this->Flash->error(__('Usuário ou Senha inválida, tente novamente'));
         }
 
         if ($this->Auth->user()) {
-            return $this->redirect('/admin/usuarios');
+            return $this->redirect('/admin/painel');
         }
     }
 
@@ -41,52 +41,70 @@ class UsuariosController extends AppController {
     }
 
     public function index() {
-        $this->set('lista_usuarios', $this->Usuarios->find('all'));
+        $this->set('list_users', $this->Users->find('all'));
     }
 
     public function view($id) {
-        $usuario = $this->Usuarios->get($id);
-        $this->set(compact('usuario'));
+        $user = $this->Users->get($id);
+        $this->set(compact('user'));
     }
 
     public function add() {
-        $usuario = $this->Usuarios->newEntity();
+        $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
-            $usuario = $this->Usuarios->patchEntity($usuario, $this->request->data);
-            if ($this->Usuarios->save($usuario)) {
+            $user = $this->Users->patchEntity($user, $this->request->data);
+            if ($this->Users->save($user)) {
                 $this->Flash->success(__('Registro salvo.'));
                 return $this->redirect(['action' => 'add']);
             }
             $this->Flash->error(__('Não foi possível inserir registro.'));
         }
-        $this->set('usuario', $usuario);
+        $this->set('user', $user);
     }
 
     public function edit($id = NULL) {
-        $usuario = $this->Usuarios->get($id);
+        $user = $this->Users->get($id);
         if ($this->request->is(['post', 'put'])) {
-            $usuario = $this->Usuarios->patchEntity($usuario, $this->request->data);
-            if ($this->Usuarios->save($usuario)) {
+            $user = $this->Users->patchEntity($user, $this->request->data);
+            if ($this->Users->save($user)) {
                 $this->Flash->success(__('Registro atualizado.'));
                 //return $this->redirect(['action' => 'edit'. DS . $categorias->id]);
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('Não foi possível atualizar registro.'));
         }
-        $this->set(compact('usuario'));
+        $this->set(compact('user'));
     }
 
     public function delete($id = NULL) {
-        $usuario = $this->Usuarios->get($id);
+        $user = $this->Users->get($id);
         $this->set(compact('user'));
         if ($this->request->is(['post', 'delete'])) {
-            $usuario = $this->Usuarios->patchEntity($usuario, $this->request->data);
-            if ($this->Usuarios->delete($usuario)) {
+            $user = $this->Users->patchEntity($user, $this->request->data);
+            if ($this->Users->delete($user)) {
                 $this->Flash->success(__('Registro removido.'));
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('Não foi possível remover registro.'));
         }
+    }
+    
+    public function account() {
+        $user = $this->User->get($this->Auth->user()->id);
+        if ($this->request->is(['post', 'put'])) {
+            $user = $this->Users->patchEntity($user, $this->request->data);
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('Registro atualizado.'));
+                //return $this->redirect(['action' => 'edit'. DS . $categorias->id]);
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('Não foi possível atualizar registro.'));
+        }
+        $this->set(compact('user'));
+    }
+    
+    public function painel() {
+        
     }
 
 }

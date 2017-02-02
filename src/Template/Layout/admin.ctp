@@ -30,7 +30,7 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <?php if (isset($user_session['username'])): ?>
-                <li><?php echo $this->Html->link('Conta', ['controller' => 'contas', 'action' => 'contas']); ?></li>
+                <?php echo $this->Html->link('Usuários', ['controller' => 'users']); ?>
                 <li><?php echo $this->Html->link('Preferências', ['controller' => 'preferencias', 'action' => 'add']); ?></li>
                 <li><a href="#"><?php echo $user_session['username']; ?></a></li>
                 <li><?php echo $this->Html->link('SAIR', ['controller' => 'users', 'action' => 'logout']); ?></li>
@@ -47,11 +47,11 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class='<?php if ($this->request->session()->read('link_actived') === 'meu-painel'){echo 'active';}?>'>
+            <li class='<?php if ($this->request->session()->read('link_actived') === 'painel'){echo 'active';}?>'>
               <?php echo $this->Html->link('MEU PAINEL', ['controller' => 'users']); ?>
             </li>
-            <li class='<?php if ($this->request->session()->read('link_actived') === 'usuarios'){echo 'active';}?>'>
-                <?php echo $this->Html->link('Usuários', ['controller' => 'usuarios']); ?>
+            <li class='<?php if ($this->request->session()->read('link_actived') === 'users'){echo 'active';}?>'>
+                <?php echo $this->Html->link('Usuários', ['controller' => 'users']); ?>
             </li>
             <li class='<?php if ($this->request->session()->read('link_actived') === 'categorias'){echo 'active';}?>'>
                 <?php echo $this->Html->link('Categorias', ['controller' => 'categorias']); ?>

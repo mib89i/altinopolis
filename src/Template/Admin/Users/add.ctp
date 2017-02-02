@@ -1,4 +1,4 @@
-<?= $this->Form->create($usuario) ?>
+<?= $this->Form->create($user) ?>
 <div class="row">
     <div class="col-lg-12">
         <div class="row">
@@ -32,10 +32,10 @@
                 <?= $this->Form->submit('Salvar', ['class' => 'btn btn-default btn-block', 'title' => 'Salvar']); ?>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4">
-                <?php echo $this->Html->link('Voltar', ['controller' => 'usuarios'], array('class' => 'btn btn-default btn-block')); ?>
+                <?php echo $this->Html->link('Voltar', ['controller' => 'users'], array('class' => 'btn btn-default btn-block')); ?>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4">
-                <?php echo $this->Html->link('Novo', ['controller' => 'usuarios', 'action' => 'add'], array('class' => 'btn btn-default btn-block')); ?>
+                <?php echo $this->Html->link('Novo', ['controller' => 'users', 'action' => 'add'], array('class' => 'btn btn-default btn-block')); ?>
             </div>
         </div>
     </div>
