@@ -9,6 +9,7 @@
                             <th width="15">#</th>
                             <th width="15"></th>
                             <th>Descrição</th>
+                            <th>Usuário</th>
                             <th width="15"></th>
                         </tr>
                     </thead>
@@ -18,6 +19,7 @@
                                 <td><?= $categoria['id']; ?></td>
                                 <td><?php echo $this->Html->link('<span class="glyphicon glyphicon-edit"></span>', ['controller' => 'categorias', 'action' => 'edit', $categoria['id']], array('escape' => false)); ?></td>
                                 <td><?= $categoria['name']; ?></td>
+                                <td><?= $categoria['user']['name']; ?></td>
                                 <td><?php echo $this->Form->postLink('<span class="glyphicon glyphicon-trash"></span>', array('controller' => 'categorias', 'action' => 'delete', $categoria['id']), array('escape' => false, 'confirm' => 'Deseja Realmente excluir essa Categoria?')); ?></td>
                             </tr>
                         </tbody>

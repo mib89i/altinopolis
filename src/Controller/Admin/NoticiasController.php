@@ -27,7 +27,7 @@ class NoticiasController extends AppController {
         $noticias = $this->Noticias->newEntity();
         if ($this->request->is('post')) {
             $noticias = $this->Noticias->patchEntity($noticias, $this->request->data);
-            // $categorias->user_id = 
+            $noticias->user_id = $this->Auth->user('id');
             if ($this->Noticias->save($noticias)) {
                 $this->Flash->success(__('Registro inserido.'));
                 return $this->redirect(['action' => 'edit', $this->Noticias->id]);

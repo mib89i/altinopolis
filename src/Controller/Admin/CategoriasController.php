@@ -27,7 +27,7 @@ class CategoriasController extends AppController {
         $categorias = $this->Categorias->newEntity();
         if ($this->request->is('post')) {
             $categorias = $this->Categorias->patchEntity($categorias, $this->request->data);
-            $categorias->user_id = $this->Auth->user()->id;
+            $categorias->user_id = $this->Auth->user('id');
             if ($this->Categorias->save($categorias)) {
                 $this->Flash->success(__('Registro inserido.'));
                 return $this->redirect(['action' => 'add']);
