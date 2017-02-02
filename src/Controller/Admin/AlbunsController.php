@@ -3,6 +3,8 @@ namespace App\Controller\Admin;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\Filesystem\Folder;
+use Cake\Filesystem\File;
 
 class AlbunsController extends AppController {
 
@@ -23,38 +25,52 @@ class AlbunsController extends AppController {
 
     public function add() {
         $album = $this->Albuns->newEntity();
-        $this->request->data['Album']['name'] = '_Sem Nome_';
         $album = $this->Albuns->patchEntity($album, $this->request->data);
+        $album->name = '_Sem Nome_';
+
         if ($this->Albuns->save($album)) {
-            $this->Session->setFlash(__('Digite um nome para o Álbum!'));
-            return $this->redirect(array('action' => 'edit' . DS . $this->Albuns->id));
+            $this->Flash->success(__('Digite um nome para o Álbum!'));
+            return $this->redirect(array('action' => 'edit' . DS . $album->id));
         }
 
         $this->Flash->error(__('Não foi possível salvar Álbum.'));
     }
+    /*
+    -- OUTRA FORMA DE SALVAR QUE FUNCIONA!
+    public function add() {
+        -- use Cake\ORM\TableRegistry;
+        $albunsTable = TableRegistry::get('Albuns');
+        $album = $albunsTable->newEntity();
+        $album->name = '_Sem Nome_';
 
-    public function edit($id = NULL){
-        $this->Album->id = $id;
-        if (!$this->Album->exists()) {
-            $this->Session->setFlash(__('Álbum não existe!'));
-            return $this->redirect(array('action' => 'index'));
+        if ($albunsTable->save($album)) {
+            $this->Flash->success(__('Digite um nome para o Álbum!'));
+            return $this->redirect(array('action' => 'edit' . DS . $album->id));
         }
 
-        if ($this->request->is('post') || $this->request->is('put')) {
-            if ($this->Album->save($this->request->data)) {
+        $this->Flash->error(__('Não foi possível salvar Álbum.'));
+    }
+    */
+    public function edit($id = NULL){
+        $album = $this->Albuns->get($id);
+        if ($this->request->is(['post', 'put'])) {
+            if ($this->Albuns->save($album)) {
 
-                $this->__upload($this->Album);
+                $this->__upload($album);
 
-                $this->Session->setFlash(__('Álbum atualizado com Sucesso! '));
-                return $this->redirect(array('action' => 'edit' . DS . $this->Album->id));
+                $this->Flash->success(__('Álbum atualizado com Sucesso!'));
+                return $this->redirect(array('action' => 'edit' . DS . $album->id));
             }
             $this->Session->setFlash(
                     __('Erro ao atualizar Álbum, tente novamente.')
             );
-        } else {
-            $this->request->data = $this->Album->read(null, $id);
-            $this->set('album', $this->request->data);
         }
+        $this->set(compact('album'));
+
+        $imagens = $this->Albuns->Imagens->find('all');
+        echo debug($imagens);
+
+        $this->set(compact('imagens'));
     }
 
     public function __upload($album = NULL) {

@@ -8,5 +8,7 @@ class ImagensTable extends Table {
     public function initialize(array $config) {
         $this->table('pictures');
         $this->entityClass('App\Model\Entity\Imagem');
+        $this->addBehavior('Timestamp');
+        $this->belongsTo('Gallery');
     }
 }

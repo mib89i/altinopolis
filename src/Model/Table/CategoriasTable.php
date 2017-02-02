@@ -7,6 +7,7 @@ use Cake\Validation\Validator;
 class CategoriasTable extends Table {
     public function initialize(array $config) {
         $this->table('categories');
+        $this->addBehavior('Timestamp');
     }
 
     public function validationDefault(Validator $validator) {
