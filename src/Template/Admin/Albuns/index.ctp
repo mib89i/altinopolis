@@ -10,12 +10,13 @@
 </div>
 
 <div class="row">
-    <?php foreach ($lista_albuns as $album): ?>
+    <?php 
+    foreach ($lista_albuns as $album): ?>
 	<div class="small-6 medium-4 large-3 columns left">
 		<div class="panel radius">
 		    <h6>
-		    	<?php $name_image = $this->Strings->abreviar($album['Album']['name'], 23); ?>
-		    	<?php echo $this->Html->link($name_image, array('controller' => 'albuns', 'action' => 'edit/'.$album['Album']['id']), array('style' => 'font-size: 10pt; font-weight: bold')); ?>
+		    	<?php $name_image = $this->Strings->abreviar($album['name'], 23); ?>
+		    	<?php echo $this->Html->link($name_image, array('controller' => 'albuns', 'action' => 'edit/'.$album['id']), array('style' => 'font-size: 10pt; font-weight: bold')); ?>
 		    </h6>
 		    
 		    <?php  if ( !empty($album['Imagem']) ): ?>
@@ -26,8 +27,8 @@
 						$capa = $album['Imagem'][0]['name'];
 
 					echo $this->Html->link(
-					        $this->Html->image( 'albuns/' . $album['Album']['id'] .'/thumb_'. $capa, array('alt' => $album['Album']['name'], 'width'=> '200')),
-					        "edit/".$album['Album']['id'],
+					        $this->Html->image( 'albuns/' . $album['Album']['id'] .'/thumb_'. $capa, array('alt' => $album['name'], 'width'=> '200')),
+					        "edit/".$album['id'],
 					        array('escape' => false)
 					);
 				?>
@@ -35,7 +36,7 @@
 				<?php 
 					echo $this->Html->link(
 					        $this->Html->image('gallery_empty.png', array('alt' => 'Álbum sem Imagens', 'width'=> '200')),
-					        "edit/".$album['Album']['id'],
+					        "/admin/albuns/edit/".$album['id'],
 					        array('escape' => false)
 					);
 				?>

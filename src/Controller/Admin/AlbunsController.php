@@ -3,8 +3,11 @@ namespace App\Controller\Admin;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+
 use Cake\Filesystem\Folder;
 use Cake\Filesystem\File;
+
+use Cake\ORM\TableRegistry;
 
 class AlbunsController extends AppController {
 
@@ -20,7 +23,7 @@ class AlbunsController extends AppController {
     }
 
     public function index() {
-        $this->set('albuns', $this->Albuns->find('all'));
+        $this->set('lista_albuns', $this->Albuns->find('all'));
     }
 
     public function add() {
@@ -54,6 +57,7 @@ class AlbunsController extends AppController {
     public function edit($id = NULL){
         $album = $this->Albuns->get($id);
         if ($this->request->is(['post', 'put'])) {
+            $album = $this->Albuns->patchEntity($album, $this->request->data);
             if ($this->Albuns->save($album)) {
 
                 $this->__upload($album);
@@ -67,39 +71,36 @@ class AlbunsController extends AppController {
         }
         $this->set(compact('album'));
 
-        $imagens = $this->Albuns->Imagens->find('all');
-        echo debug($imagens);
-
-        $this->set(compact('imagens'));
+        $lista_imagens = $this->Albuns->Imagens->find('all');
+        
+        $this->set(compact('lista_imagens'));
     }
 
     public function __upload($album = NULL) {
+        $imagensTable = TableRegistry::get('Imagens');
         $folder = new Folder();
-        $dir = NULL;
-        if (!$folder->create('img' . DS . 'albuns'. DS . $album->id)) {
+        $dir =  WWW_ROOT .'img' . DS . 'albuns' . DS . $album->id;
+        
+        if (!$folder->create($dir)) {
             return false;
         }
 
-        if (!empty($this->request->data['Album']['filename'][0]['size'])) {
-        //if (!empty($_FILES)) {
-            $dir = 'img' . DIRECTORY_SEPARATOR . 'albuns' . DIRECTORY_SEPARATOR . $album->id;
-            $dir = WWW_ROOT . $dir . DS;
-
-            foreach ($this->request->data['Album']['filename'] as $file) {
+        if (!empty($album->uploaded_file[0]['size'])) {
+            //foreach ($this->request->data['filename'] as $file) {
+            foreach ($album->uploaded_file as $file) {
                 $info =  pathinfo($file['name']);
                 $filename = md5($file['name']);
                 $filename = $filename . '.'. $info['extension'];
             
-                $this->request->data['Album']['Imagem']['gallery_id'] = $album->id;
-                $this->request->data['Album']['Imagem']['name'] = $filename;
-                $file['name'] = $filename;
+                $imagem = $imagensTable->newEntity();
 
-                $this->Album->Imagem->create();
+                $imagem->name = $filename;
+                $imagem->gallery_id = $album->id;
 
-                $this->Album->Imagem->crop_image($file, $dir);
+                $imagem->crop_image($file, $dir . DS);
 
-                if (!$this->Album->Imagem->save($this->request->data['Album']['Imagem'])) {
-                    $this->Session->setFlash(__('Não foi possível salvar Imagem no Banco!'));
+                if (!$imagensTable->save($imagem)) {
+                    $this->Flash->error(__('Não foi possível salvar Imagem no Banco!'));
                     return $this->redirect(array('action' => 'edit' . DS . $this->Album->id));
                 }
 
@@ -111,5 +112,71 @@ class AlbunsController extends AppController {
             return false;
         }
     }
+
+
+    public function deleteImg($id = NULL) {
+        $imagensTable = TableRegistry::get('Imagens');
+        $albunsTable = TableRegistry::get('Albuns');
+
+        if ($this->request->is(['post', 'delete'])) {
+            //$this->request->onlyAllow('post');
+
+            $imagem = $imagensTable->get($id);
+            $album = $albunsTable->get($imagem->gallery_id);
+
+            // SE A IMAGEM FOR DE CAPA, ATUALIZA PARA NULL
+            if ($album->picture_id == $imagem->id){
+                $album->picture_id = NULL;
+                $albunsTable->save($album);
+            }
+
+            $imagem_delete = $imagem->delete_images($imagem);
+
+            if (!$imagem_delete){
+                $this->Flash->error(__('Imagem do Álbum não foi deletada!'));
+                return $this->redirect(array('action' => 'edit/'.$imagem->gallery_id));
+            }
+
+            if (!$imagensTable->delete($imagem)){
+                $this->Flash->error(__('Não foi possível deletar essa Imagem!'));
+                return $this->redirect(array('action' => 'edit/'.$imagem->gallery_id));
+            }
+            
+            $this->Flash->success(__('Imagem deletada!'));
+            return $this->redirect(array('action' => 'edit/'.$imagem->gallery_id));
+        }
+    } 
+
+    public function admin_capa_img($id = NULL) {
+        $this->layout = 'default_admin';
+
+        $this->Album->Imagem->id = $id;
+        
+        if (!$this->Album->Imagem->exists()) {
+            $this->Session->setFlash(__('Imagem não existe!'));
+            return $this->redirect(array('action' => 'index'));
+        }
+
+        $imagem = $this->Album->Imagem->read();
+        $this->Album->id = $imagem['Gallery']['id'];
+        $album = $this->Album->read();
+
+        if ($this->request->is('post') || $this->request->is('put')) {
+            $this->request->onlyAllow('post');
+            
+            $album['Album']['picture_id'] = $id;
+
+            $this->Album->create();
+
+            if ($this->Album->save($album['Album'])) {
+                $this->Session->setFlash(__('Imagem de Capa Alterada!'));
+                return $this->redirect(array('action' => 'edit' . DS . $album['Album']['id']));
+            }
+
+            $this->Session->setFlash(__('Erro ao Alterar Álbum, tente novamente!'));
+            return $this->redirect(array('action' => 'edit' . DS . $album['Album']['id']));
+        }
+    }  
+
 
 }

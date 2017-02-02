@@ -3,6 +3,11 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\Filesystem\Folder;
+use Cake\Filesystem\File;
+
+require_once(ROOT . DS . 'vendor' . DS . "WideImage" . DS . "WideImage.php");
+use WideImage;
 
 class Imagem extends Entity {
     
@@ -10,12 +15,11 @@ class Imagem extends Entity {
         '*' => true,
         'id' => false
     ];
-
-    public $belongsTo = array('Gallery');
     
     public function crop_image($image, $path_name){
-   		App::import('Vendor', 'WideImage/WideImage');  
-  
+   		//App::import('Vendor', 'WideImage/WideImage');  
+        //Plugin::load('WideImage/WideImage');
+
         $img = WideImage::load($image['tmp_name']);    
   
         $min = $img->resize(200,200,'outside');    
@@ -29,16 +33,32 @@ class Imagem extends Entity {
     }
 
     public function delete_images($imagem){
-        $file = new File('img/albuns/'.$imagem['Gallery']['id'].'/'.$imagem['Imagem']['name']);
-        $file_thumb = new File('img/albuns/'.$imagem['Gallery']['id'].'/thumb_'.$imagem['Imagem']['name']);
-
-        $file_thumb_slide = new File('img/albuns/'.$imagem['Gallery']['id'].'/thumb_slide_'.$imagem['Imagem']['name']);
-
-        if (!$file->delete() || !$file_thumb->delete() || !$file_thumb_slide->delete()) {
+        $file = new File(WWW_ROOT . 'img/albuns/' . $imagem->gallery_id . '/' . $imagem->name);
+        $file_thumb = new File(WWW_ROOT . 'img/albuns/' . $imagem->gallery_id . '/thumb_' . $imagem->name);
+        $file_thumb_slide = new File(WWW_ROOT . 'img/albuns/' . $imagem->gallery_id . '/thumb_slide_' . $imagem->name);
+        echo debug(WWW_ROOT . 'img/albuns/' . $imagem->gallery_id . '/' . $imagem->name);
+        echo debug(WWW_ROOT . 'img/albuns/' . $imagem->gallery_id . '/thumb_' . $imagem->name);
+        echo debug(WWW_ROOT . 'img/albuns/' . $imagem->gallery_id . '/thumb_slide_' . $imagem->name);
+        exit;
+        if ($file->exists() && !$file->delete()){
+            echo debug(WWW_ROOT . 'img/albuns/' . $imagem->gallery_id . '/' . $imagem->name);
+            exit;
             return false;
-        }else{
-            return true;
         }
+
+        if ($file_thumb->exists() && !$file_thumb->delete()){
+            echo debug(WWW_ROOT . 'img/albuns/' . $imagem->gallery_id . '/thumb_' . $imagem->name);
+            exit;
+            return false;
+        }
+
+        if ($file_thumb_slide->exists() && !$file_thumb_slide->delete()){
+            echo debug(WWW_ROOT . 'img/albuns/' . $imagem->gallery_id . '/thumb_slide_' . $imagem->name);
+            exit;
+            return false;
+        }
+
+        return true;
     }
 
     public function drop_images($path_name){

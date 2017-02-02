@@ -12,7 +12,7 @@
 
 <div class="row">
     <div class="large-12 columns">
-        <?php echo $this->Form->create($album, ['type' => 'file']); ?>
+        <?php echo $this->Form->create($album, ['enctype' => 'multipart/form-data']); ?>
         <div class="panel radius">
             <div class="row">
                 <div class="large-4 columns">
@@ -33,12 +33,13 @@
                 <?php 
                     echo $this->Form->input('name', array('label' => 'Nome'));
                     echo $this->Form->input('description', array('label' => 'Descrição'));
-                    echo $this->Form->input('filename', array('type' => 'file', 'multiple', 'label'=>'Fotos do Álbum'));
+                    echo $this->Form->input('uploaded_file[]', array('type' => 'file', 'multiple' => true, 'label' => 'Fotos do Álbum'));
+                    echo $this->Form->submit('Salvar', ['class' => 'btn btn-default', 'title' => 'Salvar']);
                 ?>
                 </div>
             </div>
         </div>
-        <?php echo $this->Form->end(array('label'=> 'SALVAR', 'class'=>'button small radius')); ?>
+        <?php echo $this->Form->end(); ?>
     </div>
 </div>
 
@@ -48,8 +49,7 @@
         <ul class="clearing-thumbs small-block-grid-4">
 
         <?php 
-        echo debug($album);
-        foreach ($album['Picture'] as $imagem): ?>
+        foreach ($lista_imagens as $imagem): ?>
             <?php 
                 $capa = FALSE;
                 $index++;
