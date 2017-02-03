@@ -5,7 +5,14 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 class UsersTable extends Table {
-    
+    public function initialize(array $config) {
+        $this->addBehavior('Timestamp');
+        
+        $this->hasMany('Categorias', [
+           'className' => 'Categorias'
+        ]);
+    }
+
     public function validationDefault(Validator $validator) {
         return $validator
             ->notEmpty('name', 'Nome requerido')

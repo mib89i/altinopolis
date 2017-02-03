@@ -7,7 +7,6 @@ use Cake\ORM\Entity;
 class Categoria extends Entity {
     
     protected $_accessible = [
-        '*' => true,
-        'id' => false
+        '*' => true
     ];
 }

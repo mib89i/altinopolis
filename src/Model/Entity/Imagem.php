@@ -35,25 +35,16 @@ class Imagem extends Entity {
         $file = new File(WWW_ROOT . 'img/albuns/' . $imagem->gallery_id . '/' . $imagem->name);
         $file_thumb = new File(WWW_ROOT . 'img/albuns/' . $imagem->gallery_id . '/thumb_' . $imagem->name);
         $file_thumb_slide = new File(WWW_ROOT . 'img/albuns/' . $imagem->gallery_id . '/thumb_slide_' . $imagem->name);
-        echo debug(WWW_ROOT . 'img/albuns/' . $imagem->gallery_id . '/' . $imagem->name);
-        echo debug(WWW_ROOT . 'img/albuns/' . $imagem->gallery_id . '/thumb_' . $imagem->name);
-        echo debug(WWW_ROOT . 'img/albuns/' . $imagem->gallery_id . '/thumb_slide_' . $imagem->name);
-        exit;
+        
         if ($file->exists() && !$file->delete()){
-            echo debug(WWW_ROOT . 'img/albuns/' . $imagem->gallery_id . '/' . $imagem->name);
-            exit;
             return false;
         }
 
         if ($file_thumb->exists() && !$file_thumb->delete()){
-            echo debug(WWW_ROOT . 'img/albuns/' . $imagem->gallery_id . '/thumb_' . $imagem->name);
-            exit;
             return false;
         }
 
         if ($file_thumb_slide->exists() && !$file_thumb_slide->delete()){
-            echo debug(WWW_ROOT . 'img/albuns/' . $imagem->gallery_id . '/thumb_slide_' . $imagem->name);
-            exit;
             return false;
         }
 

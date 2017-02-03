@@ -72,6 +72,7 @@ class AlbunsController extends AppController {
                     __('Erro ao atualizar Álbum, tente novamente.')
             );
         }
+
         $this->set(compact('album'));
         $lista_imagens = $album->imagens;
         /*
@@ -82,8 +83,43 @@ class AlbunsController extends AppController {
         $this->set(compact('lista_imagens'));
     }
 
+
+    public function delete($id = NULL) {
+        $album = $this->Albuns->get($id, [
+            'contain' => ['Imagens']
+        ]);
+
+        if ($this->request->is(['post', 'delete'])) {
+
+            $lista_imagens =  $album->imagens;
+
+            foreach ($lista_imagens as $imagem) {
+                                
+                if (!$this->Albuns->Imagens->delete($imagem)){
+                    $this->Flash->error(__('Não foi possível deletar essa Imagem!'));
+                    return $this->redirect(array('action' => 'index'));
+                }
+            }
+
+            $drop_folder = $album->delete_gallery($album->id);
+
+            if (!$drop_folder) {
+            //    $this->Session->setFlash(__('Pasta do Álbum não foi deletada!'));
+            //    return $this->redirect(array('action' => 'index'));
+            }
+
+            if ($this->Albuns->delete($album)) {
+                $this->Flash->success(__('Álbum deletado!'));
+                return $this->redirect(array('action' => 'index'));
+            }
+        }
+    }    
+
+
     public function __upload($album = NULL) {
         $imagensTable = TableRegistry::get('Imagens');
+        $albunsTable = TableRegistry::get('Albuns');
+
         $folder = new Folder();
         $dir =  WWW_ROOT .'img' . DS . 'albuns' . DS . $album->id;
         
@@ -92,7 +128,6 @@ class AlbunsController extends AppController {
         }
 
         if (!empty($album->uploaded_file[0]['size'])) {
-            //foreach ($this->request->data['filename'] as $file) {
             foreach ($album->uploaded_file as $file) {
                 // FILE NAME
                 $info =  pathinfo($file['name']);
@@ -109,8 +144,18 @@ class AlbunsController extends AppController {
 
                 if (!$imagensTable->save($imagem)) {
                     $this->Flash->error(__('Não foi possível salvar Imagem no Banco!'));
-                    return $this->redirect(array('action' => 'edit' . DS . $this->Album->id));
+                    return $this->redirect(array('action' => 'edit' . DS . $album->id));
                 }
+                
+                if ($album->picture_id == NULL){
+                    $album->picture_id = $imagem->id;
+
+                    if (!$albunsTable->save($album)) {
+                        $this->Flash->error(__('Não foi possível salvar Imagem no Banco!'));
+                        return $this->redirect(array('action' => 'edit' . DS . $album->id));
+                    }
+                }
+                
 
                 $tempPath = $file['tmp_name'];
                 $uploadPath = $dir . DIRECTORY_SEPARATOR . $filename;
@@ -127,13 +172,31 @@ class AlbunsController extends AppController {
         $albunsTable = TableRegistry::get('Albuns');
 
         if ($this->request->is(['post', 'delete'])) {
-            //$this->request->onlyAllow('post');
-
             $imagem = $imagensTable->get($id);
-            $album = $albunsTable->get($imagem->gallery_id);
+/*
+            $album = $albunsTable->find()->contain([
+                'Imagens' => function ($q){
 
+                }
+            ])->first();
+                
+ */
+            
+            $album = $albunsTable->get($imagem->gallery_id, [
+                'contain' => ['Imagens' => function ($q, $imagem){
+                    return $q->where(['Imagens.id <> ' => $imagem->id]);
+                }]
+            ]);
+           
+
+            echo debug($album);
+            exit;
             // SE A IMAGEM FOR DE CAPA, ATUALIZA PARA NULL
             if ($album->picture_id == $imagem->id){
+
+                if ($album->imagens){
+
+                }
                 $album->picture_id = NULL;
                 $albunsTable->save($album);
             }
@@ -160,11 +223,6 @@ class AlbunsController extends AppController {
         $albunsTable = TableRegistry::get('Albuns');
 
         if ($this->request->is(['post', 'put'])) {
-            /*
-            $imagem = $imagensTable->get($id,[
-                'contain' => ['Albuns']
-            ]);
-            */
             $imagem = $imagensTable->get($id);
 
             $album = $albunsTable->get($imagem->gallery_id);

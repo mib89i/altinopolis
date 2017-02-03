@@ -10,9 +10,12 @@ class CategoriasTable extends Table {
     public function initialize(array $config) {
         $this->table('categories');
         $this->addBehavior('Timestamp');
-      $this->hasOne('Users', [
-            'foreignKey' => 'user_id'
-        ]);        
+
+        $this->belongsTo('Users',[
+            'foreignKey' => 'user_id',
+            'className' => 'Users'
+        ]);
+      
     }
 
     public function validationDefault(Validator $validator) {

@@ -1,4 +1,4 @@
-    <?= $this->Form->create($categorias) ?>
+    <?= $this->Form->create($categoria) ?>
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">Editar - Categoria</h1>

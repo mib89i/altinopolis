@@ -21,7 +21,7 @@ class CategoriasController extends AppController {
     }
 
     public function index() {
-        $this->set('lista_categoria', $this->Categorias->find('all'));
+        $this->set('lista_categoria', $this->Categorias->find('all')->contain(['Users']));
     }
 
     public function add() {

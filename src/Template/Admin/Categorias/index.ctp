@@ -19,7 +19,7 @@
                                 <td><?= $c['id']; ?></td>
                                 <td><?php echo $this->Html->link('<span class="glyphicon glyphicon-edit"></span>', ['controller' => 'categorias', 'action' => 'edit', $c['id']], array('escape' => false)); ?></td>
                                 <td><?= $c['name']; ?></td>
-                                <td><?= $c['user_id']; debug($c);?></td>
+                                <td><?= $c['user']['name']; ?></td>
                                 <td><?php echo $this->Form->postLink('<span class="glyphicon glyphicon-trash"></span>', array('controller' => 'categorias', 'action' => 'delete', $c['id']), array('escape' => false, 'confirm' => 'Deseja Realmente excluir essa Categoria?')); ?></td>
                             </tr>
                         </tbody>
