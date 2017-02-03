@@ -23,7 +23,7 @@ class AlbunsController extends AppController {
     }
 
     public function index() {
-        $this->set('lista_albuns', $this->Albuns->find('all'));
+        $this->set('lista_albuns', $this->Albuns->find('all')->contain(['ImagemCapa']));
     }
 
     public function add() {
@@ -55,7 +55,10 @@ class AlbunsController extends AppController {
     }
     */
     public function edit($id = NULL){
-        $album = $this->Albuns->get($id);
+        $album = $this->Albuns->get($id, [
+            'contain' => ['Imagens', 'ImagemCapa']
+        ]);
+
         if ($this->request->is(['post', 'put'])) {
             $album = $this->Albuns->patchEntity($album, $this->request->data);
             if ($this->Albuns->save($album)) {
@@ -70,9 +73,12 @@ class AlbunsController extends AppController {
             );
         }
         $this->set(compact('album'));
-
-        $lista_imagens = $this->Albuns->Imagens->find('all');
-        
+        $lista_imagens = $album->imagens;
+        /*
+        $lista_imagens = $this->Albuns->Imagens->find()->contain([
+            'Albuns',
+        ]);;
+        */
         $this->set(compact('lista_imagens'));
     }
 
@@ -88,10 +94,12 @@ class AlbunsController extends AppController {
         if (!empty($album->uploaded_file[0]['size'])) {
             //foreach ($this->request->data['filename'] as $file) {
             foreach ($album->uploaded_file as $file) {
+                // FILE NAME
                 $info =  pathinfo($file['name']);
                 $filename = md5($file['name']);
                 $filename = $filename . '.'. $info['extension'];
-            
+                $file['name'] = $filename;
+                // ---
                 $imagem = $imagensTable->newEntity();
 
                 $imagem->name = $filename;
@@ -147,34 +155,29 @@ class AlbunsController extends AppController {
         }
     } 
 
-    public function admin_capa_img($id = NULL) {
-        $this->layout = 'default_admin';
+    public function capaImg($id = NULL) {
+        $imagensTable = TableRegistry::get('Imagens');
+        $albunsTable = TableRegistry::get('Albuns');
 
-        $this->Album->Imagem->id = $id;
-        
-        if (!$this->Album->Imagem->exists()) {
-            $this->Session->setFlash(__('Imagem não existe!'));
-            return $this->redirect(array('action' => 'index'));
-        }
+        if ($this->request->is(['post', 'put'])) {
+            /*
+            $imagem = $imagensTable->get($id,[
+                'contain' => ['Albuns']
+            ]);
+            */
+            $imagem = $imagensTable->get($id);
 
-        $imagem = $this->Album->Imagem->read();
-        $this->Album->id = $imagem['Gallery']['id'];
-        $album = $this->Album->read();
+            $album = $albunsTable->get($imagem->gallery_id);
 
-        if ($this->request->is('post') || $this->request->is('put')) {
-            $this->request->onlyAllow('post');
-            
-            $album['Album']['picture_id'] = $id;
+            $album->picture_id = $imagem->id;
 
-            $this->Album->create();
-
-            if ($this->Album->save($album['Album'])) {
-                $this->Session->setFlash(__('Imagem de Capa Alterada!'));
-                return $this->redirect(array('action' => 'edit' . DS . $album['Album']['id']));
+            if (!$albunsTable->save($album)) {
+                $this->Flash->error(__('Não foi possível definir Capa de Álbum!'));
+                return $this->redirect(array('action' => 'edit' . DS . $album->id));
             }
 
-            $this->Session->setFlash(__('Erro ao Alterar Álbum, tente novamente!'));
-            return $this->redirect(array('action' => 'edit' . DS . $album['Album']['id']));
+            $this->Flash->success(__('Álbum Atualizado!'));
+            return $this->redirect(['action' => 'edit' . DS . $album->id]);
         }
     }  
 

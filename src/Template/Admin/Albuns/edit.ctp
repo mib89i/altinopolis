@@ -19,13 +19,12 @@
                 <label>Capa do Álbum</label>
                 <br />
                 <?php 
-                	//echo debug($album['Picture']);
-                    if ($album['picture_id'] != NULL){
-                        echo $this->Html->image('albuns/' . $album['id'] .'/'. $album['Picture']['name'], array("alt" => "Capa do Álbum"));
-                    }else if (empty($this->request->data['Imagem'])){
+                	if ($album['picture_id'] != NULL){
+                        echo $this->Html->image('albuns/' . $album['id'] .'/'. $album['capa']['name'], array("alt" => "Capa do Álbum"));
+                    } else if (empty($this->request->data['Imagem'])){
                         echo $this->Html->image('gallery_empty.png', array("alt" => "Capa do Álbum", 'width' => '500'));
-                    }else{
-                        echo $this->Html->image('albuns/' . $album['Album']['id'] .'/'.$this->request->data['Imagem'][0]['name'], array("alt" => "Capa do Álbum"));
+                    } else {
+                        echo $this->Html->image('albuns/' . $album['id'] .'/'.$this->request->data['Imagem'][0]['name'], array("alt" => "Capa do Álbum"));
                     }
                 ?>
                 </div>
@@ -53,19 +52,20 @@
             <?php 
                 $capa = FALSE;
                 $index++;
-                if ($imagem['id'] == $album['Picture']['id'])
+                if ($imagem['id'] == $album->picture_id){
                     $capa = TRUE;
+                }
             ?>
 
             <li onmouseover="document.getElementById('i_capa<?php echo $index; ?>').style.visibility = '';"
                 onmouseout="document.getElementById('i_capa<?php echo $index; ?>').style.visibility = 'hidden';">
-                <?php echo $this->Html->image('albuns/' . $album['Album']['id'] .'/thumb_'.$imagem['name'], array(
+                <?php echo $this->Html->image('albuns/' . $album['id'] .'/thumb_'.$imagem['name'], [
                     "alt" => "Imagem do Álbum", 
                     "class" => "th",
-                    'url' => '/img/albuns/'.$album['Album']['id'] .'/'. $imagem['name'],
+                    'url' => '/img/albuns/'.$album->id .'/'. $imagem['name'],
                     'width' => '500',
                     'target' => '_BLANK'
-                ));
+                ]);
                 ?>
 
                 <?php 

@@ -9,6 +9,11 @@ class ImagensTable extends Table {
         $this->table('pictures');
         $this->entityClass('App\Model\Entity\Imagem');
         $this->addBehavior('Timestamp');
-        $this->belongsTo('Gallery');
+
+        $this->belongsTo('Albuns', [
+        	'foreignKey' => 'gallery_id',
+        	'propertyName' => 'album'
+        	]
+        );
     }
 }

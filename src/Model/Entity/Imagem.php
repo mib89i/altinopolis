@@ -12,10 +12,9 @@ use WideImage;
 class Imagem extends Entity {
     
     protected $_accessible = [
-        '*' => true,
-        'id' => false
+        '*' => true
     ];
-    
+
     public function crop_image($image, $path_name){
    		//App::import('Vendor', 'WideImage/WideImage');  
         //Plugin::load('WideImage/WideImage');

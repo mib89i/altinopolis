@@ -7,7 +7,11 @@ use Cake\ORM\Entity;
 class Album extends Entity {
     
     protected $_accessible = [
-        '*' => true,
-        'id' => false
+        '*' => true
     ];
+/*
+    protected $_dirty = [
+        'picture_id' => true
+    ];
+    */
 }

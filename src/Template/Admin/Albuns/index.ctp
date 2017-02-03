@@ -19,26 +19,22 @@
 		    	<?php echo $this->Html->link($name_image, array('controller' => 'albuns', 'action' => 'edit/'.$album['id']), array('style' => 'font-size: 10pt; font-weight: bold')); ?>
 		    </h6>
 		    
-		    <?php  if ( !empty($album['Imagem']) ): ?>
+		    <?php  
+		    if ($album['capa'] != NULL): ?>
 				<?php 
-					$capa = $album['Picture']['name'];
-
-					if ($capa == null)
-						$capa = $album['Imagem'][0]['name'];
-
-					echo $this->Html->link(
-					        $this->Html->image( 'albuns/' . $album['Album']['id'] .'/thumb_'. $capa, array('alt' => $album['name'], 'width'=> '200')),
-					        "edit/".$album['id'],
-					        array('escape' => false)
-					);
+					echo $this->Html->image( 'albuns/' . $album['id'] .'/thumb_'. $album['capa']['name'], [
+						'alt' => 'Capa do Álbum',
+						'width'=> '200',
+						'url' => ['controller' => 'albuns', 'action' => 'edit', $album['id']]
+					]);				
 				?>
 			<?php else: ?>
 				<?php 
-					echo $this->Html->link(
-					        $this->Html->image('gallery_empty.png', array('alt' => 'Álbum sem Imagens', 'width'=> '200')),
-					        "/admin/albuns/edit/".$album['id'],
-					        array('escape' => false)
-					);
+					echo $this->Html->image('gallery_empty.png', [
+					    'alt' => 'Álbum sem Imagens', 
+					    'width'=> '200', 
+					    'url' => ['controller' => 'albuns', 'action' => 'edit', $album['id']]
+					]);
 				?>
 		    <?php endif; ?>
 		    <br /><br />

@@ -9,8 +9,15 @@ class AlbunsTable extends Table {
         $this->table('galleries');
         $this->entityClass('App\Model\Entity\Album');
         $this->addBehavior('Timestamp');
-        $this->hasOne('Imagens', [
-        	'foreignKey' => 'picture_id'
+
+        $this->belongsTo('ImagemCapa',[
+        	'foreignKey' => 'picture_id',
+        	'className' => 'Imagens',
+        	'propertyName' => 'capa'
+        ]);
+
+        $this->hasMany('Imagens', [
+           'className' => 'Imagens'
         ]);
         /*
         $this->hasOne('Imagem', [
