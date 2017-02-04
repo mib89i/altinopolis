@@ -55,7 +55,7 @@ class UsersController extends AppController {
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('Registro salvo.'));
-                return $this->redirect(['action' => 'add']);
+                return $this->redirect(['action' => 'edit', $user->id]);
             }
             $this->Flash->error(__('Não foi possível inserir registro.'));
         }

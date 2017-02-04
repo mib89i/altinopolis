@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 
 class NoticiasController extends AppController {
 
@@ -20,7 +21,23 @@ class NoticiasController extends AppController {
     }
 
     public function index() {
-        $this->set('lista_noticias', $this->Noticias->find('all')->limit(1));
+        $query = $this->Noticias;
+        if($this->Auth->user('role') === 'admin') {
+            $this->set('lista_noticias', 
+                    $query->find('all')
+                    ->order(['Noticias.title' => 'ASC', 'Noticias.created' => 'DESC'])
+                    ->limit(200)
+                    ->contain(['Users'])
+            );
+        } else {
+            $this->set('lista_noticias', 
+                    $query->find('all')
+                    ->where(['user_id =' => $this->Auth->user('id')])
+                    ->order(['Noticias.title' => 'ASC', 'Noticias.created' => 'DESC'])
+                    ->limit(200)
+                    ->contain(['Users'])
+            );
+        }
     }
 
     public function add() {
@@ -30,10 +47,12 @@ class NoticiasController extends AppController {
             $noticias->user_id = $this->Auth->user('id');
             if ($this->Noticias->save($noticias)) {
                 $this->Flash->success(__('Registro inserido.'));
-                return $this->redirect(['action' => 'edit', $this->Noticias->id]);
-            }
+                return $this->redirect(['action' => 'edit', $noticias->id]);
+             }
             $this->Flash->error(__('Não foi possível inserir registro.'));
         }
+        $noticias->active = true;
+        $this->list_categories();
         $this->set('noticias', $noticias);
     }
 
@@ -48,6 +67,7 @@ class NoticiasController extends AppController {
             }
             $this->Flash->error(__('Não foi possível atualizar registro.'));
         }
+        $this->list_categories();
         $this->set(compact('noticias'));
     }
 
@@ -62,6 +82,16 @@ class NoticiasController extends AppController {
             }
             $this->Flash->error(__('Não foi possível remover registro.'));
         }
+    }
+
+    public function list_categories() {
+        $cat = TableRegistry::get('Categorias');
+        $lista_categoria = $cat
+                ->find('list')
+                ->select(['Categorias.id', 'Categorias.name'])
+                ->where(['user_id =' => $this->Auth->user('id')])
+                ->order(['Categorias.name' => 'ASC']);
+        $this->set(compact('lista_categoria'));
     }
 
 }

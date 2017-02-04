@@ -16,8 +16,7 @@
         <!-- <meta property="og:image" content="logo-128x128x.png" /> -->
         <meta property="og:url" content="http://www.cidadealtinopolis.com.br/" />
         <!-- // FACEBOOK -->
-        <?= $this->Html->css('offcanvas.css'); ?>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/journal/bootstrap.min.css" >
         <!-- // GOOGLE ANALYTICS -->
         <!-- 
         <script type="text/javascript">
@@ -39,63 +38,84 @@
 
         <!-- // GOOGLE ANALYTICS -->
     </head>
-    <body>
-         <?= $this->Html->image('background_top.jpg', ['class' => 'img-responsive']); ?>
-        <div class="container">
-            <nav class="navbar navbar-fixed-top navbar-inverse">
-                <div class="container">
+    <body >
+        <div class="container" style="margin-top: 0px">
+            <?= $this->Html->image('background_top.jpg', ['class' => 'img-responsive', 'syle="margin-top:0px"']); ?>
+            <nav class="navbar navbar-default" style="border-radius: 0">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
                     <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                            <span class="sr-only">Navegação</span>
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="#">Nome do Site/Logo</a>
+                        <?php echo $this->Html->link('Início', array('controller' => 'Home', 'action' => 'index'), array('class'=>'navbar-brand')); ?>
                     </div>
-                    <div id="navbar" class="collapse navbar-collapse">
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
-                            <li class="active"><?php echo $this->Html->link('Início', array('controller' => 'Home', 'action' => 'index')); ?></li>
-                            <li><a href="noticias.html">Noticias</a></li>
+                            <li><?php echo $this->Html->link('NOTÍCIAS', array('controller' => 'Noticias', 'action' => 'index')); ?></li>
+                            <li class="active"></li>
                         </ul>
-                    </div><!-- /.nav-collapse -->
-                </div><!-- /.container -->
-            </nav><!-- /.navbar -->            
-    
+                        <ul class="nav navbar-nav navbar-right">
+                            <form class="navbar-form navbar-left">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Pesquisar...">
+                                </div>
+                            </form>
+                            <!-- 
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </li>
+                            -->
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
+            
+            <?= $this->Flash->render() ?>
 
-        <?= $this->Flash->render() ?>
+            <div>
+                <?= $this->fetch('content') ?>
+            </div>
 
-        <div>
-            <?= $this->fetch('content') ?>
-        </div>
 
-        <div class="navbar navbar-inverse navbar-fixed-bottom">
-            <div class="container">
-                <div class="navbar-collapse collapse" id="footer-body">
-                    <ul class="nav navbar-nav">
-                        <li><a href="#">Sobre</a></li>
-                        <li><a href="#">Contato</a></li>
-                        <li><a href="#">Parceiros</a></li>
-                        <li><?php echo $this->Html->link('Login', '/admin'); ?></li>
-                    </ul>
-                </div>
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#footer-body">
-                        <span style="color: white;">^</span>
-                        <span><br /></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <ul class="footer-bar-btns visible-xs">
-                        <li><a href="#" class="btn" title="History"><i class="fa fa-2x fa-clock-o blue-text"></i></a></li>
-                        <li><a href="#" class="btn" title="Favourites"><i class="fa fa-2x fa-star yellow-text"></i></a></li>
-                        <li><a href="#" class="btn" title="Subscriptions"><i class="fa fa-2x fa-rss-square orange-text"></i></a></li>
-                    </ul>
+        <footer>
+            <div class="navbar navbar-default navbar-fixed-bottom">
+                <div class="container">
+                    <div class="navbar-collapse collapse" id="footer-body">
+                        <ul class="nav navbar-nav">
+                            <li><a href="#">Sobre</a></li>
+                            <li><a href="#">Contato</a></li>
+                            <li><a href="#">Parceiros</a></li>
+                            <li><?php echo $this->Html->link('Login', '/admin'); ?></li>
+                        </ul>
+                    </div>
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#footer-body">
+                            <span style="color: white;">^</span>
+                            <span><br /></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <ul class="footer-bar-btns visible-xs">
+                            <li><a href="#" class="btn" title="History"><i class="fa fa-2x fa-clock-o blue-text"></i></a></li>
+                            <li><a href="#" class="btn" title="Favourites"><i class="fa fa-2x fa-star yellow-text"></i></a></li>
+                            <li><a href="#" class="btn" title="Subscriptions"><i class="fa fa-2x fa-rss-square orange-text"></i></a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-                </div>
-
-        <footer>
             <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
             <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -103,7 +123,6 @@
 
             <?= $this->Html->script('ie-emulation-modes-warning.js'); ?>
             <?= $this->Html->script('ie10-viewport-bug-workaround.js'); ?>
-            <?= $this->Html->script('offcanvas.js'); ?>
         </footer>
     </body>
 </html>

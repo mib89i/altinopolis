@@ -15,6 +15,8 @@ class CategoriasTable extends Table {
             'foreignKey' => 'user_id',
             'className' => 'Users'
         ]);
+        
+        $this->displayField('name');
       
     }
 

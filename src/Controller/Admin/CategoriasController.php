@@ -31,7 +31,7 @@ class CategoriasController extends AppController {
             $categorias->user_id = $this->Auth->user('id');
             if ($this->Categorias->save($categorias)) {
                 $this->Flash->success(__('Registro inserido.'));
-                return $this->redirect(['action' => 'add']);
+                return $this->redirect(['action' => 'edit', $categorias->id]);
             }
             $this->Flash->error(__('Não foi possível inserir registro.'));
         }

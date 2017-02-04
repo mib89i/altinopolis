@@ -13,11 +13,9 @@
                             </div>
                             <div class="form-group">
                                 <label>Categoria</label>
-                                <select class="form-control">
-                                    <option>Categoria 1</option>
-                                    <option>Categoria 2</option>
-                                    <option>Categoria 3</option>
-                                </select>
+                                <?php
+                                    echo $this->Form->select('category_id', $lista_categoria, ['empty' => false, 'label'=>'Categorias', 'class'=>'form-control']);
+                                ?>
                             </div>
                             <div class="form-group">
                                 <?= $this->Form->input('title', array('label' => 'Titulo', 'class' => 'form-control', 'placeholder' => 'Titulo...')) ?>
@@ -31,24 +29,24 @@
                             <div class="form-group">
                                 <?= $this->Form->input('video_url', array('label' => 'Incoporar Vídeo', 'class' => 'form-control', 'placeholder' => 'Url de incoporação...', '' => '', 'type' => 'url')) ?>
                             </div>
-
-                            <div class="form-group">
-                                <!-- 16:9 aspect ratio -->
-                                <div class="embed-responsive embed-responsive-16by9">
-                                    <iframe width="854" height="480" src="https://www.youtube.com/embed/UMhskLXJuq4" frameborder="0" allowfullscreen></iframe>
-                                </div>
-                            </div>                 
+                 
                             <div class="form-group">
                                 <label>Publicar em</label>
                                 <?= $this->Form->input('schedule', array('label' => false, 'class' => 'form-control', 'placeholder' => 'Data...', '' => '', 'type' => 'date')) ?>
                             </div>
                             <div class="form-group">
                                 <?=
-                                $this->Form->input('checkbox', array(
+                                $this->Form->input('main', array(
+                                    'label' => 'Principal',
+                                    'type' => 'checkbox'
+                                ));
+                                ?>
+                            </div>
+                            <div class="form-group">
+                                <?=
+                                $this->Form->input('active', array(
                                     'label' => 'Ativar',
-                                    'type' => 'checkbox',
-                                    'style' => 'font-weight:bold',
-                                    'format' => array('before', 'input', 'between', 'label', 'after', 'error')
+                                    'type' => 'checkbox'
                                 ));
                                 ?>
                             </div>

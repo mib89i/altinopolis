@@ -7,6 +7,7 @@ use Cake\ORM\Entity;
 class Noticia extends Entity {
     
     protected $_accessible = [
-        '*' => true
+        '*' => true,
+        'id' => false
     ];
 }
