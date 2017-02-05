@@ -20,7 +20,7 @@ class NoticiasController extends AppController {
         return true;
     }
 
-    public function index() {
+    public function index($q = NULL) {
         $query = $this->Noticias;
         if ($this->Auth->user('role') === 'admin') {
             $this->set('lista_noticias', $query->find('all')
@@ -36,7 +36,10 @@ class NoticiasController extends AppController {
                             ->contain(['Users'])
             );
         }
-        echo "oi";
+        echo $this->request->query('q');
+        $noticias = $query;
+        $this->set('noticias');
+        $this->set('q');
     }
 
     public function add() {
@@ -85,8 +88,8 @@ class NoticiasController extends AppController {
     }
 
     public function view($id = NULL) {
-        if($id === NULL) {
-            $this->Flash->e-rror(__('NOTÍCIA NÃO ENCONTRADA!'));
+        if ($id === NULL) {
+            $this->Flash->e - rror(__('NOTÍCIA NÃO ENCONTRADA!'));
             return;
         }
         $noticias = $this->Noticias->get($id);
@@ -104,12 +107,34 @@ class NoticiasController extends AppController {
                 ->order(['Categorias.name' => 'ASC']);
         $this->set(compact('lista_categoria'));
     }
-    
+
+    public function find($q = NULL) {
+        $noticias = TableRegistry::get('Noticias');
+        $lista_noticias = $noticias
+                ->find('all')
+                ->where([
+                    'title LIKE' => "%{$q}%"
+                ])
+                ->andWhere([
+                    'subtitle LIKE' => "%{$q}%"
+                ])
+                ->andWhere([
+                    'Users.name LIKE' => "%{$q}%"
+                ])
+                ->order([
+                    'Noticias.schedule' => 'DESC',
+                    'Noticias.created' => 'DESC',
+                    'Noticias.title' => 'ASC'
+                ])
+                ->contain(['Users', 'Categorias']);
+        $this->set(compact('lista_noticias'));
+    }
+
     public function load_user($user_id = NULL) {
         $usuario = TableRegistry::get('Users')->get($user_id);
         $this->set(compact('usuario'));
     }
-    
+
     public function load_categoria($category_id = NULL) {
         $categoria = TableRegistry::get('Categorias')->get($category_id);
         $this->set(compact('categoria'));

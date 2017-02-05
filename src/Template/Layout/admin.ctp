@@ -25,7 +25,7 @@
             <span class="icon-bar"></span>
             <?php echo $this->Html->link('Painel de Controle', ['controller' => 'users', 'action' => 'painel']); ?>
           </button>
-          <a class="navbar-brand" href="dashboard.html">Nome do Site / Logo</a>
+          <a class="navbar-brand" href="dashboard.html">Cidade de Altinópolis</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -36,9 +36,6 @@
                 <li><?php echo $this->Html->link('SAIR', ['controller' => 'users', 'action' => 'logout']); ?></li>
             <?php endif; ?>            
           </ul>
-          <form class="navbar-form navbar-right">
-            <input type="text" class="form-control" placeholder="Pesquisar notícias...">
-          </form>
         </div>
       </div>
     </nav>

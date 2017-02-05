@@ -13,6 +13,10 @@ class NoticiasTable extends Table {
             'foreignKey' => 'user_id',
             'className' => 'Users'
         ]);        
+        $this->belongsTo('Categorias',[
+            'foreignKey' => 'category_id',
+            'className' => 'Categorias'
+        ]);        
     }
 
     public function validationDefault(Validator $validator) {
