@@ -3,7 +3,7 @@
         <h1 class="page-header">Notícias</h1>
         <div class="row">            
             <div class="col-lg-12">
-                <table class="table table-responsive table-striped" style="margin-top: 15px">
+                <table class="table table-responsive table-hover" style="margin-top: 15px">
                     <thead>
                         <tr>
                             <th width="15">#</th>
@@ -19,9 +19,9 @@
                         <tr>
 
                             <td><?= $noticia['id']; ?></td>
-                            <td><?php echo $this->Html->link('<span class="glyphicon glyphicon-edit"></span>', ['controller' => 'categorias', 'action' => 'edit', $noticia['id']], array('escape' => false)); ?></td>
+                            <td><?php echo $this->Html->link('<span class="glyphicon glyphicon-edit"></span>', ['controller' => 'noticias', 'action' => 'edit', $noticia['id']], array('escape' => false)); ?></td>
                             <td><?= $noticia['title']; ?></td>
-                            <td><?= $noticia['Users']; ?></td>
+                            <td><?= $noticia['user']['name']; ?></td>
                             <td><?php echo $this->Form->postLink('<span class="glyphicon glyphicon-trash"></span>', array('controller' => 'noticias', 'action' => 'delete', $noticia['id']), array('escape' => false, 'confirm' => 'Deseja Realmente excluir essa notícia?')); ?></td>
 
                         </tr>

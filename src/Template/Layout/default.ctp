@@ -1,5 +1,10 @@
 <!DOCTYPE html>
-<html>
+<!--[if lt IE 7 ]> <html prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#" class="no-js ie ie6 lte6 lte7 lte8 lte9 jqueryui-com jquery-ui" dir="ltr" lang="pt-BR"> <![endif]-->
+<!--[if IE 7 ]>		 <html prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#" class="no-js ie ie7 lte7 lte8 lte9 jqueryui-com jquery-ui" dir="ltr" lang="pt-BR"> <![endif]-->
+<!--[if IE 8 ]>		 <html prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#" class="no-js ie ie8 lte8 lte9 jqueryui-com jquery-ui" dir="ltr" lang="pt-BR"> <![endif]-->
+<!--[if IE 9 ]>		 <html prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#" class="no-js ie ie9 lte9 jqueryui-com jquery-ui" dir="ltr" lang="pt-BR"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> 
+<html prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
     <head>
         <?= $this->Html->charset() ?>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">

@@ -1,4 +1,9 @@
-<?= $this->Form->create($user) ?>
+<?= 
+$this->Form->create($user);
+$this->Form->templates(
+  ['dateWidget' => '{{day}}{{month}}{{year}}']
+);
+?>
 <div class="row">
     <div class="col-lg-12">
         <div class="row">

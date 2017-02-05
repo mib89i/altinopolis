@@ -1,4 +1,9 @@
-<?= $this->Form->create($noticias) ?>
+<?= 
+$this->Form->create($noticias);
+$this->Form->templates(
+  ['dateWidget' => '{{day}}{{month}}{{year}}']
+);
+?>
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">Noticias</h1>
@@ -9,7 +14,7 @@
                         <form id="form_noticias"  method="post">
                             <div class="form-group">
                                 <label>Publicação</label>
-                                <?= $this->Form->input('publish', array('label' => false, 'class' => 'form-control', 'placeholder' => 'Data...', '' => '', 'type' => 'date')) ?>
+                                <?= $this->Form->input('created', array('label' => false, 'class' => 'form-control', 'placeholder' => 'Data...', '' => '', 'type' => 'date')) ?>
                             </div>
                             <div class="form-group">
                                 <label>Categoria</label>
@@ -24,29 +29,29 @@
                                 <?= $this->Form->input('subtitle', array('label' => 'Subtitulo', 'class' => 'form-control', 'placeholder' => 'Texto em...', 'maxlenght' => '150', 'rows' => '3', 'style="overflow:nome"')) ?>
                             </div>
                             <div class="form-group">
-                                <?= $this->Form->input('text', array('label' => 'Texto', 'name' => 'editor1', 'id' => 'editor1', 'class' => 'form-control', 'placeholder' => 'Texto em...', 'id' => 'editor1', 'maxlenght' => '5000')) ?>
+                                <?= $this->Form->input('text', array('label' => 'Texto', 'id' => 'editor1', 'class' => 'form-control', 'placeholder' => 'Texto em...', 'id' => 'editor1', 'maxlenght' => '5000')) ?>
                             </div>
                             <div class="form-group">
                                 <?= $this->Form->input('video_url', array('label' => 'Incoporar Vídeo', 'class' => 'form-control', 'placeholder' => 'Url de incoporação...', '' => '', 'type' => 'url')) ?>
                             </div>
-
-                            <div class="form-group">
-                                <!-- 16:9 aspect ratio -->
-                                <div class="embed-responsive embed-responsive-16by9">
-                                    <iframe width="854" height="480" src="https://www.youtube.com/embed/UMhskLXJuq4" frameborder="0" allowfullscreen></iframe>
-                                </div>
-                            </div>                 
+                 
                             <div class="form-group">
                                 <label>Publicar em</label>
                                 <?= $this->Form->input('schedule', array('label' => false, 'class' => 'form-control', 'placeholder' => 'Data...', '' => '', 'type' => 'date')) ?>
                             </div>
                             <div class="form-group">
                                 <?=
-                                $this->Form->input('checkbox', array(
+                                $this->Form->input('main', array(
+                                    'label' => 'Principal',
+                                    'type' => 'checkbox'
+                                ));
+                                ?>
+                            </div>
+                            <div class="form-group">
+                                <?=
+                                $this->Form->input('active', array(
                                     'label' => 'Ativar',
-                                    'type' => 'checkbox',
-                                    'style' => 'font-weight:bold',
-                                    'format' => array('before', 'input', 'between', 'label', 'after', 'error')
+                                    'type' => 'checkbox'
                                 ));
                                 ?>
                             </div>

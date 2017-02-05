@@ -22,22 +22,21 @@ class NoticiasController extends AppController {
 
     public function index() {
         $query = $this->Noticias;
-        if($this->Auth->user('role') === 'admin') {
-            $this->set('lista_noticias', 
-                    $query->find('all')
-                    ->order(['Noticias.title' => 'ASC', 'Noticias.created' => 'DESC'])
-                    ->limit(200)
-                    ->contain(['Users'])
+        if ($this->Auth->user('role') === 'admin') {
+            $this->set('lista_noticias', $query->find('all')
+                            ->order(['Noticias.title' => 'ASC', 'Noticias.created' => 'DESC'])
+                            ->limit(200)
+                            ->contain(['Users'])
             );
         } else {
-            $this->set('lista_noticias', 
-                    $query->find('all')
-                    ->where(['user_id =' => $this->Auth->user('id')])
-                    ->order(['Noticias.title' => 'ASC', 'Noticias.created' => 'DESC'])
-                    ->limit(200)
-                    ->contain(['Users'])
+            $this->set('lista_noticias', $query->find('all')
+                            ->where(['user_id =' => $this->Auth->user('id')])
+                            ->order(['Noticias.title' => 'ASC', 'Noticias.created' => 'DESC'])
+                            ->limit(200)
+                            ->contain(['Users'])
             );
         }
+        echo "oi";
     }
 
     public function add() {
@@ -48,7 +47,7 @@ class NoticiasController extends AppController {
             if ($this->Noticias->save($noticias)) {
                 $this->Flash->success(__('Registro inserido.'));
                 return $this->redirect(['action' => 'edit', $noticias->id]);
-             }
+            }
             $this->Flash->error(__('Não foi possível inserir registro.'));
         }
         $noticias->active = true;
@@ -60,6 +59,7 @@ class NoticiasController extends AppController {
         $noticias = $this->Noticias->get($id);
         if ($this->request->is(['post', 'put'])) {
             $noticias = $this->Noticias->patchEntity($noticias, $this->request->data);
+            debug($noticias);
             if ($this->Noticias->save($noticias)) {
                 $this->Flash->success(__('Registro atualizado.'));
                 //return $this->redirect(['action' => 'edit'. DS . $noticias->id]);
@@ -84,6 +84,17 @@ class NoticiasController extends AppController {
         }
     }
 
+    public function view($id = NULL) {
+        if($id === NULL) {
+            $this->Flash->e-rror(__('NOTÍCIA NÃO ENCONTRADA!'));
+            return;
+        }
+        $noticias = $this->Noticias->get($id);
+        $this->load_user($noticias->user_id);
+        $this->load_categoria($noticias->category_id);
+        $this->set(compact('noticias'));
+    }
+
     public function list_categories() {
         $cat = TableRegistry::get('Categorias');
         $lista_categoria = $cat
@@ -92,6 +103,16 @@ class NoticiasController extends AppController {
                 ->where(['user_id =' => $this->Auth->user('id')])
                 ->order(['Categorias.name' => 'ASC']);
         $this->set(compact('lista_categoria'));
+    }
+    
+    public function load_user($user_id = NULL) {
+        $usuario = TableRegistry::get('Users')->get($user_id);
+        $this->set(compact('usuario'));
+    }
+    
+    public function load_categoria($category_id = NULL) {
+        $categoria = TableRegistry::get('Categorias')->get($category_id);
+        $this->set(compact('categoria'));
     }
 
 }

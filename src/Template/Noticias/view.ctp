@@ -1,9 +1,4 @@
-<?= 
-$this->Form->create($noticias) ;
-$this->Form->templates(
-  ['dateWidget' => '{{day}}{{month}}{{year}}']
-);        
-?>
+<?= $this->Form->create($noticias) ?>
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">Noticias</h1>

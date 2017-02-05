@@ -18,7 +18,6 @@ class NoticiasTable extends Table {
     public function validationDefault(Validator $validator) {
         return $validator
             ->notEmpty('title', 'Título requerido!') 
-            ->notEmpty('title', 'Subtítulo requerido!')
-            ->notEmpty('text', 'Texto requerido!'); 
+            ->notEmpty('subtitle', 'Subtítulo requerido!'); 
     }
 }
