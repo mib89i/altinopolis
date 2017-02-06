@@ -3,10 +3,15 @@
         <h1 class="page-header">Notícias</h1>
         <div class="row">
             <div class="col-lg-12">
-                <?= $this->Form->create($noticias, ['type' => 'get']); ?>
+                            <?php
+                            echo $this->Form->create(false, array(
+                                'url' => '/admin/noticias/',
+                                'type' => 'get',
+                            ));
+                            ?>
                 <div class="form-group">
                     <label>PESQUISAR</label>
-                    <input name="q" type="text" class="form-control" placeholder="Pesquisar notícias...">
+                    <?= $this->Form->input('search', array('label'=>false, 'class'=>'form-control', 'placeholder'=>'Pesquisar...')); ?>
                 </div>
                 <?= $this->Form->end() ?>            
             </div>

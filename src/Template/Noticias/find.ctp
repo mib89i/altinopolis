@@ -34,7 +34,9 @@
                             </div>
                         <?php } ; ?>
                         <div class="col-lg-10">
-                            <?php echo $this->Html->link("<h3>" . $noticia['title'] . "</h3>", ['controller' => 'noticias', 'action' => 'view', $noticia['id'], \Cake\Utility\Inflector::slug(strtolower($noticia['title']))], array('escape' => false)); ?>
+                            <h3>
+                                <?php echo $this->Html->link($noticia['title'], ['controller' => 'noticias', 'action' => 'view', $noticia['id'], \Cake\Utility\Inflector::slug(strtolower($noticia['title']))], array('escape' => false)); ?>
+                            </h3>
                             <p style=" text-align: justify;">
                                 <cite>
                                     <strong><?= $noticia['created']; ?></strong>

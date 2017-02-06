@@ -24,21 +24,77 @@ class NoticiasController extends AppController {
         return true;
     }
 
-    public function index($q = NULL) {
+    public function index() {
+        $search = "";
+        if ($this->request->is('get')) {
+            try {
+                if(sizeof($this->request->query) > 0) {
+                    $search = $this->request->query['search'];                    
+                }
+            } catch (Exception $ex) {
+                $search = "";
+            }            
+        }
+        
         $query = $this->Noticias;
         if ($this->Auth->user('role') === 'admin') {
-            $this->set('lista_noticias', $query->find('all')
-                            ->order(['Noticias.title' => 'ASC', 'Noticias.created' => 'DESC'])
-                            ->limit(200)
-                            ->contain(['Users'])
-            );
+            if (empty($search)) {
+                $this->set('lista_noticias', $query->find('all')
+                                ->order(['Noticias.title' => 'ASC', 'Noticias.created' => 'DESC'])
+                                ->limit(200)
+                                ->contain(['Users'])
+                );
+            } else {
+                $this->set('lista_noticias', $query
+                                ->find('all')
+                                ->where([
+                                    'title LIKE' => "%{$search}%"
+                                ])
+                                ->orWhere([
+                                    'subtitle LIKE' => "%{$search}%"
+                                ])
+                                ->orWhere([
+                                    'Users.name LIKE' => "%{$search}%"
+                                ])
+                                ->order([
+                                    'Noticias.schedule' => 'DESC',
+                                    'Noticias.created' => 'DESC',
+                                    'Noticias.title' => 'ASC'
+                                ])
+                                ->contain(['Users', 'Categorias']));
+                $this->set(compact('search'));
+                $this->set(compact('lista_noticias'));
+            }
         } else {
-            $this->set('lista_noticias', $query->find('all')
-                            ->where(['user_id =' => $this->Auth->user('id')])
-                            ->order(['Noticias.title' => 'ASC', 'Noticias.created' => 'DESC'])
-                            ->limit(200)
-                            ->contain(['Users'])
-            );
+            if (empty($search)) {
+                $this->set('lista_noticias', $query->find('all')
+                                ->where(['user_id =' => $this->Auth->user('id')])
+                                ->order(['Noticias.title' => 'ASC', 'Noticias.created' => 'DESC'])
+                                ->limit(200)
+                                ->contain(['Users'])
+                );
+            } else {
+                $this->set('lista_noticias', $query
+                                ->find('all')
+                                ->where([
+                                    'title LIKE' => "%{$search}%"
+                                ])
+                                ->where(['user_id =' => $this->Auth->user('id')])
+                                ->orWhere([
+                                    'subtitle LIKE' => "%{$search}%"
+                                ])
+                                ->orWhere([
+                                    'Users.name LIKE' => "%{$search}%"
+                                ])
+                                ->order([
+                                    'Noticias.schedule' => 'DESC',
+                                    'Noticias.created' => 'DESC',
+                                    'Noticias.title' => 'ASC'
+                                ])
+                                ->contain(['Users', 'Categorias']));
+                $this->set(compact('search'));
+                $this->set(compact('lista_noticias'));
+            }
         }
         echo $this->request->query('q');
         $noticias = $query;
@@ -99,7 +155,7 @@ class NoticiasController extends AppController {
                 ->where(['user_id =' => $this->Auth->user('id')])
                 ->order(['Categorias.name' => 'ASC']);
         $this->set(compact('lista_categoria'));
-    }  
+    }
 
     public function load_user($user_id = NULL) {
         $usuario = TableRegistry::get('Users')->get($user_id);
@@ -110,5 +166,4 @@ class NoticiasController extends AppController {
         $categoria = TableRegistry::get('Categorias')->get($category_id);
         $this->set(compact('categoria'));
     }
-
 }

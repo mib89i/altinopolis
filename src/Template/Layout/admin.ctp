@@ -23,29 +23,47 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-            <?php echo $this->Html->link('Painel de Controle', ['controller' => 'users', 'action' => 'painel']); ?>
+            
           </button>
           <a class="navbar-brand" href="dashboard.html">Cidade de Altinópolis</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <?php if (isset($user_session['username'])): ?>
+                <li><?php echo $this->Html->link('Meu Cadastro', ['controller' => 'users', 'action' => 'account']); ?></li>
+                <li><a href="#"><?php echo $user_session['name']; ?></a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Meu Painel<span class="caret"></span></a>
+                  
+                  <ul class="dropdown-menu">
+            <li class='<?php if ($this->request->session()->read('link_actived') === 'users'){echo 'active';}?>'>
                 <?php echo $this->Html->link('Usuários', ['controller' => 'users']); ?>
-                <li><?php echo $this->Html->link('Preferências', ['controller' => 'preferencias', 'action' => 'add']); ?></li>
-                <li><a href="#"><?php echo $user_session['username']; ?></a></li>
+            </li>
+            <li class='<?php if ($this->request->session()->read('link_actived') === 'categorias'){echo 'active';}?>'>
+                <?php echo $this->Html->link('Categorias', ['controller' => 'categorias']); ?>
+            </li>
+            <li class='<?php if ($this->request->session()->read('link_actived') === 'noticias'){echo 'active';}?>'>
+                <?php echo $this->Html->link('Notícias', ['controller' => 'noticias']); ?>
+            </li>
+            <li class='<?php if ($this->request->session()->read('link_actived') === 'albuns'){echo 'active';}?>'>
+                <?php echo $this->Html->link('Albuns', ['controller' => 'albuns']); ?>
+            </li>
+                  </ul>
+                </li>            
                 <li><?php echo $this->Html->link('SAIR', ['controller' => 'users', 'action' => 'logout']); ?></li>
             <?php endif; ?>            
           </ul>
+            <ul>                
+            </ul>
         </div>
       </div>
     </nav>
-
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li class='<?php if ($this->request->session()->read('link_actived') === 'painel'){echo 'active';}?>'>
-                <?php echo $this->Html->link('MEU PAINEL', ['controller' => 'painel']); ?>
+                <?php echo $this->Html->link('Painel', ['controller' => 'painel']); ?>
             </li>
             <li class='<?php if ($this->request->session()->read('link_actived') === 'users'){echo 'active';}?>'>
                 <?php echo $this->Html->link('Usuários', ['controller' => 'users']); ?>

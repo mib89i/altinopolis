@@ -9,11 +9,14 @@
                 <h1>Pesquisar <?= $q; ?></h1>
             </div>
             <div class="col-lg-12">
-                <form method="POST">
-                    <div class="form-group">
-                        <?= $this->Form->input('q', array('label' => false, 'class' => 'form-control', 'placeholder' => 'Pesquisar título...')) ?>
-                    </div>
-                </form>
+                <?php
+                echo $this->Form->create(false, [
+                    'url' => ['controller' => 'noticias', 'action' => 'find']
+                ]);
+                ?>
+                <?= $this->Form->input('search', array('value'=>$search, 'label'=>false, 'class'=>'form-control', 'placeholder'=>'Pesquisar...')); ?>
+
+                <?= $this->Form->end() ?>
             </div>
         </div>         
         <div class="row">
