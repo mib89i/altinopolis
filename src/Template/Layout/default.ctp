@@ -9,10 +9,10 @@
         <?= $this->Html->charset() ?>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" /> -->
-        <title>Cidade de Altinópolis</title>
+        <title><?= empty($title) ? "" : $title; ?></title>
         <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
-        <meta name="description" content="Portal de notícias da cidade altinópilis" />
-        <meta name="keywords" content="altinopolis, noticas, portal, turismo" />
+        <meta name="description" content="<?= empty($meta_description) ? "" : $meta_description; ?>" />
+        <meta name="keywords" content="<?= empty($meta_keyworks) ? "" : $meta_keyworks; ?>" />
         <!-- // FACEBOOK -->
         <!-- <meta property="fb:app_id" content="" /> -->
         <meta property="og:type" content="website" />
@@ -56,7 +56,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <?php echo $this->Html->link('Início', array('controller' => 'Home', 'action' => 'index'), array('class'=>'navbar-brand')); ?>
+                        <?php echo $this->Html->link('Início', array('controller' => 'Home', 'action' => 'index'), array('class' => 'navbar-brand')); ?>
                     </div>
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -66,11 +66,16 @@
                             <li class="active"></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
-                            <form class="navbar-form navbar-left">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Pesquisar...">
-                                </div>
-                            </form>
+                            <?php
+                            echo $this->Form->create(false, array(
+                                'url' => '/noticias/find',
+                                'type' => 'get',
+                                'class' => 'navbar-form navbar-left'
+                            ));
+                            ?>
+                            <?= $this->Form->input('search', array('label'=>false, 'class'=>'form-control', 'placeholder'=>'Pesquisar...')); ?>
+
+                            <?= $this->Form->end() ?>                            
                             <!-- 
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
@@ -87,7 +92,7 @@
                     </div><!-- /.navbar-collapse -->
                 </div><!-- /.container-fluid -->
             </nav>
-            
+
             <?= $this->Flash->render() ?>
 
             <div>
@@ -95,6 +100,8 @@
             </div>
 
 
+        </div>
+        <div style="display: block; height: 300px"></div>
         <footer>
             <div class="navbar navbar-default navbar-fixed-bottom">
                 <div class="container">
@@ -120,14 +127,13 @@
                     </div>
                 </div>
             </div>
-        </div>
-            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-            <!-- Include all compiled plugins (below), or include individual files as needed -->
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-            <?= $this->Html->script('ie-emulation-modes-warning.js'); ?>
-            <?= $this->Html->script('ie10-viewport-bug-workaround.js'); ?>
         </footer>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+        <?= $this->Html->script('ie-emulation-modes-warning.js'); ?>
+        <?= $this->Html->script('ie10-viewport-bug-workaround.js'); ?>
     </body>
 </html>

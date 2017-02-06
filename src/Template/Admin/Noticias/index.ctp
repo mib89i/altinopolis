@@ -10,7 +10,8 @@
                 </div>
                 <?= $this->Form->end() ?>            
             </div>
-        </div>            
+        </div>
+        <section>
         <div class="row">            
             <div class="col-lg-12">
                 <table class="table table-responsive table-hover" style="margin-top: 15px">
@@ -18,6 +19,7 @@
                         <tr>
                             <th width="15">#</th>
                             <th width="15"></th>
+                            <th>Publicação</th>
                             <th>Descrição</th>
                             <th>Usuário</th>
                             <th width="15"></th>
@@ -25,11 +27,10 @@
                     </thead>
                     <tbody>	
                         <?php foreach ($lista_noticias as $noticia): ?>
-
                             <tr>
-
                                 <td><?= $noticia['id']; ?></td>
                                 <td><?php echo $this->Html->link('<span class="glyphicon glyphicon-edit"></span>', ['controller' => 'noticias', 'action' => 'edit', $noticia['id']], array('escape' => false)); ?></td>
+                                <td><article><?= $noticia->created; ?></article></td>
                                 <td><?= $noticia['title']; ?></td>
                                 <td><?= $noticia['user']['name']; ?></td>
                                 <td><?php echo $this->Form->postLink('<span class="glyphicon glyphicon-trash"></span>', array('controller' => 'noticias', 'action' => 'delete', $noticia['id']), array('escape' => false, 'confirm' => 'Deseja Realmente excluir essa notícia?')); ?></td>
@@ -42,6 +43,7 @@
 
             </div>            
         </div>
+        </section>
         <div class="row">
             <div class="col-lg-12" >
                 <?php echo $this->Html->link('Novo', ['controller' => 'noticias', 'action' => 'add'], array('class' => 'btn btn-default')); ?>

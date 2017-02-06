@@ -112,7 +112,10 @@ mb_internal_encoding(Configure::read('App.encoding'));
  * Set the default locale. This controls how dates, number and currency is
  * formatted and sets the default language to use for translations.
  */
-ini_set('intl.default_locale', Configure::read('App.defaultLocale'));
+// PADRÃO DE DATA COMENTEI
+// ini_set('intl.default_locale', Configure::read('App.defaultLocale'));
+// ADICIONADO POR BRUNO
+ini_set('intl.default_locale', 'pt_BR');
 
 /*
  * Register application error and exception handlers.
@@ -222,3 +225,7 @@ Type::build('timestamp')
 if (Configure::read('debug')) {
     Plugin::load('DebugKit', ['bootstrap' => true]);
 }
+
+$meta_title = "Cidade de Altinópolis";
+$meta_description = "Portal de notícias da cidade altinópilis";
+$meta_keyworks = "altinopolis, noticas, portal, turismo";
