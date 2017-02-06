@@ -181,26 +181,6 @@ class AlbunsController extends AppController {
             ])->first();
                 
  */
-            
-            $album = $albunsTable->get($imagem->gallery_id, [
-                'contain' => ['Imagens' => function ($q, $imagem){
-                    return $q->where(['Imagens.id <> ' => $imagem->id]);
-                }]
-            ]);
-           
-
-            echo debug($album);
-            exit;
-            // SE A IMAGEM FOR DE CAPA, ATUALIZA PARA NULL
-            if ($album->picture_id == $imagem->id){
-
-                if ($album->imagens){
-
-                }
-                $album->picture_id = NULL;
-                $albunsTable->save($album);
-            }
-
             $imagem_delete = $imagem->delete_images($imagem);
 
             if (!$imagem_delete){
@@ -212,13 +192,30 @@ class AlbunsController extends AppController {
                 $this->Flash->error(__('Não foi possível deletar essa Imagem!'));
                 return $this->redirect(array('action' => 'edit/'.$imagem->gallery_id));
             }
-            
+
+            $album = $albunsTable->get($imagem->gallery_id, [
+                'contain' => 'Imagens'
+            ]);
+
+            // SE A IMAGEM FOR DE CAPA, ATUALIZA PARA NULL
+            if ($album->picture_id == $imagem->id){
+                if (!empty($album->imagens)) {
+                    $album->picture_id = $album->imagens[0]['id'];
+                } else {
+                    $album->picture_id = NULL;
+                }
+
+                $albunsTable->save($album);
+            }
+
             $this->Flash->success(__('Imagem deletada!'));
             return $this->redirect(array('action' => 'edit/'.$imagem->gallery_id));
         }
     } 
 
     public function capaImg($id = NULL) {
+        echo '<script>open_modal_aguarde();</script>';
+
         $imagensTable = TableRegistry::get('Imagens');
         $albunsTable = TableRegistry::get('Albuns');
 
