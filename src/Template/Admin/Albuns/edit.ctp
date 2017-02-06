@@ -48,30 +48,97 @@
 </div>
 
 <div id="modal_salvar" class="modal fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">SALVAR ÁLBUM</h4>
-      </div>
-      <div class="modal-body">
-        <p>Deseja realmente salvar este álbum?</p>
-      </div>
-      <div class="modal-footer">
-        <div class="row">
-            <div class="col-xs-3">
-            <?php echo $this->Form->submit('Salvar', ['class' => 'btn btn-primary btn-block', 'title' => 'Salvar']); ?>  
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">SALVAR ÁLBUM</h4>
             </div>
-            <div class="col-xs-3">
-                <button type="button" class="btn btn-default btn-block" data-dismiss="modal">Fechar</button>                      
+            <div class="modal-body">
+                <p>Deseja realmente salvar este álbum?</p>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-xs-3">
+                    <?php echo $this->Form->submit('Salvar', ['class' => 'btn btn-primary btn-block', 'title' => 'Salvar']); ?>  
+                    </div>
+                    <div class="col-xs-3">
+                        <button type="button" class="btn btn-default btn-block" data-dismiss="modal">Fechar</button>                      
+                    </div>
+                </div>
             </div>
         </div>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->    
+    </div>
+</div>
 <?php echo $this->Form->end(); ?>
+
+<!--
+CHAMADA VIA POSTLINK SEMPRE FORA DO FORM
+-->
+<div id="modal_excluir_imagem" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">EXCLUIR IMAGEM</h4>
+            </div>
+            <div class="modal-body">
+                <p>Deseja realmente excluir esta imagem?</p>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-xs-3">
+                    <?php 
+                        echo $this->Form->postLink('Excluir', 
+                            array('controller' => 'albuns', 'action' => 'delete_img', $imagem['id']), 
+                            array('escape' => false),
+                            array('confirm' => 'Deseja Realmente excluir essa Imagem?')
+                        );
+                    ?>
+                    </div>
+                    <div class="col-xs-3">
+                        <button type="button" class="btn btn-default btn-block" data-dismiss="modal">Fechar</button>                      
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal_definir_capa" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">DEFINIR CAPA DO ÁLBUM</h4>
+            </div>
+            <div class="modal-body">
+                <p>Deseja escolher esta imagem como capa do álbum?</p>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-xs-3">
+                    <?php 
+                        echo $this->request->session()->read('imagem_capa_selecionada')['id'];
+                        //echo $imagem_capa_selecionada['id'];
+                        echo $this->Form->postLink('Definir Capa', 
+                            array('controller' => 'albuns', 'action' => 'capa_img', $this->request->session()->read('imagem_capa_selecionada')['id']), 
+                            //array('controller' => 'albuns', 'action' => 'capa_img', $imagem_capa_selecionada['id']), 
+                            array('escape' => false, 'class' => 'btn btn-primary')
+                        );
+                    ?>
+                    </div>
+                    <div class="col-xs-3">
+                        <button type="button" class="btn btn-default btn-block" data-dismiss="modal">Fechar</button>                      
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <hr />
+
 <div class="row">
     <div class="col-lg-12">
         <?php $index = 0; ?>
@@ -99,20 +166,19 @@
                                 ?>
                             </div>
                             <br />
-                            <?php 
-                                echo $this->Form->postLink('Definir Capa', 
-                                    array('controller' => 'albuns', 'action' => 'capa_img', $imagem['id']), 
-                                    array('escape' => false, 'id' => 'i_capa'.$index, 'class' => 'btn btn-primary btn-xs', 'style' => 'float: left; visibility: hidden; font-weight: bold'),
-                                    array('confirm' => 'Definir essa Imagem como Capa do Álbum?'))
-                                ;
+
+                            <?php echo $this->Html->link('Definir Capa', 
+                                ['controller' => 'albuns', 'action' => 'seleciona_capa_img', $imagem['id']], 
+                                ['id' => 'i_capa'.$index, 'class' => 'btn btn-primary btn-xs post_ajax', 'style' => 'float: left; visibility: hidden; font-weight: bold', 'title' => 'Capa do Álbum', 'data-toggle' => 'modal', 'data-target' => '#modal_definir_capa', 'data-whatever' => $imagem['id']]
+                                ); 
                             ?>
-                            <?php 
-                                echo $this->Form->postLink('Excluir', 
-                                    array('controller' => 'albuns', 'action' => 'delete_img', $imagem['id']), array('confirm' => 'Deseja Realmente excluir essa Imagem?', 'class' => 'btn btn-danger btn-xs', 'style' => 'float: right; font-weight: bold'));
+                            <?php echo $this->Html->link('Excluir', 
+                                ['action' => '#'], 
+                                ['class' => 'btn btn-danger btn-xs', 'style' => 'float: right; font-weight: bold', 'title' => 'Excluir Imagem', 'data-toggle' => 'modal', 'data-target' => '#modal_excluir_imagem']
+                                ); 
                             ?>
                         </div>
-                    </div>
-                        
+                    </div>                        
                 </div>
             <?php endforeach; ?>    
         </div>  
@@ -133,6 +199,7 @@
   </div>
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script type="text/javascript">
     document.getElementById("input_upload").onchange = function() {
         open_modal_aguarde();
@@ -142,4 +209,27 @@
     function open_modal_aguarde(){
         $('#modal_aguarde').modal('show');
     }
+
+    $('.xxpost_ajax').on('click', function(e) {
+        var href = this.href;
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: href,
+            dataType: 'json',
+            success: function(json) {
+                console.log(json);
+            }
+        }); 
+    });
+
+    $('#modal_definir_capa').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget); // Button that triggered the modal
+      var recipient = button.data('whatever'); // Extract info from data-* attributes
+      // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+      // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+      var modal = $(this);
+      modal.find('.modal-title').text('New message to ' + recipient);
+      modal.find('.modal-body input').val(recipient);
+    });
 </script>
