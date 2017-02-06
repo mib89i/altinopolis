@@ -4,7 +4,7 @@
             <article id="news">
                 <header itemprop="headline">
                     <h1>
-                        <?php echo $this->Html->link($noticias->title, ['controller' => 'noticias', 'action' => 'view', $noticias->id, \Cake\Utility\Inflector::slug(strtolower($noticia['title']))], array('escape' => false)); ?>
+                        <?php echo $this->Html->link($noticias->title, ['controller' => 'noticias', 'action' => 'view', $noticias->id, \Cake\Utility\Inflector::slug(strtolower($noticias['title']))], array('escape' => false)); ?>
                     </h1>
                     <div itemprop="category">
                           <?= $categoria->name; ?>
