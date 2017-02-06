@@ -77,8 +77,9 @@
 
     <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
         <div class="list-group">
-            <a href="#" class="list-group-item active">Autores</a>
-            <a href="#" class="list-group-item">Autor</a>
+             <?php foreach ($lista_usuarios as $lu): ?>
+                <?php echo $this->Html->link($lu['name'], ['controller' => 'noticias', 'action' => 'usuario', $lu['id'], \Cake\Utility\Inflector::slug(strtolower($lu['name']))], array('escape' => false, 'class'=>'list-group-item')); ?>
+            <?php endforeach; ?>
         </div>
     </div><!--/.sidebar-offcanvas-->
 </div><!--/row-->
