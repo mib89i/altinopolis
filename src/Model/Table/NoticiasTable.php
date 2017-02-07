@@ -12,11 +12,15 @@ class NoticiasTable extends Table {
         $this->belongsTo('Users',[
             'foreignKey' => 'user_id',
             'className' => 'Users'
-        ]);        
+        ]);
         $this->belongsTo('Categorias',[
             'foreignKey' => 'category_id',
             'className' => 'Categorias'
-        ]);        
+        ]);
+        $this->belongsTo('Albuns',[
+            'foreignKey' => 'gallery_id',
+            'className' => 'Albuns'
+        ]);
     }
 
     public function validationDefault(Validator $validator) {
