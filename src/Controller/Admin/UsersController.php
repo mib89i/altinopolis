@@ -10,7 +10,7 @@ class UsersController extends AppController {
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
 
-        $this->Auth->allow(['logout']);
+        $this->Auth->allow(['logout', 'account']);
         $this->Auth->deny(['index']);
 
         $session = $this->request->session();
@@ -18,7 +18,10 @@ class UsersController extends AppController {
     }
 
     public function isAuthorized($user) {
-        return true;
+        if ($this->request->params['prefix'] === 'admin') {
+            return (bool)($user['role'] === 'admin');
+        }
+        return false;
     }
 
     public function login() {

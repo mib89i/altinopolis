@@ -23,13 +23,39 @@ class AlbunsController extends AppController {
     }
 
     public function index() {
-        $this->set('lista_albuns', $this->Albuns->find('all')->contain(['ImagemCapa']));
+        if ($this->Auth->user('role') === 'comum'){
+            $this->set('lista_albuns', $this->Albuns->find('all')
+                ->where(['Albuns.user_id' => $this->Auth->user('id')])
+                ->order(['Albuns.created' => 'ASC'])
+                ->contain(['ImagemCapa'])
+            );
+        } else {
+            $usersTable = TableRegistry::get('Users');
+            
+            $this->set('lista_albuns_user', $usersTable->find('all')
+                ->order(['Users.name' => 'ASC'])
+                ->contain(['Albuns', 'Albuns.ImagemCapa'])
+            );
+            /*
+            $this->set('lista_albuns', $this->Albuns->find('all')
+                ->order(['Albuns.created' => 'ASC'])
+                ->contain(['ImagemCapa'])
+            );
+            */    
+        }
     }
 
-    public function add() {
+    public function add($user_id = NULL) {
         $album = $this->Albuns->newEntity();
         $album = $this->Albuns->patchEntity($album, $this->request->data);
         $album->name = '_Sem Nome_';
+
+        if ($user_id === NULL){
+            $album->user_id = $this->Auth->user('id');
+        } else {
+            $album->user_id = $user_id;
+        }
+        
 
         if ($this->Albuns->save($album)) {
             $this->Flash->success(__('Digite um nome para o Álbum!'));

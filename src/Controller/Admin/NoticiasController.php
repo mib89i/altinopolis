@@ -42,16 +42,16 @@ class NoticiasController extends AppController {
                 $this->set('lista_noticias', $query->find('all')
                                 ->order(['Noticias.title' => 'ASC', 'Noticias.created' => 'DESC'])
                                 ->limit(200)
-                                ->contain(['Users'])
+                                ->contain(['Users', 'Albuns'])
                 );
             } else {
                 $this->set('lista_noticias', $query
                                 ->find('all')
                                 ->where([
-                                    'title LIKE' => "%{$search}%"
+                                    'Noticias.title LIKE' => "%{$search}%"
                                 ])
                                 ->orWhere([
-                                    'subtitle LIKE' => "%{$search}%"
+                                    'Noticias.subtitle LIKE' => "%{$search}%"
                                 ])
                                 ->orWhere([
                                     'Users.name LIKE' => "%{$search}%"
@@ -61,27 +61,27 @@ class NoticiasController extends AppController {
                                     'Noticias.created' => 'DESC',
                                     'Noticias.title' => 'ASC'
                                 ])
-                                ->contain(['Users', 'Categorias']));
+                                ->contain(['Users', 'Categorias', 'Albuns']));
                 $this->set(compact('search'));
                 $this->set(compact('lista_noticias'));
             }
         } else {
             if (empty($search)) {
                 $this->set('lista_noticias', $query->find('all')
-                                ->where(['user_id =' => $this->Auth->user('id')])
+                                ->where(['Noticias.user_id =' => $this->Auth->user('id')])
                                 ->order(['Noticias.title' => 'ASC', 'Noticias.created' => 'DESC'])
                                 ->limit(200)
-                                ->contain(['Users'])
+                                ->contain(['Users', 'Albuns'])
                 );
             } else {
                 $this->set('lista_noticias', $query
                                 ->find('all')
                                 ->where([
-                                    'title LIKE' => "%{$search}%"
+                                    'Noticias.title LIKE' => "%{$search}%"
                                 ])
                                 ->where(['user_id =' => $this->Auth->user('id')])
                                 ->orWhere([
-                                    'subtitle LIKE' => "%{$search}%"
+                                    'Noticias.subtitle LIKE' => "%{$search}%"
                                 ])
                                 ->orWhere([
                                     'Users.name LIKE' => "%{$search}%"
@@ -91,7 +91,7 @@ class NoticiasController extends AppController {
                                     'Noticias.created' => 'DESC',
                                     'Noticias.title' => 'ASC'
                                 ])
-                                ->contain(['Users', 'Categorias']));
+                                ->contain(['Users', 'Categorias', 'Albuns']));
                 $this->set(compact('search'));
                 $this->set(compact('lista_noticias'));
             }
@@ -115,11 +115,14 @@ class NoticiasController extends AppController {
         }
         $noticias->active = true;
         $this->list_categories();
+        $this->lista_albuns();
         $this->set('noticias', $noticias);
     }
 
     public function edit($id = NULL) {
-        $noticias = $this->Noticias->get($id);
+        $noticias = $this->Noticias->get($id, [
+            'contain' => ['Albuns']
+        ]);
         if ($this->request->is(['post', 'put'])) {
             $noticias = $this->Noticias->patchEntity($noticias, $this->request->data);
             debug($noticias);
@@ -131,6 +134,7 @@ class NoticiasController extends AppController {
             $this->Flash->error(__('Não foi possível atualizar registro.'));
         }
         $this->list_categories();
+        $this->lista_albuns();
         $this->set(compact('noticias'));
     }
 
@@ -152,10 +156,18 @@ class NoticiasController extends AppController {
         $lista_categoria = $cat
                 ->find('list')
                 ->select(['Categorias.id', 'Categorias.name'])
-                ->where(['user_id =' => $this->Auth->user('id')])
                 ->order(['Categorias.name' => 'ASC']);
         $this->set(compact('lista_categoria'));
     }
+
+    public function lista_albuns() {
+        $albunsTable = TableRegistry::get('Albuns');
+        $lista_albuns = $albunsTable
+                ->find('list')
+                ->where(['Albuns.user_id' => $this->Auth->user('id')])
+                ->order(['Albuns.name' => 'ASC']);
+        $this->set(compact('lista_albuns'));
+    }    
 
     public function load_user($user_id = NULL) {
         $usuario = TableRegistry::get('Users')->get($user_id);

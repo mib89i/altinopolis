@@ -21,7 +21,7 @@
 </style>
 
 
-<?php echo $this->Form->create($album, ['id' => 'form_album', 'type' => 'file', 'onsubmit' => 'return open_modal_aguarde();']); ?>
+<?php echo $this->Form->create($album, ['id' => 'form_album', 'type' => 'file']); ?>
 <div class="row">
     <div class="col-lg-12">
         <div class="page-header">
@@ -165,17 +165,21 @@ CHAMADA VIA POSTLINK SEMPRE FORA DO FORM
                                 ]);
                                 ?>
                             </div>
+
                             <br />
 
-                            <?php echo $this->Html->link('Definir Capa', 
-                                ['controller' => 'albuns', 'action' => 'seleciona_capa_img', $imagem['id']], 
-                                ['id' => 'i_capa'.$index, 'class' => 'btn btn-primary btn-xs post_ajax', 'style' => 'float: left; visibility: hidden; font-weight: bold', 'title' => 'Capa do Álbum', 'data-toggle' => 'modal', 'data-target' => '#modal_definir_capa', 'data-whatever' => $imagem['id']]
-                                ); 
+                            <?php 
+                                echo $this->Form->postLink('Definir Capa', 
+                                    ['controller' => 'albuns', 'action' => 'capa_img', $imagem['id']], 
+                                    ['confirm' => 'Definir esta imagem de Capa?', 'id' => 'i_capa'.$index, 'class' => 'btn btn-primary btn-xs', 'style' => 'float: left; visibility: hidden; font-weight: bold', 'title' => 'Capa do Álbum']
+                                );
                             ?>
-                            <?php echo $this->Html->link('Excluir', 
-                                ['action' => '#'], 
-                                ['class' => 'btn btn-danger btn-xs', 'style' => 'float: right; font-weight: bold', 'title' => 'Excluir Imagem', 'data-toggle' => 'modal', 'data-target' => '#modal_excluir_imagem']
-                                ); 
+
+                            <?php 
+                                echo $this->Form->postLink('Excluir', 
+                                ['controller' => 'albuns', 'action' => 'delete_img', $imagem['id']], 
+                                ['confirm' => 'Deseja Realmente excluir essa Imagem?', 'class' => 'btn btn-danger btn-xs', 'style' => 'float: right; font-weight: bold', 'title' => 'Excluir Imagem']
+                                );
                             ?>
                         </div>
                     </div>                        
@@ -192,11 +196,11 @@ CHAMADA VIA POSTLINK SEMPRE FORA DO FORM
 </div>
 
 <div id="modal_aguarde" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static">
-  <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
-      <h4 style="padding: 20px; text-align: center">AGUARDE ...</h4>
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <h4 style="padding: 20px; text-align: center">AGUARDE ...</h4>
+        </div>
     </div>
-  </div>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -210,7 +214,8 @@ CHAMADA VIA POSTLINK SEMPRE FORA DO FORM
         $('#modal_aguarde').modal('show');
     }
 
-    $('.xxpost_ajax').on('click', function(e) {
+    // TEST POST VIA AJAX
+    $('.post_ajax').on('click', function(e) {
         var href = this.href;
         e.preventDefault();
         $.ajax({
@@ -223,13 +228,4 @@ CHAMADA VIA POSTLINK SEMPRE FORA DO FORM
         }); 
     });
 
-    $('#modal_definir_capa').on('show.bs.modal', function (event) {
-      var button = $(event.relatedTarget); // Button that triggered the modal
-      var recipient = button.data('whatever'); // Extract info from data-* attributes
-      // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-      // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-      var modal = $(this);
-      modal.find('.modal-title').text('New message to ' + recipient);
-      modal.find('.modal-body input').val(recipient);
-    });
 </script>

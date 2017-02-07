@@ -19,6 +19,11 @@ class AlbunsTable extends Table {
         $this->hasMany('Imagens', [
            'className' => 'Imagens'
         ]);
+
+        $this->belongsTo('Users',[
+            'foreignKey' => 'user_id',
+            'className' => 'Users'
+        ]);        
         /*
         $this->hasOne('Imagem', [
         	'foreignKey' => 'picture_id'

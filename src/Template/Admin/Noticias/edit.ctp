@@ -31,10 +31,23 @@ $this->Form->templates(
                             <div class="form-group">
                                 <?= $this->Form->input('text', array('label' => 'Texto', 'id' => 'editor1', 'class' => 'form-control', 'placeholder' => 'Texto em...', 'id' => 'editor1', 'maxlenght' => '5000')) ?>
                             </div>
+
+                            <div class="form-group">
+                                <label>Selecionar ou Criar um novo álbum</label>
+                                <div class="row">
+                                    <div class="col-lg-10">
+                                        <?php echo $this->Form->select('gallery_id', $lista_albuns, ['empty' => 'Sem Álbum', 'class'=>'form-control']); ?>        
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <?php echo $this->Html->link('Criar Álbum', ['controller' => 'albuns', 'action' => 'add'], ['class' => 'btn btn-default btn-block']); ?>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <?= $this->Form->input('video_url', array('label' => 'Incoporar Vídeo', 'class' => 'form-control', 'placeholder' => 'Url de incoporação...', '' => '', 'type' => 'url')) ?>
                             </div>
-                 
+
                             <div class="form-group">
                                 <label>Publicar em</label>
                                 <?= $this->Form->input('schedule', array('label' => false, 'class' => 'form-control', 'placeholder' => 'Data...', '' => '', 'type' => 'date')) ?>

@@ -11,6 +11,10 @@ class UsersTable extends Table {
         $this->hasMany('Categorias', [
            'className' => 'Categorias'
         ]);
+
+        $this->hasMany('Albuns', [
+           'className' => 'Albuns'
+        ]);
     }
 
     public function validationDefault(Validator $validator) {

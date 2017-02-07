@@ -14,7 +14,7 @@ $this->Form->templates(
                     <?= $this->Form->input('username', array('label' => false, 'class' => 'form-control', 'type' => 'date')) ?>
                 </div>
                 <div class="form-group">
-                    <?= $this->Form->input('username', array('label' => 'Nome', 'class' => 'form-control', 'placeholder' => 'Nome...', '' => '', 'maxlenght' => '150')) ?>
+                    <?= $this->Form->input('name', array('label' => 'Nome', 'class' => 'form-control', 'placeholder' => 'Nome...', '' => '', 'maxlenght' => '150')) ?>
                 </div>                   
                 <div class="form-group">
                     <?= $this->Form->input('username', array('label' => 'Login', 'class' => 'form-control', 'placeholder' => 'Login...', '' => '', 'maxlenght' => '100')) ?>

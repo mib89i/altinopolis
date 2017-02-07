@@ -53,13 +53,17 @@ class AppController extends Controller
                 'action' => 'login'
             ],
             'authorize' => array('Controller'),
-            'authError' => 'Você não tem permissão para acessar essa página!'
+            'authError' => 'Você não tem permissão para acessar essa página!',
+            'flash' => ['element' => 'auth']
             /*'loginAction' => [
             'prefix' => true,
             'controller' => 'users',
             'action' => 'login'
             ]*/
         ]);
+
+        //$this->Auth->flash['element'] = 'flash/auth';
+
         /*
          * Enable the following components for recommended CakePHP security settings.
          * see http://book.cakephp.org/3.0/en/controllers/components/security.html
