@@ -14,6 +14,7 @@ class NoticiasController extends AppController {
     public function beforeFilter(Event $event) {
          $this->Auth->allow(['find']);
          $this->Auth->allow(['view']);
+         $this->Auth->allow(['autor']);
         parent::beforeFilter($event);        
     }
 
@@ -124,7 +125,7 @@ class NoticiasController extends AppController {
         $this->set('title', "Publicações do autor");
         $this->set('meta_description', "Pesquisar");
         $this->set('meta_keyworks', 'autor');        
-        $this->set('usuario_id', $id);        
+        $this->set('usuario_id', $id);
         $this->set('usuario_nome', $username);        
     }
 

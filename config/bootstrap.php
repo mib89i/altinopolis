@@ -225,7 +225,3 @@ Type::build('timestamp')
 if (Configure::read('debug')) {
     Plugin::load('DebugKit', ['bootstrap' => true]);
 }
-
-$meta_title = "Cidade de Altinópolis";
-$meta_description = "Portal de notícias da cidade altinópilis";
-$meta_keyworks = "altinopolis, noticas, portal, turismo";

@@ -45,24 +45,24 @@
     </head>
     <body >
         <div class="container" style="margin-top: 0px">
-            <?= $this->Html->image('background_top.jpg', ['class' => 'img-responsive', 'syle="margin-top:0px"']); ?>
+            <?= $this->Html->image('background_top.jpg', ['class' => 'img-responsive', 'syle="margin-top:0px"']); ?>                
             <nav class="navbar navbar-default" style="border-radius: 0">
                 <div class="container-fluid">
                     <!-- Brand and toggle get grouped for better mobile display -->
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                            <span class="sr-only">Toggle navigation</span>
+                            <span class="sr-only">Navegar</span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <?php echo $this->Html->link('Início', array('controller' => 'Home', 'action' => 'index'), array('class' => 'navbar-brand')); ?>
+                        <?php echo $this->Html->link('Cidade de Altinópolis', array('controller' => 'Home', 'action' => 'index'), array('class' => 'navbar-brand')); ?>
                     </div>
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
-                            <li><?php echo $this->Html->link('NOTÍCIAS', array('controller' => 'Noticias', 'action' => 'index')); ?></li>
+                            <!-- <li><?php echo $this->Html->link('NOTÍCIAS', array('controller' => 'Noticias', 'action' => 'index')); ?></li> -->
                             <li class="active"></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
@@ -73,7 +73,10 @@
                                 'class' => 'navbar-form navbar-left'
                             ));
                             ?>
-                            <?= $this->Form->input('search', array('label'=>false, 'class'=>'form-control', 'placeholder'=>'Pesquisar...')); ?>
+                            <div class="input-group">
+                                <?= $this->Form->input('search', array('label' => false, 'class' => 'form-control', 'placeholder' => 'Pesquisar...')); ?>
+                                <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search"></span></span>                                    
+                          </div>
 
                             <?= $this->Form->end() ?>                            
                             <!-- 
@@ -102,32 +105,24 @@
 
         </div>
         <div style="display: block; height: 300px"></div>
-        <footer>
-            <div class="navbar navbar-default navbar-fixed-bottom">
+        <footer class="footer">
+            <div class="navbar navbar-default">
                 <div class="container">
-                    <div class="navbar-collapse collapse" id="footer-body">
-                        <ul class="nav navbar-nav">
-                            <li><a href="#">Sobre</a></li>
-                            <li><a href="#">Contato</a></li>
-                            <li><a href="#">Parceiros</a></li>
-                            <li><?php echo $this->Html->link('Login', '/admin'); ?></li>
-                        </ul>
-                    </div>
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#footer-body">
-                            <span style="color: white;">^</span>
-                            <span><br /></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <ul class="footer-bar-btns visible-xs">
-                            <li><a href="#" class="btn" title="History"><i class="fa fa-2x fa-clock-o blue-text"></i></a></li>
-                            <li><a href="#" class="btn" title="Favourites"><i class="fa fa-2x fa-star yellow-text"></i></a></li>
-                            <li><a href="#" class="btn" title="Subscriptions"><i class="fa fa-2x fa-rss-square orange-text"></i></a></li>
-                        </ul>
-                    </div>
+                    <ul class="nav navbar-nav">
+                        <li><a href="#">Sobre</a></li>
+                        <li><a href="#">Contato</a></li>
+                        <li><a href="#">Parceiros</a></li>
+                        <li><?php echo $this->Html->link('Login', '/admin'); ?></li>
+                    </ul>                    
                 </div>
             </div>
         </footer>
+        <!-- 
+        <footer class="footer">
+            <div class="container">
+                <p class="text-muted">Place sticky footer content here.</p>
+            </div>
+        </footer>  -->      
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed -->
