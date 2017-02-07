@@ -12,7 +12,8 @@ class HomeController extends AppController {
         $this->set('meta_description', 'Cidade de Altinópolis');
         $this->set('meta_keyworks', 'cidade, altinopolis');
         $this->Auth->allow(['index']);
-        $this->lista_noticias_destaques();
+        $this->lista_destaques();
+        $this->lista_destaques_img();
         $this->lista_noticias();
         $this->lista_users();
     }
@@ -27,7 +28,19 @@ class HomeController extends AppController {
         $this->set(compact('lista_usuarios'));
     }
 
-    public function lista_noticias_destaques() {
+    public function lista_destaques() {
+        $query = TableRegistry::get('Noticias');
+        $lista_destaques = $query
+                ->find('all')
+                ->where(['active' => true])
+                ->andWhere(['main' => true])
+                ->limit(3)
+                ->order(['Noticias.schedule' => 'DESC']);
+
+        $this->set(compact('lista_destaques'));
+    }
+    
+    public function lista_destaques_img() {
         $query = TableRegistry::get('Noticias');
         $lista_destaques = $query
                 ->find('all')
@@ -36,8 +49,8 @@ class HomeController extends AppController {
                 ->limit(4)
                 ->order(['Noticias.schedule' => 'DESC']);
 
-        $this->set(compact('lista_destaques'));
-    }
+        $this->set(compact('lista_destaques_img'));
+    }    
 
     public function lista_noticias() {
         $query = TableRegistry::get('Noticias');
@@ -46,8 +59,8 @@ class HomeController extends AppController {
                 ->where(['active' => true])
                 ->andWhere(['main' => false])
                 ->limit(9)
-                ->order(['Noticias.schedule' => 'DESC']);
-
+                ->order(['Noticias.schedule' => 'DESC'])
+                ->contain(['Albuns', 'Albuns.ImagemCapa']);
         $this->set(compact('lista_noticias'));
     }
 

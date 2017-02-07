@@ -9,13 +9,12 @@ use Cake\ORM\TableRegistry;
 // VER ISSO http://cauancabral.net/2015/02/15/cakephp-3-0-o-fim-do-locale/
 
 class NoticiasController extends AppController {
-    
 
     public function beforeFilter(Event $event) {
-         $this->Auth->allow(['find']);
-         $this->Auth->allow(['view']);
-         $this->Auth->allow(['autor']);
-        parent::beforeFilter($event);        
+        $this->Auth->allow(['find']);
+        $this->Auth->allow(['view']);
+        $this->Auth->allow(['autor']);
+        parent::beforeFilter($event);
     }
 
     public function isAuthorized($user) {
@@ -57,7 +56,7 @@ class NoticiasController extends AppController {
         $this->set(compact('noticias'));
         $this->set('title', $noticias->title);
         $this->set('meta_description', $noticias->subtitle);
-        $this->set('meta_keyworks', 'noticias');        
+        $this->set('meta_keyworks', 'noticias');
     }
 
     public function list_categories() {
@@ -98,11 +97,12 @@ class NoticiasController extends AppController {
         $this->set(compact('lista_noticias'));
         $this->set('title', "Pesquisar " + $search);
         $this->set('meta_description', "Pesquisar");
-        $this->set('meta_keyworks', 'noticias');        
+        $this->set('meta_keyworks', 'noticias');
     }
-    
+
     public function autor($id = NULL, $username = NULL, $search = NULL, $page = NULL) {
-        if(sizeof($this->request) > 0) {
+        error_reporting(0);
+        if (sizeof($this->request) > 0) {
             $search = $this->request->query['search'];
         }
         $noticias = TableRegistry::get('Noticias');
@@ -110,8 +110,11 @@ class NoticiasController extends AppController {
                 ->find('all')
                 ->where([
                     'Users.id' => $id,
-                    'Noticias.active'=>true,
-                    'OR' => ['Noticias.title LIKE' => "%{$search}%", 'Noticias.subtitle LIKE' => "%{$search}%"],
+                    'Noticias.active' => true,
+                    'OR' => ['Noticias.title LIKE' => "%{$search}%",
+                        'Noticias.subtitle LIKE' => "%{$search}%",
+                        'Categorias.name LIKE' => "%{$search}%"
+                    ],
                 ])
                 ->order([
                     'Noticias.schedule' => 'DESC',
@@ -124,9 +127,10 @@ class NoticiasController extends AppController {
         $this->set(compact('lista_noticias'));
         $this->set('title', "Publicações do autor");
         $this->set('meta_description', "Pesquisar");
-        $this->set('meta_keyworks', 'autor');        
+        $this->set('meta_keyworks', 'autor');
         $this->set('usuario_id', $id);
-        $this->set('usuario_nome', $username);        
+        $usuario = TableRegistry::get('Users')->get($id);
+        $this->set('usuario_nome', $usuario->name);
     }
 
     public function load_user($user_id = NULL) {

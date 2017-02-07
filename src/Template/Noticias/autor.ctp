@@ -6,7 +6,8 @@
     <div class="col-lg-12">
         <div class="row">
             <div class="col-lg-12">
-                <h1>Pesquisar <?= $search; ?></h1>
+                <h1><?=$usuario_nome;?></h1>
+                <h5 style="margin-top: 25px">Pesquisar por <?= $search; ?></h5>
             </div>
             <div class="col-lg-12">
                 <div class="form-group">
@@ -30,7 +31,7 @@
                             <div class="col-lg-2">
 
                             </div>
-                        <?php } ; ?>
+                        <?php } ?>
                         <div class="col-lg-10">
                             <h3>
                                 <?php echo $this->Html->link($noticia['title'], ['controller' => 'noticias', 'action' => 'view', $noticia['id'], \Cake\Utility\Inflector::slug(strtolower($noticia['title']))], array('escape' => false)); ?>
