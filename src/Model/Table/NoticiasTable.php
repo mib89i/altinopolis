@@ -19,7 +19,8 @@ class NoticiasTable extends Table {
         ]);
         $this->belongsTo('Albuns',[
             'foreignKey' => 'gallery_id',
-            'className' => 'Albuns'
+            'className' => 'Albuns',
+            'propertyName' => 'album'
         ]);
     }
 
