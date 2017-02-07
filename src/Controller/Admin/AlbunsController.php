@@ -68,9 +68,7 @@ class AlbunsController extends AppController {
                 $this->Flash->success(__('Álbum atualizado com Sucesso!'));
                 return $this->redirect(array('action' => 'edit' . DS . $album->id));
             }
-            $this->Session->setFlash(
-                    __('Erro ao atualizar Álbum, tente novamente.')
-            );
+            $this->Flash->error(__('Erro ao atualizar Álbum, tente novamente.'));
         }
 
         $this->set(compact('album'));
@@ -214,8 +212,6 @@ class AlbunsController extends AppController {
     } 
 
     public function capaImg($id = NULL) {
-        echo '<script>open_modal_aguarde();</script>';
-
         $imagensTable = TableRegistry::get('Imagens');
         $albunsTable = TableRegistry::get('Albuns');
 
@@ -237,4 +233,15 @@ class AlbunsController extends AppController {
     }  
 
 
+    public function selecionaCapaImg($id = NULL) {
+        if ($this->request->is(['post', 'put'])) {
+            $imagensTable = TableRegistry::get('Imagens');
+            $imagem = $imagensTable->get($id);
+
+            $session = $this->request->session();
+            $session->write('imagem_capa_selecionada', $imagem);
+            //return $this->redirect(['action' => 'edit' . DS . 50]);
+            //$this->set('imagem_capa_selecionada', $imagem);
+        }
+    }  
 }

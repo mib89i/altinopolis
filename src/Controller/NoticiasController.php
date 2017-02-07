@@ -75,7 +75,10 @@ class NoticiasController extends AppController {
         $lista_noticias = $noticias
                 ->find('all')
                 ->where([
-                    'title LIKE' => "%{$search}%"
+                    'title LIKE' => "%{$search}%",
+                ])
+                ->andWhere([
+                    'Noticias.active' => true
                 ])
                 ->orWhere([
                     'subtitle LIKE' => "%{$search}%"
@@ -88,12 +91,41 @@ class NoticiasController extends AppController {
                     'Noticias.created' => 'DESC',
                     'Noticias.title' => 'ASC'
                 ])
+                ->limit(100)
                 ->contain(['Users', 'Categorias']);
         $this->set(compact('search'));
         $this->set(compact('lista_noticias'));
         $this->set('title', "Pesquisar " + $search);
         $this->set('meta_description', "Pesquisar");
         $this->set('meta_keyworks', 'noticias');        
+    }
+    
+    public function autor($id = NULL, $username = NULL, $search = NULL, $page = NULL) {
+        if(sizeof($this->request) > 0) {
+            $search = $this->request->query['search'];
+        }
+        $noticias = TableRegistry::get('Noticias');
+        $lista_noticias = $noticias
+                ->find('all')
+                ->where([
+                    'Users.id' => $id,
+                    'Noticias.active'=>true,
+                    'OR' => ['Noticias.title LIKE' => "%{$search}%", 'Noticias.subtitle LIKE' => "%{$search}%"],
+                ])
+                ->order([
+                    'Noticias.schedule' => 'DESC',
+                    'Noticias.created' => 'DESC',
+                    'Noticias.title' => 'ASC'
+                ])
+                ->limit(100)
+                ->contain(['Users', 'Categorias']);
+        $this->set(compact('search'));
+        $this->set(compact('lista_noticias'));
+        $this->set('title', "Publicações do autor");
+        $this->set('meta_description', "Pesquisar");
+        $this->set('meta_keyworks', 'autor');        
+        $this->set('usuario_id', $id);        
+        $this->set('usuario_nome', $username);        
     }
 
     public function load_user($user_id = NULL) {

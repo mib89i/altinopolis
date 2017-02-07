@@ -63,7 +63,7 @@ Router::scope('/', function (RouteBuilder $routes) {
      */
     $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
     
-    $routes->connect("/admin/:search", ['controller' => 'noticias', 'action' => 'index']);
+    $routes->connect('/autor/:id/:username/:search/:page/', ['controller' => 'noticias', 'action' => 'autor']);
 
     /**
      * Connect catchall routes for all controllers.
