@@ -130,5 +130,6 @@
 
         <?= $this->Html->script('ie-emulation-modes-warning.js'); ?>
         <?= $this->Html->script('ie10-viewport-bug-workaround.js'); ?>
+        <?= $this->Html->script('offcanvas.js'); ?>
     </body>
 </html>

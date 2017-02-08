@@ -50,9 +50,7 @@ class NoticiasController extends AppController {
             $this->Flash->e - rror(__('NOTÍCIA NÃO ENCONTRADA!'));
             return;
         }
-        $noticias = $this->Noticias->get($id);
-        $this->load_user($noticias->user_id);
-        $this->load_categoria($noticias->category_id);
+        $noticias = $this->Noticias->get($id, ['contain'=>['Users', 'Categorias', 'Albuns', 'Albuns.ImagemCapa', 'Albuns.Imagens']]);
         $this->set(compact('noticias'));
         $this->set('title', $noticias->title);
         $this->set('meta_description', $noticias->subtitle);
@@ -75,7 +73,7 @@ class NoticiasController extends AppController {
         $lista_noticias = $noticias
                 ->find('all')
                 ->where([
-                    'title LIKE' => "%{$search}%",
+                    'Noticias.title LIKE' => "%{$search}%",
                 ])
                 ->andWhere([
                     'Noticias.active' => true
@@ -92,7 +90,7 @@ class NoticiasController extends AppController {
                     'Noticias.title' => 'ASC'
                 ])
                 ->limit(100)
-                ->contain(['Users', 'Categorias']);
+                ->contain(['Users', 'Categorias', 'Albuns', 'Albuns.ImagemCapa']);
         $this->set(compact('search'));
         $this->set(compact('lista_noticias'));
         $this->set('title', "Pesquisar " + $search);
@@ -122,7 +120,7 @@ class NoticiasController extends AppController {
                     'Noticias.title' => 'ASC'
                 ])
                 ->limit(100)
-                ->contain(['Users', 'Categorias']);
+                ->contain(['Users', 'Categorias', 'Albuns', 'Albuns.ImagemCapa']);
         $this->set(compact('search'));
         $this->set(compact('lista_noticias'));
         $this->set('title', "Publicações do autor");

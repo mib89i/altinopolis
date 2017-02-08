@@ -2,47 +2,71 @@
     .panel-transparent {
         background: rgba(46, 51, 56, 0.2)!important;
     }
+    .img-news .img-responsive {
+        margin: 0 auto;
+    }    
+    .min-height-200 { min-height: 180px;} 
+    .img-news-top {margin-top: 15px} 
+
+    .carousel-control {background: transparent!important}
+    
+    .carousel-inner > .item > img {
+        position: relative; 
+        top: 0;
+        left: 0;
+        margin: 0 auto;
+        min-width: 50%;
+        height: 100%;
     }
+    .carousel .item {
+        
+    }    
+
 </style>
 <div class="row">
-    <div class="col-sm-9">
+    <div class="col-lg-12">
+        <div class="visible-xs">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">AUTORES
+                    <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <?php foreach ($lista_usuarios as $lu): ?>
+                        <li>
+                            <?php echo $this->Html->link($lu['name'], ['controller' => 'noticias', 'action' => 'autor', $lu['id'], \Cake\Utility\Inflector::slug(strtolower($lu['name']))], array('escape' => false)); ?>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+            <br />
+        </div> 
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-9">
         <div class="row">
             <div class="col-lg-8">
-
                 <div id="myCarousel" class="carousel slide" data-ride="carousel" style="margin-bottom: 10px">
                     <!-- Indicators -->
-                    <ol class="carousel-indicators">
-                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                        <li data-target="#myCarousel" data-slide-to="1"></li>
-                        <li data-target="#myCarousel" data-slide-to="2"></li>
-                        <li data-target="#myCarousel" data-slide-to="3"></li>
-                    </ol>
+                    <div class="carousel-indicators">
+                        <?php $i = 0; ?>
+                        <?php foreach ($lista_destaques_img as $noticias): ?>
+                            <?php= $noticias['title']; ?>                        
+                            <span href="#" data-target="#myCarousel" data-slide-to="<?= $i; ?>" class="<?= ($i === 0 ) ? 'active' : ''; ?>" style="cursor: pointer;" >
+                                <?= $this->Html->image('albuns/' . $noticias['gallery_id'] . '/thumb_' . $noticias['album']['capa']['name'], ['class' => 'img-rounded', 'width' => '40', 'height' => '40']); ?>
+                            </span >
+                            <?php $i++; ?>
+                        <?php endforeach; ?>
+                    </div>
 
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner" role="listbox">
-                        <div class="item active">
-                            <img src="http://www.w3schools.com/bootstrap/img_chania.jpg" alt="Chania" class="img-responsive">
-                            <div class="carousel-caption panel-transparent">
-                                <h1>
-                                    <a href="#">
-                                        Chania
-                                    </a>
-                                </h1>
-                                <p>Notícia......</p>
-                            </div>                    
-                        </div>
-
-                        <div class="item">
-                            <img src="http://www.w3schools.com/bootstrap/img_chania.jpg" alt="Chania" class="img-responsive">
-                        </div>
-
-                        <div class="item">
-                            <img src="http://www.w3schools.com/bootstrap/img_flower.jpg" alt="Chania" class="img-responsive">
-                        </div>
-
-                        <div class="item">
-                            <img src="http://www.w3schools.com/bootstrap/img_flower2.jpg" alt="Chania" class="img-responsive">
-                        </div>
+                        <?php $i = 0; ?>
+                        <?php foreach ($lista_destaques_img as $noticias): ?>
+                            <div class="item <?= ($i === 0 ) ? 'active' : ''; ?> ">
+                                <?= $this->Html->image('albuns/' . $noticias['gallery_id'] . '/thumb_slide_' . $noticias['album']['capa']['name'], ['class' => 'img-rounded   img-responsive', 'style'=>'width:100%; height:80%!important']); ?>
+                            </div>
+                            <?php $i++; ?>
+                        <?php endforeach; ?>
                     </div>
 
                     <!-- Left and right controls -->
@@ -74,15 +98,17 @@
                 <cite>MAIS NOTÍCIAS</cite>
                 <div class="row">
                     <?php foreach ($lista_noticias as $noticia): ?>
-                    <?php /*debug($noticia);*/?>
-                        <div class="col-lg-4" style="height: 150px">
+                        <?php /* debug($noticia); */ ?>
+                        <div class="col-lg-4 min-height-200">
                             <div class="row">
                                 <?php if ($noticia['gallery_id'] !== NULL) { ?>
-                                    <div class="col-lg-4">
-                                        <?=$this->Html->image('albuns/' . $noticia['album']['id'] . '/' . 'thumb_' . $noticia['album']['capa']['name'], ['class'=>'img-responsive', 'alt'=>'', 'style'=>'width: 100%; height: auto; ']); ?>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <div>
+                                            <?= $this->Html->image('albuns/' . $noticia['album']['id'] . '/' . 'thumb_' . $noticia['album']['capa']['name'], ['class' => 'img-responsive img-news-top', 'alt' => '']); ?>
+                                        </div>
                                     </div>
-                                <?php } ?>
-                                <div class="<?= ($noticia['gallery_id'] !== NULL) ? 'col-lg-8' : 'col-lg-12'; ?>">
+                                <?php } ?>                                
+                                <div class="<?= ($noticia['gallery_id'] !== NULL) ? 'col-lg-8 col-md-8 col-sm-8 col-xs-8' : 'col-lg-12'; ?>">
                                     <h4 style="text-align: justify">
                                         <?php echo $this->Html->link($this->Strings->abreviar($noticia['title'], 100), ['controller' => 'noticias', 'action' => 'view', $noticia['id'], \Cake\Utility\Inflector::slug(strtolower($noticia['title']))], array('escape' => false, 'style' => 'color:#0066ff')); ?>
                                     </h4>
@@ -92,7 +118,7 @@
                                             echo $this->Strings->abreviar($noticia['text'], 80);
                                             ?>
                                         </cite>
-                                        ...</p>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -101,21 +127,23 @@
             </div>
         </div>        
     </div>
-    <div class="col-sm-3">
-        <div class="sidebar-module">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h5>PUBLICAÇÕES</h5>                                    
+    <div class="col-lg-3">
+        <div class="hidden-xs">
+            <div class="sidebar-module">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h5>PUBLICAÇÕES</h5>                                    
+                    </div>
                 </div>
-            </div>
-            <div class="navbar navbar-default">
-                <ul class="nav nav-pills nav-stacked">
-                    <?php foreach ($lista_usuarios as $lu): ?>
-                        <li>
-                            <?php echo $this->Html->link($lu['name'], ['controller' => 'noticias', 'action' => 'autor', $lu['id'], \Cake\Utility\Inflector::slug(strtolower($lu['name']))], array('escape' => false)); ?>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
+                <div class="navbar navbar-default">
+                    <ul class="nav nav-pills nav-stacked">
+                        <?php foreach ($lista_usuarios as $lu): ?>
+                            <li>
+                                <?php echo $this->Html->link($lu['name'], ['controller' => 'noticias', 'action' => 'autor', $lu['id'], \Cake\Utility\Inflector::slug(strtolower($lu['name']))], array('escape' => false)); ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

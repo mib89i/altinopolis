@@ -39,18 +39,19 @@ class HomeController extends AppController {
 
         $this->set(compact('lista_destaques'));
     }
-    
+
     public function lista_destaques_img() {
         $query = TableRegistry::get('Noticias');
-        $lista_destaques = $query
+        $lista_destaques_img = $query
                 ->find('all')
-                ->where(['active' => true])
-                ->andWhere(['main' => true])
+                ->where(['Noticias.active' => true])
+                ->andWhere(['Noticias.main' => true])
+                ->andWhere(['Noticias.gallery_id IS NOT NULL'])
                 ->limit(4)
+                ->contain(['Albuns', 'Albuns.ImagemCapa'])
                 ->order(['Noticias.schedule' => 'DESC']);
-
         $this->set(compact('lista_destaques_img'));
-    }    
+    }
 
     public function lista_noticias() {
         $query = TableRegistry::get('Noticias');
