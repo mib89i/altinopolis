@@ -136,7 +136,6 @@ class NoticiasController extends AppController {
 
         if ($this->request->is(['post', 'put'])) {
             $noticias = $this->Noticias->patchEntity($noticias, $this->request->data);
-            debug($noticias);
             if ($this->Noticias->save($noticias)) {
                 $this->Flash->success(__('Registro atualizado.'));
                 //return $this->redirect(['action' => 'edit'. DS . $noticias->id]);
