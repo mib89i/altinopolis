@@ -34,13 +34,40 @@ $this->Form->templates(
 
                             <div class="form-group">
                                 <label>Selecionar ou Criar um novo álbum</label>
-                                <div class="row">
-                                    <div class="col-lg-10">
-                                        <?php echo $this->Form->select('gallery_id', $lista_albuns, ['empty' => 'Sem Álbum', 'class'=>'form-control']); ?>        
-                                    </div>
-                                    <div class="col-lg-2">
-                                        <?php echo $this->Html->link('Criar Álbum', ['controller' => 'albuns', 'action' => 'add'], ['class' => 'btn btn-default btn-block']); ?>
-                                    </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <div class="row vertical-align">
+                                            <div class="col-lg-1 col-sm-3">
+                                                <?php 
+                                                    if ($noticias['gallery_id'] === NULL) {
+                                                        echo $this->Html->image('gallery_empty.png', ["alt" => "Álbum da Notícia", "class" => "img-responsive"]); 
+                                                    } else {
+                                                        if ($noticias['album']['capa']) {
+                                                            echo $this->Html->image('albuns/'.$noticias['album']['id'].'/thumb_'.$noticias['album']['capa']['name'], ["alt" => "Álbum da Notícia", "class" => "img-responsive"]); 
+                                                        } else {
+                                                            echo $this->Html->image('gallery_empty.png', ["alt" => "Álbum da Notícia", "class" => "img-responsive"]); 
+                                                        }
+                                                    }
+                                                ?>
+                                            </div>
+                                            <div class="col-lg-11 col-sm-9">
+                                                <?php if ($noticias['gallery_id'] === NULL) : ?>
+                                                    <b><?php echo $this->Html->link('Selecionar Álbum para Notícia', 
+                                                                    array('controller' => 'noticias', 'action' => 'selecionar_album_noticia', $noticias['id'])
+                                                                );
+                                                        ?>
+                                                    </b>
+                                                    <?php else: ?>
+                                                        <h5><b><?php echo $noticias['album']['name'];?></b></h5>
+                                                        <h6><?php echo $noticias['album']['description'];?></h6>
+                                                        <?php echo $this->Html->link('Editar Álbum', ['controller' => 'noticias', 'action' => 'selecionar_album_noticia/'.$noticias['id'].'/'.'true'], ['class' => 'btn btn-default btn-xs']); ?>
+                                                        <?php echo $this->Html->link('Alterar Álbum', ['controller' => 'noticias', 'action' => 'selecionar_album_noticia', $noticias['id']], ['class' => 'btn btn-xs btn-primary']); ?>
+                                                        <?php echo $this->Html->link('Remover', ['controller' => 'noticias', 'action' => 'remover_album_noticia', $noticias['id']], ['class' => 'btn btn-xs btn-danger']); ?>
+                                                    <?php endif; ?>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>                                        
                                 </div>
                             </div>
 

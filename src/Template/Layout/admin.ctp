@@ -9,9 +9,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="altinopolis">
     <?= $this->Html->css('offcanvas.css') ?>
     <?= $this->Html->css('dashboard.css'); ?>
+    <?= $this->Html->css('style.css') ?>
     <?= $this->Html->script('ie-emulation-modes-warning.js'); ?>
     <?= $this->Html->script('ie10-viewport-bug-workaround.js'); ?>
-    
 </head>
 <body>
     <?php if (isset($user_session['username'])): ?>
@@ -80,9 +80,35 @@
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <?= $this->Flash->render() ?>
-          <?= $this->Flash->render('auth') ?>
-          <?= $this->fetch('content') ?>
+            <?= $this->Flash->render(); ?>
+            <?= $this->Flash->render('auth'); ?>
+            <?php if (isset($noticia_session)): ?>
+                <div class="panel panel-default">
+                    <div class="panel-body" style="background: #F5A9A9">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h5><b>SELECIONE OU CRIE UM ÁLBUM PARA NOTÍCIA:</b></h5>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-9">
+                                <blockquote>
+                                    <h5><b><?php echo $noticia_session['title']; ?></b></h5>
+                                    <h6><b><?php echo $noticia_session['subtitle']; ?></b></h6>
+                                </blockquote>
+                            </div>
+                            <div class="col-lg-2">
+                                <?php echo $this->Html->link('Voltar Para Notícias', ['controller' => 'noticias', 'action' => 'edit', $noticia_session['id']], ['class' => 'btn btn-default btn-block']); ?>
+                            </div>
+                            <div class="col-lg-1">
+                                <?php echo $this->Html->link('X', ['controller' => 'noticias', 'action' => 'excluir_sessao_album_noticia'], ['class' => 'btn btn-danger btn-block']); ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
+            <?= $this->fetch('content'); ?>
         </div>
       </div>
     </div> 

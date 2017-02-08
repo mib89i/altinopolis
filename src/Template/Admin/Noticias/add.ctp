@@ -34,13 +34,17 @@ $this->Form->templates(
 
                             <div class="form-group">
                                 <label>Selecionar ou Criar um novo álbum</label>
-                                <div class="row">
-                                    <div class="col-lg-10">
-                                        <?php echo $this->Form->select('gallery_id', $lista_albuns, ['empty' => 'Sem Álbum', 'class'=>'form-control']); ?>        
-                                    </div>
-                                    <div class="col-lg-2">
-                                        <?php echo $this->Html->link('Criar Álbum', ['controller' => 'albuns', 'action' => 'add'], ['class' => 'btn btn-default btn-block']); ?>
-                                    </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <div class="row vertical-align">
+                                            <div class="col-xs-1">
+                                                <?php echo $this->Html->image('gallery_empty.png', ["alt" => "Álbum da Notícia", "class" => "img-responsive"]); ?>
+                                            </div>
+                                            <div class="col-xs-11">
+                                                <b>Salvar para Adicionar Álbum</b>    
+                                            </div>
+                                        </div>
+                                    </div>                                        
                                 </div>
                             </div>
                                                         

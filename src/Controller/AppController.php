@@ -16,6 +16,7 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 
 /**
  * Application Controller
@@ -81,6 +82,11 @@ class AppController extends Controller
 
         if (isset($this->request->params['prefix']) && $this->request->params['prefix'] === 'admin') {
             $this->viewBuilder()->layout('admin'); 
+        }
+
+        if ($this->request->session()->check('noticia_id_session')) {
+            $noticia_session = TableRegistry::get('Noticias')->get($this->request->session()->read('noticia_id_session'));
+            $this->set(compact('noticia_session'));
         }
     }
 

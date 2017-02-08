@@ -80,6 +80,25 @@ class AlbunsController extends AppController {
         $this->Flash->error(__('Não foi possível salvar Álbum.'));
     }
     */
+    public function editGeneric($id = NULL){
+        if ($this->request->session()->check('noticia_id_session')){
+            $this->atualizaAlbumNoticia(true, $id);
+        } else {
+            return $this->redirect(['action' => 'edit' . DS . $id]);
+        }
+    }
+
+    public function atualizaAlbumNoticia($redirect = false, $id_album = NULL){
+        $noticiasTable = TableRegistry::get('Noticias');
+        $noticia_session = $noticiasTable->get($this->request->session()->read('noticia_id_session'));
+        $noticia_session->gallery_id = $id_album;
+        $noticiasTable->save($noticia_session);
+        if ($redirect){
+            $this->request->session()->delete('noticia_id_session');
+            return $this->redirect(['controller' => 'noticias', 'action' => 'edit' . DS . $noticia_session->id]);
+        }
+    }
+
     public function edit($id = NULL){
         $album = $this->Albuns->get($id, [
             'contain' => ['Imagens', 'ImagemCapa']
@@ -92,10 +111,15 @@ class AlbunsController extends AppController {
                 $this->__upload($album);
 
                 $this->Flash->success(__('Álbum atualizado com Sucesso!'));
-                return $this->redirect(array('action' => 'edit' . DS . $album->id));
+                //return $this->redirect(array('action' => 'edit' . DS . $album->id));
+                if ($this->request->session()->check('noticia_id_session')){
+                    $this->atualizaAlbumNoticia(false, $album->id);
+                }
+                return $this->redirect($this->referer());
             }
             $this->Flash->error(__('Erro ao atualizar Álbum, tente novamente.'));
         }
+
 
         $this->set(compact('album'));
         $lista_imagens = $album->imagens;

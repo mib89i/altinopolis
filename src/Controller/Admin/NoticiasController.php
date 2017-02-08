@@ -104,11 +104,16 @@ class NoticiasController extends AppController {
 
     public function add() {
         $noticias = $this->Noticias->newEntity();
+
+        if ($this->request->session()->check('noticia_id_session')){
+            $this->request->session()->delete('noticia_id_session');
+        }
+
         if ($this->request->is('post')) {
             $noticias = $this->Noticias->patchEntity($noticias, $this->request->data);
             $noticias->user_id = $this->Auth->user('id');
             if ($this->Noticias->save($noticias)) {
-                $this->Flash->success(__('Registro inserido.'));
+                $this->Flash->success(__('Registro Inserido.'));
                 return $this->redirect(['action' => 'edit', $noticias->id]);
             }
             $this->Flash->error(__('Não foi possível inserir registro.'));
@@ -121,8 +126,14 @@ class NoticiasController extends AppController {
 
     public function edit($id = NULL) {
         $noticias = $this->Noticias->get($id, [
-            'contain' => ['Albuns']
+            'contain' => ['Albuns', 'Albuns.ImagemCapa']
         ]);
+        
+        if ($this->request->session()->check('noticia_id_session')){
+            $this->request->session()->delete('noticia_id_session');
+            return $this->redirect(['action' => 'edit/' . $id]);
+        }
+
         if ($this->request->is(['post', 'put'])) {
             $noticias = $this->Noticias->patchEntity($noticias, $this->request->data);
             debug($noticias);
@@ -178,4 +189,31 @@ class NoticiasController extends AppController {
         $categoria = TableRegistry::get('Categorias')->get($category_id);
         $this->set(compact('categoria'));
     }
+
+    public function selecionarAlbumNoticia($noticia_id = NULL, $edit = NULL){
+        $session = $this->request->session();
+        $session->write('noticia_id_session', $noticia_id);
+        if ($edit === NULL){
+            return $this->redirect(['controller' => 'albuns', 'action' => 'index']);
+        } else {
+            $noticias = $this->Noticias->get($noticia_id, ['contain' => 'Albuns']);
+            return $this->redirect(['controller' => 'albuns', 'action' => 'edit' . DS . $noticias->album->id]);
+        }
+        
+    }
+
+    public function excluirSessaoAlbumNoticia(){
+        $session = $this->request->session();
+        $session->delete('noticia_id_session');
+        return $this->redirect($this->referer());
+    }
+
+    public function removerAlbumNoticia($id = NULL){
+        $noticias = $this->Noticias->get($id);
+        $noticias->gallery_id = NULL;
+
+        $this->Noticias->save($noticias);
+
+        return $this->redirect($this->referer());
+    }    
 }

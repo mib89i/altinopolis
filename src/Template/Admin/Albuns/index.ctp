@@ -15,7 +15,7 @@
 						  	<div class="panel-heading">
 								<h6 class="panel-title">
 							    	<?php $name_image = $this->Strings->abreviar($album['name'], 30); ?>
-							    	<?php echo $this->Html->link($name_image, array('controller' => 'albuns', 'action' => 'edit/'.$album['id']), array('style' => 'font-size: 10pt; font-weight: bold')); ?>
+							    	<?php echo $this->Html->link($name_image, array('controller' => 'albuns', 'action' => 'edit_generic/'.$album['id']), array('style' => 'font-size: 10pt; font-weight: bold')); ?>
 							    </h6>
 						  	</div>
 
@@ -26,7 +26,7 @@
 										echo $this->Html->image( 'albuns/' . $album['id'] .'/thumb_'. $album['capa']['name'], [
 											'alt' => 'Capa do Álbum',
 											'class'=> 'img-relative',
-											'url' => ['controller' => 'albuns', 'action' => 'edit', $album['id']]
+											'url' => ['controller' => 'albuns', 'action' => 'edit_generic', $album['id']]
 										]);				
 									?>
 								<?php else: ?>
@@ -34,7 +34,7 @@
 										echo $this->Html->image('gallery_empty.png', [
 										    'alt' => 'Álbum sem Imagens', 
 										    'class'=> 'img-relative', 
-										    'url' => ['controller' => 'albuns', 'action' => 'edit', $album['id']]
+										    'url' => ['controller' => 'albuns', 'action' => 'edit_generic', $album['id']]
 										]);
 									?>
 							    <?php endif; ?>
@@ -64,7 +64,7 @@
 							  	<div class="panel-heading">
 									<h6 class="panel-title">
 								    	<?php $name_image = $this->Strings->abreviar($album['name'], 30); ?>
-								    	<?php echo $this->Html->link($name_image, array('controller' => 'albuns', 'action' => 'edit/'.$album['id']), array('style' => 'font-size: 10pt; font-weight: bold')); ?>
+								    	<?php echo $this->Html->link($name_image, array('controller' => 'albuns', 'action' => 'edit_generic/'.$album['id']), array('style' => 'font-size: 10pt; font-weight: bold')); ?>
 								    </h6>
 							  	</div>
 
@@ -75,7 +75,7 @@
 												echo $this->Html->image( 'albuns/' . $album['id'] .'/thumb_'. $album['capa']['name'], [
 													'alt' => 'Capa do Álbum',
 													'class'=> 'img-relative',
-													'url' => ['controller' => 'albuns', 'action' => 'edit', $album['id']]
+													'url' => ['controller' => 'albuns', 'action' => 'edit_generic', $album['id']]
 												]);				
 											?>
 										<?php else: ?>
@@ -83,7 +83,7 @@
 												echo $this->Html->image('gallery_empty.png', [
 												    'alt' => 'Álbum sem Imagens', 
 												    'class'=> 'img-relative', 
-												    'url' => ['controller' => 'albuns', 'action' => 'edit', $album['id']]
+												    'url' => ['controller' => 'albuns', 'action' => 'edit_generic', $album['id']]
 												]);
 											?>
 									    <?php endif; ?>

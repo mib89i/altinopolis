@@ -38,7 +38,7 @@
                 <?php echo $this->Html->link('Salvar', ['action' => '#'], ['class' => 'btn btn-default', 'title' => 'Salvar', 'data-toggle' => 'modal', 'data-target' => '#modal_salvar']); ?>
             </div>             
             <div class="col-lg-10 col-xs-10" style="text-align: right">
-                <?php echo $this->Html->link('Voltar', array('controller' => 'albuns', 'action' => 'index'), array('class' => 'btn btn-default')); ?>
+                <?php echo $this->Html->link('Voltar Para Álbuns', array('controller' => 'albuns', 'action' => 'index'), array('class' => 'btn btn-default')); ?>
                 <label class="btn btn-default btn-file">
                    Adicionar Imagens ao Álbum<?php echo $this->Form->input('uploaded_file[]', ['id' => 'input_upload', 'label' => false, 'type' => 'file', 'multiple' => true]); ?>
                 </label>
