@@ -1,7 +1,49 @@
+
 <style type="text/css">
     .hoverDiv {background: #fff;}
     .hoverDiv:hover {background: #f5f5f5;}
-</style>
+    .panel-transparent {
+        background: rgba(46, 51, 56, 0.2)!important;
+    }
+    .img-news .img-responsive {
+        margin: 0 auto;
+    }    
+    .min-height-200 { min-height: 180px;} 
+    .img-news-top {margin-top: 15px} 
+
+    .carousel-control {background: transparent!important}
+
+    @media (max-width: 767px) {
+        .carousel-inner > .item > img {
+            width: 100%;
+            height: 250px;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .carousel-inner > .item > img {
+            width: 100%;
+            height: 350px;
+        }
+    }
+    .news-title-bg {
+        opacity: 0.6;
+        filter: alpha(opacity=70); /* For IE8 and earlier */          
+        background: white;
+        border-radius: 5px;
+    }
+    
+    .news-title {
+        opacity: 1;
+        filter: alpha(opacity=100); /* For IE8 and earlier */            
+        color: black;
+        padding: 5px;
+    }
+    
+    .carousel-caption {
+        
+    }   
+</style>    
 <div class="row">
     <div class="col-lg-12">
         <div class="row">
@@ -27,11 +69,6 @@
             <div class="col-lg-12 table-hover">
                 <?php foreach ($lista_noticias as $noticia): ?>
                     <div class="row hoverDiv">
-                        <?php if ($noticia['gallery_id'] !== NULL) { ?>
-                            <div class="col-lg-2">
-
-                            </div>
-                        <?php } ?>
                         <div class="col-lg-10">
                             <h3>
                                 <?php echo $this->Html->link($noticia['title'], ['controller' => 'noticias', 'action' => 'view', $noticia['id'], \Cake\Utility\Inflector::slug(strtolower($noticia['title']))], array('escape' => false)); ?>
@@ -51,7 +88,7 @@
                             <time datetime="<?= $noticia['publish']; ?>">
                                 <strong><?= $noticia['publish']; ?></strong>
                             </time>
-                        </div>
+                        </div> 
                     </div>
                 <?php endforeach; ?>
             </div>

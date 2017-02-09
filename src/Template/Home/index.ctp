@@ -24,21 +24,22 @@
         }
     }
     .news-title-bg {
-        opacity: 0.7;
+        opacity: 0.6;
         filter: alpha(opacity=70); /* For IE8 and earlier */          
         background: white;
+        border-radius: 5px;
     }
     
     .news-title {
         opacity: 1;
         filter: alpha(opacity=100); /* For IE8 and earlier */            
         color: black;
-        padding: 3px;
+        padding: 5px;
     }
     
     .carousel-caption {
         
-    }
+    }   
 </style>
 
 <div class="row">
@@ -82,7 +83,7 @@
                             <div class="item <?= ($i === 0 ) ? 'active' : ''; ?>">
                                 <div class="carousel-caption" style="margin-bottom: 10px">
                                     <div class="news-title-bg rounded">
-                                        <?php echo $this->Html->link('<h2 class="news-title">' . $this->Strings->abreviar($noticias['title'], 150) . '</h2>', ['controller' => 'noticias', 'action' => 'view', $noticias['id'], \Cake\Utility\Inflector::slug(strtolower($noticias['title']))], array('escape' => false, 'title' => $noticias['title'])); ?>                                                                                    
+                                        <?php echo $this->Html->link('<h4 class="news-title">' . $this->Strings->abreviar($noticias['title'], 150) . '</h4>', ['controller' => 'noticias', 'action' => 'view', $noticias['id'], \Cake\Utility\Inflector::slug(strtolower($noticias['title']))], array('escape' => false, 'title' => $noticias['title'])); ?>                                                                                    
                                     </div>
                                 </div>                                
                                 <?= $this->Html->image('albuns/' . $noticias['gallery_id'] . '/thumb_slide_' . $noticias['album']['capa']['name'], ['class' => 'img-rounded']); ?>
