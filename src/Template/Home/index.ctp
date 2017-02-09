@@ -9,20 +9,22 @@
     .img-news-top {margin-top: 15px} 
 
     .carousel-control {background: transparent!important}
-    
-    .carousel-inner > .item > img {
-        position: relative; 
-        top: 0;
-        left: 0;
-        margin: 0 auto;
-        min-width: 50%;
-        height: 100%;
-    }
-    .carousel .item {
-        
-    }    
 
+    @media (max-width: 767px) {
+        .carousel-inner > .item > img {
+            width: 100%;
+            height: 250px;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .carousel-inner > .item > img {
+            width: 100%;
+            height: 350px;
+        }
+    }
 </style>
+
 <div class="row">
     <div class="col-lg-12">
         <div class="visible-xs">
@@ -44,8 +46,8 @@
 <div class="row">
     <div class="col-lg-9">
         <div class="row">
-            <div class="col-lg-8">
-                <div id="myCarousel" class="carousel slide" data-ride="carousel" style="margin-bottom: 10px">
+            <div class="col-lg-8 col-md-6 col-sm-6">
+                <div id="myCarousel" class="carousel slide" data-ride="carousel" style="margin-bottom: 10px; overflow: hidden">
                     <!-- Indicators -->
                     <div class="carousel-indicators">
                         <?php $i = 0; ?>
@@ -62,8 +64,8 @@
                     <div class="carousel-inner" role="listbox">
                         <?php $i = 0; ?>
                         <?php foreach ($lista_destaques_img as $noticias): ?>
-                            <div class="item <?= ($i === 0 ) ? 'active' : ''; ?> ">
-                                <?= $this->Html->image('albuns/' . $noticias['gallery_id'] . '/thumb_slide_' . $noticias['album']['capa']['name'], ['class' => 'img-rounded   img-responsive', 'style'=>'width:100%; height:80%!important']); ?>
+                            <div class="item <?= ($i === 0 ) ? 'active' : ''; ?>">
+                                <?= $this->Html->image('albuns/' . $noticias['gallery_id'] . '/thumb_slide_' . $noticias['album']['capa']['name'], ['class' => 'img-rounded']); ?>
                             </div>
                             <?php $i++; ?>
                         <?php endforeach; ?>
@@ -80,7 +82,7 @@
                     </a>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-6  col-sm-6">
                 <cite>DESTAQUES</cite>
                 <?php foreach ($lista_destaques as $noticia): ?>
                     <div class="row">
