@@ -23,6 +23,12 @@
             height: 350px;
         }
     }
+    .news-title {
+        opacity: 0.5;
+        filter: alpha(opacity=50); /* For IE8 and earlier */            
+        background: #000;
+        color: white
+    }
 </style>
 
 <div class="row">
@@ -52,7 +58,6 @@
                     <div class="carousel-indicators">
                         <?php $i = 0; ?>
                         <?php foreach ($lista_destaques_img as $noticias): ?>
-                            <?php= $noticias['title']; ?>                        
                             <span href="#" data-target="#myCarousel" data-slide-to="<?= $i; ?>" class="<?= ($i === 0 ) ? 'active' : ''; ?>" style="cursor: pointer;" >
                                 <?= $this->Html->image('albuns/' . $noticias['gallery_id'] . '/thumb_' . $noticias['album']['capa']['name'], ['class' => 'img-rounded', 'width' => '40', 'height' => '40']); ?>
                             </span >
@@ -65,6 +70,9 @@
                         <?php $i = 0; ?>
                         <?php foreach ($lista_destaques_img as $noticias): ?>
                             <div class="item <?= ($i === 0 ) ? 'active' : ''; ?>">
+                                <div class="carousel-caption" style="margin-bottom: 10px">
+                                    <?php echo $this->Html->link('<h2>' . $this->Strings->abreviar($noticias['title'], 150) . '</h2>', ['controller' => 'noticias', 'action' => 'view', $noticias['id'], \Cake\Utility\Inflector::slug(strtolower($noticias['title']))], array('escape' => false, 'style' => 'color:white!important', 'title' => $noticias['title'])); ?>
+                                </div>                                
                                 <?= $this->Html->image('albuns/' . $noticias['gallery_id'] . '/thumb_slide_' . $noticias['album']['capa']['name'], ['class' => 'img-rounded']); ?>
                             </div>
                             <?php $i++; ?>
