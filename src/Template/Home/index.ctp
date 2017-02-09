@@ -23,11 +23,21 @@
             height: 350px;
         }
     }
+    .news-title-bg {
+        opacity: 0.7;
+        filter: alpha(opacity=70); /* For IE8 and earlier */          
+        background: white;
+    }
+    
     .news-title {
-        opacity: 0.5;
-        filter: alpha(opacity=50); /* For IE8 and earlier */            
-        background: #000;
-        color: white
+        opacity: 1;
+        filter: alpha(opacity=100); /* For IE8 and earlier */            
+        color: black;
+        padding: 3px;
+    }
+    
+    .carousel-caption {
+        
     }
 </style>
 
@@ -71,7 +81,9 @@
                         <?php foreach ($lista_destaques_img as $noticias): ?>
                             <div class="item <?= ($i === 0 ) ? 'active' : ''; ?>">
                                 <div class="carousel-caption" style="margin-bottom: 10px">
-                                    <?php echo $this->Html->link('<h2>' . $this->Strings->abreviar($noticias['title'], 150) . '</h2>', ['controller' => 'noticias', 'action' => 'view', $noticias['id'], \Cake\Utility\Inflector::slug(strtolower($noticias['title']))], array('escape' => false, 'style' => 'color:white!important', 'title' => $noticias['title'])); ?>
+                                    <div class="news-title-bg rounded">
+                                        <?php echo $this->Html->link('<h2 class="news-title">' . $this->Strings->abreviar($noticias['title'], 150) . '</h2>', ['controller' => 'noticias', 'action' => 'view', $noticias['id'], \Cake\Utility\Inflector::slug(strtolower($noticias['title']))], array('escape' => false, 'title' => $noticias['title'])); ?>                                                                                    
+                                    </div>
                                 </div>                                
                                 <?= $this->Html->image('albuns/' . $noticias['gallery_id'] . '/thumb_slide_' . $noticias['album']['capa']['name'], ['class' => 'img-rounded']); ?>
                             </div>
