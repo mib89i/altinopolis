@@ -109,13 +109,17 @@
             <div class="navbar navbar-default">
                 <div class="container">
                     <ul class="nav navbar-nav">
-                        <li><a href="#">Sobre</a></li>
-                        <li><a href="#">Contato</a></li>
+                        <li><a href="#">Sobre</a></li>                        
                         <li><a href="#">Parceiros</a></li>
                         <li><?php echo $this->Html->link('Login', '/admin'); ?></li>
                     </ul>                    
                 </div>
             </div>
+            <center>
+                <div>
+                    Dúvidas e Sugestões: contato@cidadealtinopolis.com.br
+                </div>                
+            </center>
         </footer>
         <!-- 
         <footer class="footer">

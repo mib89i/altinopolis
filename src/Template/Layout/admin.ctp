@@ -25,7 +25,7 @@
             <span class="icon-bar"></span>
             
           </button>
-          <a class="navbar-brand" href="dashboard.html">Cidade de Altinópolis</a>
+          <?php echo $this->Html->link('Cidade de Altinópolis', ['controller' => 'painel', 'action' => 'index'], ['class'=>'navbar-brand']); ?>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
