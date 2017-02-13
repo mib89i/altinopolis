@@ -97,15 +97,49 @@ class UsersController extends AppController {
         if ($this->request->is(['post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('Registro atualizado.'));
+                $this->Flash->success(__('Registro Atualizado.'));
                 //return $this->redirect(['action' => 'edit'. DS . $categorias->id]);
-                return $this->redirect(['action' => 'index']);
+                //return $this->redirect(['action' => 'account']);
+                return $this->render(['action' => 'account']);
             }
-            $this->Flash->error(__('Não foi possível atualizar registro.'));
+            $this->Flash->error(__('Não foi possível atualizar Registro.'));
         }
         $this->set(compact('user'));
     }
     
+    public function alterarSenha(){
+        $user = $this->Users->get($this->Auth->user('id'));
+        if (!empty($this->request->data)) {
+            $user = $this->Users->patchEntity($user, [
+                'old_password' => $this->request->data['old_password'], 
+                'password' => $this->request->data['new_password'], 
+                'new_password' => $this->request->data['new_password'], 
+                'confirm_password' => $this->request->data['confirm_password']
+            ], ['validate' => 'password'] ); // referencia a validationPassword
+            // if ['validate' => 'qualquercoisa'] // referencia a validationQualquerCoisa
+
+            if ($user->errors()) {
+                foreach ($user->errors() as $erro) {
+                    if (isset($erro['custom'])){
+                        $this->Flash->error($erro['custom']); 
+                    }
+                    if (isset($erro['match'])){
+                        $this->Flash->error($erro['match']); 
+                    }
+                }
+                return $this->redirect(['controller' => 'users', 'action' => 'account']); 
+            }
+
+            if ($this->Users->save($user)) { 
+                $this->Flash->success('Senha Alterada com Sucesso!'); 
+                $this->redirect(['controller' => 'users', 'action' => 'account']); 
+            } else { 
+                $this->Flash->error('Ocorreu um erro ao alterar a senha!'); 
+            }
+        }
+        $this->redirect(['controller' => 'users', 'action' => 'account']); 
+    }
+
     public function painel() {
         
     }

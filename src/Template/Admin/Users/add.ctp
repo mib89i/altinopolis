@@ -1,26 +1,22 @@
 <?= 
 $this->Form->create($user);
-$this->Form->templates(
-  ['dateWidget' => '{{day}}{{month}}{{year}}']
-);
+//$this->Form->templates(
+//  ['dateWidget' => '{{day}}{{month}}{{year}}']
+//);
 ?>
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">Notícias</h1>
+        <h1 class="page-header">Adicionar Usuário</h1>
         <div class="row">
             <div class="col-lg-12">
                 <div class="form-group">
-                    <label>Cadastro</label>
-                    <?= $this->Form->input('username', array('label' => false, 'class' => 'form-control', 'type' => 'date')) ?>
-                </div>
-                <div class="form-group">
-                    <?= $this->Form->input('name', array('label' => 'Nome', 'class' => 'form-control', 'placeholder' => 'Nome...', '' => '', 'maxlenght' => '150')) ?>
+                    <?= $this->Form->input('name', array('label' => 'Nome', 'class' => 'form-control', 'placeholder' => 'Nome do Usuário', 'maxlenght' => '150')) ?>
                 </div>                   
                 <div class="form-group">
-                    <?= $this->Form->input('username', array('label' => 'Login', 'class' => 'form-control', 'placeholder' => 'Login...', '' => '', 'maxlenght' => '100')) ?>
+                    <?= $this->Form->input('username', array('label' => 'Login', 'class' => 'form-control', 'placeholder' => 'Login', 'maxlenght' => '100')) ?>
                 </div>                   
                 <div class="form-group">
-                    <?= $this->Form->input('password', array('label' => 'Password', 'class' => 'form-control', 'placeholder' => 'Login...', '' => '', 'maxlenght' => '100')) ?>
+                    <?= $this->Form->input('password', array('label' => 'Password', 'class' => 'form-control', 'placeholder' => 'Senha', 'maxlenght' => '100')) ?>
                 </div> 
                 <div class="form-group">
                     <label>Nível</label>

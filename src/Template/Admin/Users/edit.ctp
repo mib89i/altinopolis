@@ -1,27 +1,27 @@
 <?= 
 $this->Form->create($user);
-$this->Form->templates(
-  ['dateWidget' => '{{day}}{{month}}{{year}}']
-);
+//$this->Form->templates(
+//  ['dateWidget' => '{{day}}{{month}}{{year}}']
+//);
 ?>
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">Notícias</h1>
+        <h1 class="page-header">Editar Usuário</h1>
         <div class="row">
             <div class="col-lg-12">
                 <div class="form-group">
-                    <label>Cadastro</label>
-                    <?= $this->Form->input('publish', array('label' => false, 'class' => 'form-control', 'type' => 'date')) ?>
-                </div>
-                <div class="form-group">
-                    <?= $this->Form->input('name', array('label' => 'Nome', 'class' => 'form-control', 'placeholder' => 'Nome...', '' => '', 'maxlenght' => '150')) ?>
+                    <?= $this->Form->input('name', array('label' => 'Nome', 'class' => 'form-control', 'placeholder' => 'Nome', 'maxlenght' => '150')) ?>
                 </div>                   
                 <div class="form-group">
-                    <?= $this->Form->input('username', array('label' => 'Login', 'class' => 'form-control', 'placeholder' => 'Login...', '' => '', 'maxlenght' => '100')) ?>
-                </div>                   
-                <div class="form-group">
-                    
+                    <?= $this->Form->input('username', array('label' => 'Login', 'class' => 'form-control', 'placeholder' => 'Login', 'maxlenght' => '100')) ?>
                 </div> 
+                <div class="form-group">
+                    <?= $this->Form->input('new_password', array('label' => 'Senha', 'class' => 'form-control', 'placeholder' => 'Senha', 'maxlenght' => '100')) ?>
+                </div> 
+                <div class="form-group">
+                    <?= $this->Form->input('confirm_password', array('label' => 'Confirme Senha', 'class' => 'form-control', 'placeholder' => 'Confirme Senha', 'maxlenght' => '100')) ?>
+                </div> 
+
                 <div class="form-group">
                     <label>Nível</label>
                     <?=
