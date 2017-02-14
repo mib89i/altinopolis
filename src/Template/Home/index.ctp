@@ -85,7 +85,7 @@
                                     <div class="news-title-bg rounded">
                                         <?php echo $this->Html->link('<h4 class="news-title">' . $this->Strings->abreviar($noticias['title'], 150) . '</h4>', ['controller' => 'noticias', 'action' => 'view', $noticias['id'], \Cake\Utility\Inflector::slug(strtolower($noticias['title']))], array('escape' => false, 'title' => $noticias['title'])); ?>                                                                                    
                                     </div>
-                                </div>                                
+                                </div>
                                 <?= $this->Html->image('albuns/' . $noticias['gallery_id'] . '/thumb_slide_' . $noticias['album']['capa']['name'], ['class' => 'img-rounded']); ?>
                             </div>
                             <?php $i++; ?>

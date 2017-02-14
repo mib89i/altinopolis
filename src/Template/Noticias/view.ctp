@@ -55,7 +55,7 @@
                     </div>
                     <div itemprop="author">
                         <strong>
-                            <?= $noticias['user']['name']; ?>
+                            <?php echo $this->Html->link($noticias['user']['name'], ['controller' => 'noticias', 'action' => 'autor', $noticias['user']['id'], \Cake\Utility\Inflector::slug(strtolower($noticias['user']['name']))], ['style'=>'color:black']); ?>
                         </strong>
                     </div>
                     <br />
@@ -89,7 +89,14 @@
             <?php $i = 0; ?>
             <?php foreach ($noticias['album']['imagens'] as $imagem2): ?>
                 <div class="item <?= ($i === 0 ) ? 'active' : ''; ?> ">
-                    <?= $this->Html->image('albuns/' . $imagem2['gallery_id'] . '/' . $imagem2['name']); ?>                            
+                    <div class="carousel-caption" >
+                        <div class="news-title-bg rounded" style="padding-bottom: 25px">
+                            <a class="news-title" href="<?='/img/albuns/' . $imagem2['gallery_id'] . '/' . $imagem2['name'];?>" target="_blank">
+                                Visualizar
+                            </a>
+                        </div>
+                    </div>                    
+                    <?= $this->Html->image('albuns/' . $imagem2['gallery_id'] . '/thumb_slide_' . $imagem2['name']); ?>
                 </div>
                 <?php $i++; ?>
             <?php endforeach; ?>

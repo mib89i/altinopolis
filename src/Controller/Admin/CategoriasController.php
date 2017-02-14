@@ -53,15 +53,19 @@ class CategoriasController extends AppController {
 
     public function delete($id = NULL) {
         $categoria = $this->Categorias->get($id);
-        $this->set(compact('categoria'));
         if ($this->request->is(['post', 'delete'])) {
             $categoria = $this->Categorias->patchEntity($categoria, $this->request->data);
-            if ($this->Categorias->delete($categoria)) {
-                $this->Flash->success(__('Registro removido.'));
-                return $this->redirect(['action' => 'index']);
+            if($this->Auth->user('role') === 'admin' || $this->Auth->user('id') === $categoria->user_id) {
+                if ($this->Categorias->delete($categoria)) {
+                    $this->Flash->success(__('Registro removido.'));
+                    return $this->redirect(['action' => 'index']);
+                }
+                $this->Flash->error(__('Não foi possível remover registro.'));
+            } else {
+                $this->Flash->error(__('Não é pissível remover registro de outro usuário.'));
             }
-            $this->Flash->error(__('Não foi possível remover registro.'));
         }
+        $this->set(compact('categoria'));
     }
 
 }

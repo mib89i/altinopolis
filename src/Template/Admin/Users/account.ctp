@@ -10,7 +10,7 @@
                 <div class="form-group">
                     <?= $this->Form->input('username', array('label' => 'Login', 'class' => 'form-control', 'placeholder' => 'Login', 'maxlenght' => '100', 'disabled' => true)) ?>
                 </div>  
-                <?php echo $this->Html->link('Alterar a Senha', ['action' => '#'], ['class' => 'btn btn-default', 'title' => 'Alterar a Senha', 'data-toggle' => 'modal', 'data-target' => '#alterar_senha']); ?>
+                <?php echo $this->Html->link('<span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Alterar a Senha', ['action' => '#'], ['class' => 'btn btn-default', 'title' => 'Alterar a Senha', 'data-toggle' => 'modal', 'data-target' => '#alterar_senha', 'escape'=>false]); ?>
             </div>
         </div>
         <div class="row" style="margin-top: 15px">

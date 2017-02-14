@@ -50,7 +50,7 @@ class NoticiasController extends AppController {
             $this->Flash->e - rror(__('NOTÍCIA NÃO ENCONTRADA!'));
             return;
         }
-        $noticias = $this->Noticias->get($id, ['contain'=>['Users', 'Categorias', 'Albuns', 'Albuns.ImagemCapa', 'Albuns.Imagens']]);
+        $noticias = $this->Noticias->get($id, ['contain' => ['Users', 'Categorias', 'Albuns', 'Albuns.ImagemCapa', 'Albuns.Imagens']]);
         $this->set(compact('noticias'));
         $this->set('title', $noticias->title);
         $this->set('meta_description', $noticias->subtitle);
@@ -129,6 +129,7 @@ class NoticiasController extends AppController {
         $this->set('usuario_id', $id);
         $usuario = TableRegistry::get('Users')->get($id);
         $this->set('usuario_nome', $usuario->name);
+        // $this->lista_destaques();
     }
 
     public function load_user($user_id = NULL) {
@@ -139,6 +140,37 @@ class NoticiasController extends AppController {
     public function load_categoria($category_id = NULL) {
         $categoria = TableRegistry::get('Categorias')->get($category_id);
         $this->set(compact('categoria'));
+    }
+
+    public function lista_destaques() {
+        $query = TableRegistry::get('Noticias');
+        $lista_destaques = $query
+                ->find('all')
+                ->where(
+                        [
+                            'Noticias.active' => true,
+                            'Noticias.main' => true,
+                            'Noticias.user_id' => $this->Auth->user('id')
+                        ]
+                )
+                ->limit(3)
+                ->order(['Noticias.schedule' => 'DESC']);
+        $this->set(compact('lista_destaques'));
+    }
+
+    public function lista_destaques_img() {
+        $query = TableRegistry::get('Noticias');
+        $lista_destaques_img = $query
+                ->find('all')
+                ->where(['Noticias.active' => true,
+                    'Noticias.user_id' => $this->Auth->user('id'),
+                    'Noticias.main' => true,
+                    'Noticias.gallery_id IS NOT NULL']
+                )
+                ->limit(4)
+                ->contain(['Albuns', 'Albuns.ImagemCapa'])
+                ->order(['Noticias.schedule' => 'DESC']);
+        $this->set(compact('lista_destaques_img'));
     }
 
 }
