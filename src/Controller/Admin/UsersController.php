@@ -70,7 +70,7 @@ class UsersController extends AppController {
         if ($this->request->is(['post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('Registro atualizado.'));
+                $this->Flash->success(__('Registro Atualizado.'));
                 //return $this->redirect(['action' => 'edit'. DS . $categorias->id]);
                 return $this->redirect(['action' => 'index']);
             }
@@ -107,17 +107,30 @@ class UsersController extends AppController {
         $this->set(compact('user'));
     }
     
-    public function alterarSenha(){
-        $user = $this->Users->get($this->Auth->user('id'));
+    public function alterarSenha($user_id = NULL){
         if (!empty($this->request->data)) {
-            $user = $this->Users->patchEntity($user, [
-                'old_password' => $this->request->data['old_password'], 
-                'password' => $this->request->data['new_password'], 
-                'new_password' => $this->request->data['new_password'], 
-                'confirm_password' => $this->request->data['confirm_password']
-            ], ['validate' => 'password'] ); // referencia a validationPassword
-            // if ['validate' => 'qualquercoisa'] // referencia a validationQualquerCoisa
+            if ($user_id != NULL){
+                $user = $this->Users->get($user_id);
+                
+                $user = $this->Users->patchEntity($user, [
+                    'password' => $this->request->data['new_password'], 
+                    'new_password' => $this->request->data['new_password'], 
+                    'confirm_password' => $this->request->data['confirm_password']
+                ], ['validate' => 'passwordadmin'] ); // referencia a validationPassword
+                // if ['validate' => 'qualquercoisa'] // referencia a validationQualquerCoisa
+            } else {
+                $user = $this->Users->get($this->Auth->user('id'));   
 
+                $user = $this->Users->patchEntity($user, [
+                    'old_password' => $this->request->data['old_password'], 
+                    'password' => $this->request->data['new_password'], 
+                    'new_password' => $this->request->data['new_password'], 
+                    'confirm_password' => $this->request->data['confirm_password']
+                ], ['validate' => 'password'] ); // referencia a validationPassword
+                // if ['validate' => 'qualquercoisa'] // referencia a validationQualquerCoisa
+
+            }
+            
             if ($user->errors()) {
                 foreach ($user->errors() as $erro) {
                     if (isset($erro['custom'])){
@@ -127,17 +140,17 @@ class UsersController extends AppController {
                         $this->Flash->error($erro['match']); 
                     }
                 }
-                return $this->redirect(['controller' => 'users', 'action' => 'account']); 
+                return $this->redirect($this->referer()); 
             }
 
             if ($this->Users->save($user)) { 
                 $this->Flash->success('Senha Alterada com Sucesso!'); 
-                $this->redirect(['controller' => 'users', 'action' => 'account']); 
+                $this->redirect($this->referer()); 
             } else { 
                 $this->Flash->error('Ocorreu um erro ao alterar a senha!'); 
             }
         }
-        $this->redirect(['controller' => 'users', 'action' => 'account']); 
+        $this->redirect($this->referer()); 
     }
 
     public function painel() {

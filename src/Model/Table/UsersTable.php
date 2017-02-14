@@ -78,5 +78,40 @@ class UsersTable extends Table {
         ->notEmpty('confirm_password', 'Confirme a Senha para alterar!');
 
         return $validator;
-    }    
+    }   
+
+
+    public function validationPasswordAdmin(Validator $validator) {
+        $validator
+        ->add('new_password', [
+                'length' => [
+                    'rule' => ['minLength', '3'],
+                    'message' => 'Digite uma senha válida!'
+                ]
+            ])        
+        ->add('new_password', [
+                'match' => [
+                    'rule' => ['compareWith', 'confirm_password'],
+                    'message' => 'Nova senha não corresponde com Confirme a Senha!'
+                ]
+            ])
+        ->notEmpty('new_password', 'Digite a nova Senha para alterar!');
+
+        $validator
+        ->add('confirm_password', [
+                'length' => [
+                    'rule' => ['minLength', '3'],
+                    'message' => 'Digite uma senha válida!'
+                ]
+            ])        
+        ->add('confirm_password', [
+                'match' => [
+                    'rule' => ['compareWith', 'new_password'],
+                    'message' => 'Confime a Senha não corresponde com Nova Senha!'
+                ]
+            ])
+        ->notEmpty('confirm_password', 'Confirme a Senha para alterar!');
+
+        return $validator;
+    }   
 }
