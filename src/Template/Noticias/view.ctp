@@ -42,6 +42,7 @@
 
     }   
 </style>
+<?= $this->Html->css('pgwslideshow.min.css'); ?> 
 <div class="row">
     <div class="col-lg-12">
         <div itemscope="">
@@ -55,7 +56,7 @@
                     </div>
                     <div itemprop="author">
                         <strong>
-                            <?php echo $this->Html->link($noticias['user']['name'], ['controller' => 'noticias', 'action' => 'autor', $noticias['user']['id'], \Cake\Utility\Inflector::slug(strtolower($noticias['user']['name']))], ['style'=>'color:black']); ?>
+                            <?php echo $this->Html->link($noticias['user']['name'], ['controller' => 'noticias', 'action' => 'autor', $noticias['user']['id'], \Cake\Utility\Inflector::slug(strtolower($noticias['user']['name']))], ['style' => 'color:black']); ?>
                         </strong>
                     </div>
                     <br />
@@ -71,45 +72,27 @@
         </div>
     </div>
 </div>
+<!-- 
+<a class="news-title" href="<?php // '/img/albuns/' . $imagem2['gallery_id'] . '/' . $imagem2['name'];  ?>" target="_blank">
+</a> -->
 <?php if ($noticias['gallery_id'] !== NULL) { ?>
-    <div id="myCarousel" class="carousel slide" data-ride="carousel" style="margin-bottom: 10px">
-        <!-- Indicators -->
-        <div class="carousel-indicators">
-            <?php $i = 0; ?>
-            <?php foreach ($noticias['album']['imagens'] as $imagem2): ?>
-                <span href="#" data-target="#myCarousel" data-slide-to="<?= $i; ?>" class="<?= ($i === 0 ) ? 'active' : ''; ?>" style="cursor: pointer">
-                    <?= $this->Html->image('albuns/' . $imagem2['gallery_id'] . '/' . $imagem2['name'], ['class' => 'img-rounded', 'width' => '50', 'height' => '50']); ?>
-                </span >
-                <?php $i++; ?>
-            <?php endforeach; ?>
-        </div>
-
-        <!-- Wrapper for slides -->
-        <div class="carousel-inner" role="listbox">
-            <?php $i = 0; ?>
-            <?php foreach ($noticias['album']['imagens'] as $imagem2): ?>
-                <div class="item <?= ($i === 0 ) ? 'active' : ''; ?> ">
-                    <div class="carousel-caption" >
-                        <div class="news-title-bg rounded" style="padding-bottom: 25px">
-                            <a class="news-title" href="<?='/img/albuns/' . $imagem2['gallery_id'] . '/' . $imagem2['name'];?>" target="_blank">
-                                Visualizar
-                            </a>
-                        </div>
-                    </div>                    
-                    <?= $this->Html->image('albuns/' . $imagem2['gallery_id'] . '/thumb_slide_' . $imagem2['name']); ?>
-                </div>
-                <?php $i++; ?>
-            <?php endforeach; ?>
-        </div>
-
-        <!-- Left and right controls -->
-        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            <span class="sr-only">Voltar</span>
-        </a>
-        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <span class="sr-only">Avançar</span>
-        </a>
-    </div>
+    <ul class="pgwSlideshow">
+        <?php foreach ($noticias['album']['imagens'] as $imagem2): ?>
+            <li>
+                <?= $this->Html->image('albuns/' . $imagem2['gallery_id'] . '/' . $imagem2['name']); ?>
+            </li>
+        <?php endforeach; ?>    
+    </ul>
 <?php } ?>
+<?= $this->Html->script('pgwslideshow.min.js'); ?> 
+<script>
+    // http://pgwjs.com/pgwslideshow/
+    // https://github.com/Pagawa/PgwSlideshow
+    $(document).ready(function () {
+        var pgwSlideshow = $('.pgwSlideshow').pgwSlideshow();
+        pgwSlideshow.reload({
+            autoSlide: false,
+            maxHeigth: 350
+        });
+    });
+</script>
