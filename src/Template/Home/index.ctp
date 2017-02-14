@@ -70,13 +70,15 @@
                 <div id="myCarousel" class="carousel slide" data-ride="carousel" style="margin-bottom: 10px; overflow: hidden">
                     <!-- Indicators -->
                     <div class="carousel-indicators">
-                        <?php $i = 0; ?>
+                        <!-- 
+                        <?php // $i = 0; ?>
                         <?php foreach ($lista_destaques_img as $noticias): ?>
                             <span href="#" data-target="#myCarousel" data-slide-to="<?= $i; ?>" class="<?= ($i === 0 ) ? 'active' : ''; ?>" style="cursor: pointer;" >
-                                <?= $this->Html->image('albuns/' . $noticias['gallery_id'] . '/thumb_' . $noticias['album']['capa']['name'], ['class' => 'img-rounded', 'width' => '40', 'height' => '40', 'title' => $noticias['title']]); ?>
+                                <?php // = $this->Html->image('albuns/' . $noticias['gallery_id'] . '/thumb_' . $noticias['album']['capa']['name'], ['class' => 'img-rounded', 'width' => '40', 'height' => '40', 'title' => $noticias['title']]); ?>
                             </span >
-                            <?php $i++; ?>
+                            <?php // $i++; ?>
                         <?php endforeach; ?>
+                        -->
                     </div>
 
                     <!-- Wrapper for slides -->
@@ -138,10 +140,10 @@
                                     <h4 style="text-align: justify">
                                         <?php echo $this->Html->link($this->Strings->abreviar($noticia['title'], 100), ['controller' => 'noticias', 'action' => 'view', $noticia['id'], \Cake\Utility\Inflector::slug(strtolower($noticia['title']))], array('escape' => false, 'style' => 'color:#0066ff')); ?>
                                     </h4>
-                                    <p style=" text-align: justify;">
+                                    <p>
                                         <cite>
                                             <?php
-                                            echo $this->Strings->abreviar($noticia['text'], 80);
+                                            echo $this->Strings->abreviar($noticia['subtitle'], 80);
                                             ?>
                                         </cite>
                                     </p>
