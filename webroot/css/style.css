@@ -8,6 +8,15 @@
     margin: 0 !important;
 }
 
+.no-padding-img {
+    padding-top: 0 !important;
+    padding-right: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-right: 0 !important;
+    margin-bottom: 0 !important;
+}
+
 .btn-file {
     position: relative;
     overflow: hidden;

@@ -22,6 +22,8 @@
         <meta property="og:url" content="http://www.cidadealtinopolis.com.br/" />
         <!-- // FACEBOOK -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/journal/bootstrap.min.css" >
+        <?= $this->Html->css('style.css'); ?>
+        <?= $this->Html->css('sticky_footer.css'); ?>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>        
         <!-- // GOOGLE ANALYTICS -->
@@ -78,7 +80,7 @@
                             <div class="input-group">
                                 <?= $this->Form->input('search', array('label' => false, 'class' => 'form-control', 'placeholder' => 'Pesquisar...')); ?>
                                 <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search"></span></span>                                    
-                          </div>
+                            </div>
 
                             <?= $this->Form->end() ?>                            
                             <!-- 
@@ -103,29 +105,39 @@
             <div>
                 <?= $this->fetch('content') ?>
             </div>
-
-
-        </div>
-        <div style="display: block; height: 300px"></div>
+        </div>  
+        <div style="display: block; height: 100px;"></div>
         <footer class="footer">
-            <div class="navbar navbar-default">
-                <div class="container">
-                    <ul class="nav navbar-nav">
-                        <li>
-                            <?php echo $this->Html->link('Sobre', array('controller' => 'Pagina', 'action' => 'sobre')); ?>
-                        </li>                        
-                        <li>
-                            <?php echo $this->Html->link('Parceiros', array('controller' => 'Pagina', 'action' => 'parceiros')); ?>
-                        </li>
-                        <li><?php echo $this->Html->link('Login', '/admin'); ?></li>
-                    </ul>                    
+            <div class="container">
+                <div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h4>
+                                <?php echo $this->Html->link('Sobre', array('controller' => 'Pagina', 'action' => 'sobre')); ?>
+                            </h4>
+                        </div>
+                        <div class="col-lg-12">
+                            <h4>
+                                <?php echo $this->Html->link('Parceiros', array('controller' => 'Pagina', 'action' => 'parceiros')); ?>
+                            </h4>
+                        </div>
+                        <div class="col-lg-12">
+                            <h4>
+                                <?php echo $this->Html->link('Login', '/admin'); ?>
+                            </h4>
+                        </div>
+                    </div>                    
+                </div>
+                <div style="margin-top: 10px">
+                    <div class="col-lg-12">
+                        <p style="text-align: center; color: black">
+                            <strong>
+                                Dúvidas e Sugestões: contato@cidadealtinopolis.com.br
+                            </strong>
+                        </p>
+                    </div>
                 </div>
             </div>
-            <center>
-                <div>
-                    Dúvidas e Sugestões: contato@cidadealtinopolis.com.br
-                </div>                
-            </center>
         </footer>
         <!-- 
         <footer class="footer">

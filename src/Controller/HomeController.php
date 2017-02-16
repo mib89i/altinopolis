@@ -32,8 +32,9 @@ class HomeController extends AppController {
         $query = TableRegistry::get('Noticias');
         $lista_destaques = $query
                 ->find('all')
-                ->where(['active' => true])
-                ->andWhere(['main' => true])
+                ->where(['Noticias.active' => true])
+                ->andWhere(['Noticias.main' => true])
+                ->andWhere(['Noticias.gallery_id IS NULL'])
                 ->limit(3)
                 ->order(['Noticias.schedule' => 'DESC']);
 
@@ -57,9 +58,9 @@ class HomeController extends AppController {
         $query = TableRegistry::get('Noticias');
         $lista_noticias = $query
                 ->find('all')
-                ->where(['active' => true])
-                ->andWhere(['main' => false])
-                ->limit(9)
+                ->where(['Noticias.active' => true])
+                ->andWhere(['Noticias.main' => false])
+                ->limit(12)
                 ->order(['Noticias.schedule' => 'DESC'])
                 ->contain(['Albuns', 'Albuns.ImagemCapa']);
         $this->set(compact('lista_noticias'));
